@@ -5,6 +5,8 @@ python-multipart==0.0.9
 
 # Sessions & OAuth
 authlib==1.3.1
+httpx==0.24.1
+
 
 # MongoDB
 pymongo==4.10.1
@@ -21,5 +23,6 @@ python-dateutil==2.9.0.post0
 
 # Optional: rate limiting if you use the example fix
 slowapi==0.1.9
+
 
 
