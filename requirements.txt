@@ -17,11 +17,9 @@ bcrypt==4.1.2
 # Environment variables
 python-dotenv==1.0.1
 
-# Email
-smtplib-client==0.1.1   # optional wrapper if you use smtplib (stdlib covers basics)
-
 # Utils
 python-dateutil==2.9.0.post0
 
 # Optional: rate limiting if you use the example fix
 slowapi==0.1.9
+
