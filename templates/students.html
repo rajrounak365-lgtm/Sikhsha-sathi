@@ -1,0 +1,220 @@
+{% extends "layout.html" %}
+
+{% block title %}Students | Sikhsha Sathi{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-3xl font-bold flex items-center gap-2">
+  👥 Student Management
+</h1>
+
+  <button
+    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+    onclick="document.getElementById('addModal').classList.remove('hidden')">
+    + Add Student
+  </button>
+</div>
+
+<!-- Search + Filters -->
+<form method="get" action="/students" class="bg-white shadow-md rounded-lg p-4 mb-6 flex flex-wrap gap-3">
+  <input type="text" name="search" value="{{ request.query_params.get('search', '') }}"
+         placeholder="Search by name or phone" class="border rounded p-2 flex-1 min-w-[200px]">
+
+  <select name="course" class="border rounded p-2">
+  <option value="">All Courses</option>
+  {% set selected_course = request.query_params.get('course', '') %}
+  {% for course in courses %}
+    <option value="{{ course._id }}" {% if course._id == selected_course %}selected{% endif %}>
+      {{ course.name }} ({{ course.type }})
+    </option>
+  {% endfor %}
+</select>
+
+
+  <select name="status" class="border rounded p-2">
+    <option value="">All Status</option>
+    <option value="Active" {% if request.query_params.get('status') == "Active" %}selected{% endif %}>Active</option>
+    <option value="Inactive" {% if request.query_params.get('status') == "Inactive" %}selected{% endif %}>Inactive</option>
+  </select>
+
+  <select name="payment_status" class="border rounded p-2">
+    <option value="">All Payments</option>
+    <option value="Paid" {% if request.query_params.get('payment_status') == "Paid" %}selected{% endif %}>Paid</option>
+    <option value="Pending" {% if request.query_params.get('payment_status') == "Pending" %}selected{% endif %}>Pending</option>
+    <option value="Pay Later" {% if request.query_params.get('payment_status') == "Pay Later" %}selected{% endif %}>Pay Later</option>
+    <option value="Partial" {% if request.query_params.get('payment_status') == "Partial" %}selected{% endif %}>Partial</option>
+
+  </select>
+
+  <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+    Apply
+  </button>
+</form>
+
+<!-- Students Table -->
+<div class="bg-white shadow-md rounded-lg overflow-hidden">
+  <table class="min-w-full border-collapse">
+    <thead class="bg-green-700 text-white">
+      <tr>
+        <th class="p-3 text-left">Name</th>
+        <th class="p-3 text-left">Phone</th>
+        <th class="p-3 text-left">Course</th>
+        <th class="p-3 text-left">Joined Date</th>
+        <th class="p-3 text-left">Guardian</th>
+        <th class="p-3 text-left">Village/City</th>
+        <th class="p-3 text-left">Status</th>
+        <th class="p-3 text-left">Payment</th>
+        <th class="p-3 text-left">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if students %}
+        {% for student in students %}
+        <tr class="border-b hover:bg-gray-50">
+          <td class="p-3">{{ student.name }}</td>
+          <td class="p-3">{{ student.phone }}</td>
+          <td class="p-3">{{ student.course_name }}</td>
+          <td class="p-3">{{ student.joined_date }}</td>
+          <td class="p-3">{{ student.guardian_name }} ({{ student.guardian_phone }})</td>
+          <td class="p-3">{{ student.village }}</td>
+
+          <td class="p-3">
+            <span class="px-2 py-1 rounded text-xs
+              {% if student.status == 'Active' %}
+                bg-green-100 text-green-700
+              {% else %}
+                bg-red-100 text-red-700
+              {% endif %}
+            ">
+              {{ student.status }}
+            </span>
+          </td>
+          <td class="p-3">
+            <span class="px-2 py-1 rounded text-xs
+              {% if student.payment_status == 'Paid' %}
+                bg-green-100 text-green-700
+              {% elif student.payment_status == 'Pending' %}
+                bg-yellow-100 text-yellow-700
+              {% else %}
+                bg-gray-100 text-gray-700
+              {% endif %}
+            ">
+              {{ student.payment_status }}
+            </span>
+          </td>
+          <td class="p-3">
+            <a href="/students/{{ student._id }}"
+               class="text-blue-600 hover:underline">View</a>
+          </td>
+        </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="8" class="p-4 text-center text-gray-500">
+            No students found.
+          </td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Add Student Modal -->
+<div id="addModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-[700px]">
+    <h2 class="text-xl font-bold mb-2">Add New Student</h2>
+    <p class="text-gray-600 mb-4">Fill in the student details for admission</p>
+
+    <form action="/students/add" method="post" class="grid grid-cols-2 gap-4">
+      <!-- Name -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Student Name *</label>
+        <input type="text" name="name" placeholder="Enter full name" class="w-full border rounded p-2" required>
+      </div>
+
+      <!-- Phone -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Phone Number *</label>
+        <input type="text" name="phone" placeholder="+91 XXXXXXXXXX" class="w-full border rounded p-2" required>
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" name="student_email" placeholder="student@email.com" class="w-full border rounded p-2">
+      </div>
+
+      <!-- Village -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Village/City *</label>
+        <input type="text" name="village" placeholder="Enter village or city" class="w-full border rounded p-2" required>
+      </div>
+
+      <!-- Guardian -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Parent/Guardian Name *</label>
+        <input type="text" name="guardian_name" placeholder="Enter parent's name" class="w-full border rounded p-2" required>
+      </div>
+
+      <!-- Guardian Phone -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Parent's Phone *</label>
+        <input type="text" name="guardian_phone" placeholder="+91 XXXXXXXXXX" class="w-full border rounded p-2" required>
+      </div>
+
+      <!-- Course -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Select Course *</label>
+        <select name="course_id" class="w-full border rounded p-2" required>
+          <option value="">Choose course</option>
+             {% for course in courses %}
+          <option value="{{ course._id }}">{{ course.name }} ({{ course.type }})</option>
+             {% endfor %}
+        </select>
+      </div>
+
+
+      <!-- Payment -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Fee Payment Option *</label>
+        <select name="payment_status" class="w-full border rounded p-2" required>
+          <option value="">Choose payment option</option>
+          <option value="Paid">Paid</option>
+          <option value="Pending">Pending</option>
+          <option value="Pay Later">Pay Later</option>
+           <option value="Pay Later">Partial</option>
+        </select>
+      </div>
+      <!-- Joined Date -->
+<div>
+  <label class="block text-sm font-medium text-gray-700">Joining Date *</label>
+  <input type="date" name="joined_date" class="w-full border rounded p-2" required>
+</div>
+
+<!-- Status -->
+<div>
+  <label class="block text-sm font-medium text-gray-700">Status</label>
+  <select name="status" class="w-full border rounded p-2">
+    <option value="Active" selected>Active</option>
+    <option value="Inactive">Inactive</option>
+  </select>
+</div>
+
+
+      <!-- Buttons (spans full width) -->
+      <div class="col-span-2 flex justify-end space-x-2 mt-4">
+        <button type="button"
+                onclick="document.getElementById('addModal').classList.add('hidden')"
+                class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+          Cancel
+        </button>
+        <button type="submit"
+                class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+          Add Student
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
