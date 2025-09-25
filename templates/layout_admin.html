@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ sidebarOpen: false }" class="scroll-smooth" xmlns:x-transition="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}Shiksha Sathi - Admin{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/alpinejs" defer></script>
+  <style>
+    /* Custom scrollbar */
+    aside::-webkit-scrollbar {
+      width: 6px;
+    }
+    aside::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    aside::-webkit-scrollbar-thumb {
+      background-color: #34d399; /* emerald-400 */
+      border-radius: 3px;
+    }
+    /* Active link style */
+    a[data-active="true"] {
+      @apply bg-green-200 text-green-900 font-semibold shadow-inner;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col font-sans text-gray-800">
+
+  <!-- Navbar -->
+  <header class="bg-green-700 text-white shadow-md sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
+      <div class="flex items-center space-x-3">
+        <!-- Toggle Button -->
+        <button
+          @click="sidebarOpen = !sidebarOpen"
+          class="md:hidden p-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <span class="font-extrabold text-xl md:text-2xl">Shiksha Sathi</span>
+      </div>
+      <a href="/logout" class="text-green-100 hover:text-white font-medium">Logout</a>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside
+      class="bg-white shadow-lg w-64 p-6 flex flex-col overflow-y-auto fixed inset-y-0 left-0 transform md:relative md:translate-x-0 transition-transform duration-300 ease-in-out z-40"
+      :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
+    >
+      <!-- Header -->
+     <div class="mb-8">
+    <h1 class="text-2xl font-extrabold text-green-800 leading-tight">
+      Shiksha Sathi
+    </h1>
+    <p class="text-sm text-gray-600">Coaching Management System</p>
+    <span class="mt-1 inline-block bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5 rounded">
+      Admin
+    </span>
+  </div>
+
+      <!-- Menu -->
+      <nav class="space-y-1 text-green-800 font-semibold">
+        <a href="/admin-dashboard"
+           class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 transition"
+           :class="window.location.pathname === '/admin-dashboard' ? 'bg-green-200 text-green-900 shadow-inner' : ''"
+           :data-active="window.location.pathname === '/admin-dashboard'">
+          <span class="text-xl">📊</span> Admin Dashboard
+        </a>
+        <a href="/client-institutes"
+           class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 transition"
+           :class="window.location.pathname === '/client-institutes' ? 'bg-green-200 text-green-900 shadow-inner' : ''"
+           :data-active="window.location.pathname === '/client-institutes'">
+          <span class="text-xl">🏫</span> Client Institutes
+        </a>
+        <a href="/subscriptions"
+           class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 transition"
+           :class="window.location.pathname === '/subscriptions' ? 'bg-green-200 text-green-900 shadow-inner' : ''"
+           :data-active="window.location.pathname === '/subscriptions'">
+          <span class="text-xl">💳</span> Subscriptions
+        </a>
+        <a href="/system-reports"
+           class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 transition"
+           :class="window.location.pathname === '/system-reports' ? 'bg-green-200 text-green-900 shadow-inner' : ''"
+           :data-active="window.location.pathname === '/system-reports'">
+          <span class="text-xl">📈</span> System Reports
+        </a>
+      </nav>
+
+      <!-- Bihar Special -->
+      <div class="mt-auto p-4 rounded-xl bg-gradient-to-r from-green-50 to-green-100 border border-green-300 shadow">
+        <span class="inline-block bg-green-200 text-green-800 text-xs font-bold px-2 py-1 rounded-full mb-2">
+          Bihar Special
+        </span>
+        <p class="text-sm text-green-900 font-semibold">
+          Designed for Tier 3–4 cities
+        </p>
+      </div>
+    </aside>
+
+    <!-- Overlay -->
+    <div
+      x-show="sidebarOpen"
+      @click="sidebarOpen = false"
+      class="fixed inset-0 bg-black bg-opacity-30 z-30 md:hidden transition-opacity"
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-30"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-30"
+      x-transition:leave-end="opacity-0"
+    ></div>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</body>
+</html>

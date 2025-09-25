@@ -1,0 +1,108 @@
+{% extends "layout.html" %}
+{% block title %}Create / Edit Test | Sikhsha Sathi{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+  <h2 class="text-2xl font-bold mb-4">
+    {% if test %}✏️ Edit Test{% else %}➕ Create New Test{% endif %}
+  </h2>
+
+  <form method="post" action="{% if test %}/tests/update/{{ test._id }}{% else %}/tests/add{% endif %}">
+    <div class="space-y-4">
+
+      <!-- Title -->
+      <div>
+        <label class="block text-sm font-medium">Test Title *</label>
+        <input type="text" name="title" value="{{ test.title if test }}"
+               class="w-full border px-3 py-2 rounded-lg" required>
+      </div>
+
+      <!-- Course -->
+      <div>
+        <label class="block text-sm font-medium">Course *</label>
+        <select name="course_id" class="w-full border px-3 py-2 rounded-lg" required>
+          <option value="">Select Course</option>
+          {% for c in courses %}
+            <option value="{{ c._id }}" {% if test and test.course_id == c._id|string %}selected{% endif %}>
+              {{ c.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Subject (manual text) -->
+      <div>
+        <label class="block text-sm font-medium">Subject *</label>
+        <input type="text" name="subject" value="{{ test.subject if test }}"
+               class="w-full border px-3 py-2 rounded-lg" required>
+      </div>
+
+      <!-- Faculty Name (manual text) -->
+      <div>
+        <label class="block text-sm font-medium">Faculty Name *</label>
+        <input type="text" name="faculty" value="{{ test.faculty_name if test }}"
+               class="w-full border px-3 py-2 rounded-lg" required>
+      </div>
+
+      <!-- Type + Duration -->
+      <div class="flex gap-4">
+        <div class="flex-1">
+          <label class="block text-sm font-medium">Test Type *</label>
+          <select name="test_type" class="w-full border px-3 py-2 rounded-lg" required>
+            <option value="Mock" {% if test and test.test_type == 'Mock Test' %}selected{% endif %}>Mock Test</option>
+            <option value="Weekly" {% if test and test.test_type == 'Weekly Test' %}selected{% endif %}>Weekly Test</option>
+            <option value="Monthly" {% if test and test.test_type == 'Monthly Test' %}selected{% endif %}>Monthly Test</option>
+            <option value="Mock" {% if test and test.test_type == '' %}selected{% endif %}>Chapter Test</option>
+            <option value="Mock" {% if test and test.test_type == 'Mock' %}selected{% endif %}>Final Assessment</option>
+          </select>
+        </div>
+        <div class="flex-1">
+          <label class="block text-sm font-medium">Duration *</label>
+          <input type="text" name="duration" value="{{ test.duration if test }}"
+                 placeholder="e.g. 3 hours" class="w-full border px-3 py-2 rounded-lg" required>
+        </div>
+      </div>
+
+      <!-- Questions + Marks -->
+      <div class="flex gap-4">
+        <div class="flex-1">
+          <label class="block text-sm font-medium">No. of Questions</label>
+          <input type="number" name="num_questions" value="{{ test.num_questions if test }}"
+                 class="w-full border px-3 py-2 rounded-lg">
+        </div>
+        <div class="flex-1">
+          <label class="block text-sm font-medium">Total Marks</label>
+          <input type="number" name="total_marks" value="{{ test.total_marks if test }}"
+                 class="w-full border px-3 py-2 rounded-lg">
+        </div>
+      </div>
+
+      <!-- Date + Time -->
+      <div class="flex gap-4">
+        <div class="flex-1">
+          <label class="block text-sm font-medium">Scheduled Date *</label>
+          <input type="date" name="scheduled_date" value="{{ test.scheduled_date if test }}"
+                 class="w-full border px-3 py-2 rounded-lg" required>
+        </div>
+        <div class="flex-1">
+          <label class="block text-sm font-medium">Scheduled Time *</label>
+          <input type="time" name="scheduled_time" value="{{ test.scheduled_time if test }}"
+                 class="w-full border px-3 py-2 rounded-lg" required>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label class="block text-sm font-medium">Test Description</label>
+        <textarea name="description" class="w-full border px-3 py-2 rounded-lg">{{ test.description if test }}</textarea>
+      </div>
+
+      <!-- Submit -->
+      <div class="flex justify-end gap-3">
+        <a href="/tests" class="px-4 py-2 bg-gray-200 rounded-lg">Cancel</a>
+        <button type="submit" class="px-4 py-2 bg-orange-600 text-white rounded-lg">Save</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

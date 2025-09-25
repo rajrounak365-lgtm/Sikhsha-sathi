@@ -1,0 +1,19 @@
+{% extends "layout_admin.html" %}
+
+{% block title %}Admin Dashboard | Sikhsha Sathi{% endblock %}
+
+{% block content %}
+  <h2 class="text-2xl font-semibold mb-6">Admin Dashboard</h2>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <div class="bg-white shadow-md rounded-xl p-6">
+      <h3 class="text-gray-500 text-sm font-medium">Total Institutes</h3>
+      <p class="text-3xl font-bold text-blue-600 mt-2">{{ total_institutes }}</p>
+    </div>
+    <div class="bg-white shadow-md rounded-xl p-6">
+      <h3 class="text-gray-500 text-sm font-medium">Total Users</h3>
+      <p class="text-3xl font-bold text-green-600 mt-2">{{ total_users }}</p>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "layout_admin.html" %}
+{% block title %}System Reports | Shiksha Sathi{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 min-h-screen p-6">
+
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">📊 System Reports</h1>
+    <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow">
+      ⬇ Download Report
+    </button>
+  </div>
+
+  <!-- Reports Summary Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white rounded-xl shadow p-4">
+      <h2 class="text-sm text-gray-500">Total Institutes</h2>
+      <p class="text-2xl font-bold text-gray-800">24</p>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <h2 class="text-sm text-gray-500">Total Students</h2>
+      <p class="text-2xl font-bold text-gray-800">1,245</p>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <h2 class="text-sm text-gray-500">Active Subscriptions</h2>
+      <p class="text-2xl font-bold text-green-600">18</p>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <h2 class="text-sm text-gray-500">Expired Subscriptions</h2>
+      <p class="text-2xl font-bold text-red-600">6</p>
+    </div>
+  </div>
+
+  <!-- Reports Table -->
+  <div class="bg-white rounded-xl shadow-md p-6">
+    <h2 class="text-lg font-semibold text-gray-700 mb-4">Detailed Reports</h2>
+    <table class="min-w-full border border-gray-200">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 text-left text-gray-700">#</th>
+          <th class="px-4 py-2 text-left text-gray-700">Institute</th>
+          <th class="px-4 py-2 text-left text-gray-700">Students</th>
+          <th class="px-4 py-2 text-left text-gray-700">Active Plan</th>
+          <th class="px-4 py-2 text-left text-gray-700">Status</th>
+          <th class="px-4 py-2 text-left text-gray-700">Last Reported</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-t">
+          <td class="px-4 py-2">1</td>
+          <td class="px-4 py-2">ABC Institute</td>
+          <td class="px-4 py-2">320</td>
+          <td class="px-4 py-2">Premium</td>
+          <td class="px-4 py-2 text-green-600 font-semibold">Active</td>
+          <td class="px-4 py-2">2025-09-20</td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">2</td>
+          <td class="px-4 py-2">XYZ Academy</td>
+          <td class="px-4 py-2">190</td>
+          <td class="px-4 py-2">Basic</td>
+          <td class="px-4 py-2 text-red-600 font-semibold">Expired</td>
+          <td class="px-4 py-2">2025-08-15</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Faculty | Shiksha Sathi{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white shadow rounded p-6">
+  <h1 class="text-2xl font-semibold mb-6">Edit Faculty Member</h1>
+
+  <form action="/faculty/update/{{ faculty._id }}" method="post" class="grid grid-cols-2 gap-4">
+
+    <!-- Full Name -->
+    <div class="col-span-1">
+      <label for="name" class="block text-sm font-medium text-gray-700">Full Name *</label>
+      <input type="text" id="name" name="name" value="{{ faculty.name }}"
+             class="mt-1 block w-full border px-3 py-2 rounded" required>
+    </div>
+
+    <!-- Phone -->
+    <div class="col-span-1">
+      <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number *</label>
+      <input type="text" id="phone" name="phone" value="{{ faculty.phone }}"
+             class="mt-1 block w-full border px-3 py-2 rounded" required>
+    </div>
+
+    <!-- Email -->
+    <div class="col-span-1">
+      <label for="email" class="block text-sm font-medium text-gray-700">Email *</label>
+      <input type="email" id="email" name="email" value="{{ faculty.email }}"
+             class="mt-1 block w-full border px-3 py-2 rounded" required>
+    </div>
+
+    <!-- Qualification -->
+    <div class="col-span-1">
+      <label for="qualification" class="block text-sm font-medium text-gray-700">Qualification *</label>
+      <input type="text" id="qualification" name="qualification" value="{{ faculty.qualification }}"
+             class="mt-1 block w-full border px-3 py-2 rounded" required>
+    </div>
+
+    <!-- Experience -->
+    <div class="col-span-1">
+      <label for="experience" class="block text-sm font-medium text-gray-700">Experience</label>
+      <input type="text" id="experience" name="experience" value="{{ faculty.experience }}"
+             class="mt-1 block w-full border px-3 py-2 rounded">
+    </div>
+
+    <!-- Monthly Salary -->
+<div class="col-span-1">
+  <label for="monthly_salary" class="block text-sm font-medium text-gray-700">Monthly Salary</label>
+  <input type="text" id="monthly_salary" name="monthly_salary" value="{{ faculty.monthly_salary }}"
+         class="mt-1 block w-full border px-3 py-2 rounded">
+</div>
+    <!-- Assign Batches -->
+  <div class="col-span-2">
+  <label class="text-sm font-medium text-gray-700">Assign Batches (Courses) *</label>
+  <div class="mt-2 space-y-2">
+    {% for c in courses %}
+      <label class="flex items-center space-x-2">
+        <input type="checkbox" name="batch" value="{{ c._id }}"
+               class="rounded border-gray-300"
+               {% if c.name in faculty.batch %}checked{% endif %}>
+        <span class="text-gray-700">{{ c.name }}</span>
+      </label>
+    {% endfor %}
+  </div>
+  <p class="text-xs text-gray-500">Select one or more batches for this faculty.</p>
+</div>
+
+
+    <!-- Subjects -->
+    <div class="col-span-2">
+      <label for="subjects" class="block text-sm font-medium text-gray-700">Subjects *</label>
+      <input type="text" id="subjects" name="subjects" value="{{ faculty.subjects | join(', ') }}"
+             class="mt-1 block w-full border px-3 py-2 rounded" required>
+      <p class="text-xs text-gray-500 mt-1">Separate multiple subjects with commas</p>
+    </div>
+
+    <!-- Address -->
+    <div class="col-span-2">
+      <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+      <input type="text" id="address" name="address" value="{{ faculty.address }}"
+             class="mt-1 block w-full border px-3 py-2 rounded">
+    </div>
+
+<!-- Joining Date -->
+<div class="col-span-1">
+  <label for="joining_date" class="block text-sm font-medium text-gray-700">Joining Date</label>
+  <input type="date" id="joining_date" name="joining_date" value="{{ faculty.joining_date }}"
+         class="mt-1 block w-full border px-3 py-2 rounded">
+</div>
+
+    <!-- Buttons -->
+    <div class="col-span-2 flex justify-end gap-4 mt-4">
+      <a href="/faculty" class="bg-gray-200 text-gray-800 px-4 py-2 rounded">Cancel</a>
+      <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Update Faculty</button>
+    </div>
+    {% if error %}
+  <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">
+    ⚠️ {{ error }}
+  </div>
+{% endif %}
+
+
+  </form>
+</div>
+{% endblock %}

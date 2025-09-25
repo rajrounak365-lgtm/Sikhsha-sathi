@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block title %}Add Event{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 min-h-screen p-6">
+  <div class="max-w-2xl mx-auto bg-white shadow rounded-xl p-6">
+    <h1 class="text-2xl font-bold mb-4">➕ Add New Event</h1>
+
+    <form action="/event/add" method="POST" class="space-y-4">
+
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Event Title</label>
+        <input type="text" name="title" required
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+      </div>
+
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Description</label>
+        <textarea name="description" rows="3"
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div>
+    <label class="block text-gray-700 font-medium mb-1">Date</label>
+    <input type="date" name="date" required
+           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+  </div>
+  <div>
+    <label class="block text-gray-700 font-medium mb-1">Time</label>
+    <div class="flex gap-2">
+      <select name="hour" required
+              class="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+        {% for h in range(1,13) %}
+        <option value="{{ h }}">{{ h }}</option>
+        {% endfor %}
+      </select>
+      <span class="self-center">:</span>
+      <select name="minute" required
+              class="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+        {% for m in ['00','15','30','45'] %}
+        <option value="{{ m }}">{{ m }}</option>
+        {% endfor %}
+      </select>
+      <select name="ampm" required
+              class="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Audience</label>
+          <input type="text" name="audience" placeholder="e.g. Students, Faculty" required
+                 class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+        </div>
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Type</label>
+          <input type="text" name="event_type" placeholder="e.g. Workshop, Seminar" required
+                 class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-3 mt-4">
+        <a href="/institute-dashboard"
+           class="px-5 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Cancel</a>
+        <button type="submit"
+                class="px-5 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700">Add Event</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

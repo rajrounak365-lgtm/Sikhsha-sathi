@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block title %}Test Results | Sikhsha Sathi{% endblock %}
+
+{% block content %}
+<!-- Back Button -->
+  <div class="mb-4">
+    <a href="/tests" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+      ← Back to Tests
+    </a>
+  </div>
+<div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
+  <h2 class="text-2xl font-bold mb-4">🎓 Results for {{ test.title }}</h2>
+
+  <p class="mb-4 text-gray-600">
+    Course: {{ test.course_name }} | Subject: {{ test.subject }} | Date: {{ test.scheduled_date }}
+  </p>
+
+  {% if students %}
+    <table class="min-w-full bg-white border rounded-lg">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="px-4 py-2 border">#</th>
+          <th class="px-4 py-2 border">Student Name</th>
+          <th class="px-4 py-2 border">Marks</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in students %}
+        <tr>
+          <td class="px-4 py-2 border">{{ loop.index }}</td>
+          <td class="px-4 py-2 border">{{ s.name }}</td>
+          <td class="px-4 py-2 border">{{ s.marks }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="text-gray-600">No students found for this test.</p>
+  {% endif %}
+</div>
+{% endblock %}

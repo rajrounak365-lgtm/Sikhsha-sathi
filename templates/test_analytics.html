@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block title %}Test Analytics | Sikhsha Sathi{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
+  <h2 class="text-2xl font-bold mb-4">📊 Analytics for {{ test.title }}</h2>
+
+  <p class="mb-4 text-gray-600">
+    Course: {{ test.course_name }} | Subject: {{ test.subject }} | Date: {{ test.scheduled_date }}
+  </p>
+
+  {% if students %}
+  <form method="post" action="/tests/analytics/save/{{ test._id }}">
+    <table class="min-w-full bg-white border rounded-lg">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="px-4 py-2 border">#</th>
+          <th class="px-4 py-2 border">Student Name</th>
+          <th class="px-4 py-2 border">Marks</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in students %}
+        <tr>
+          <td class="px-4 py-2 border">{{ loop.index }}</td>
+          <td class="px-4 py-2 border">{{ s.name }}</td>
+          <td class="px-4 py-2 border">
+            <<input type="number"
+       name="marks[{{ s._id }}]"
+       class="w-24 border px-2 py-1 rounded-lg"
+       value="{{ s.marks if s.marks is defined else 0 }}">
+
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- Submit button at the bottom -->
+    <div class="mt-4 flex justify-end">
+      <button type="submit" class="px-6 py-2 bg-orange-600 text-white rounded-lg">
+        💾 Save Marks & Finish Analytics
+      </button>
+    </div>
+  </form>
+  {% else %}
+  <p class="text-gray-600">⚠️ No attendance found for this test date. Please ensure attendance is recorded first.</p>
+  {% endif %}
+</div>
+{% endblock %}

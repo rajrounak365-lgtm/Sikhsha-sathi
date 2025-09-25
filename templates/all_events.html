@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %}All Events{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 min-h-screen p-6">
+  <h1 class="text-3xl font-bold mb-6">📅 All Events</h1>
+
+  <table class="min-w-full bg-white shadow rounded-lg">
+    <thead>
+      <tr class="bg-gray-100 text-left">
+        <th class="py-2 px-4">Title</th>
+        <th class="py-2 px-4">Date</th>
+        <th class="py-2 px-4">Time</th>
+        <th class="py-2 px-4">Audience</th>
+        <th class="py-2 px-4">Type</th>
+        <th class="py-2 px-4">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in events %}
+      <tr class="border-b">
+        <td class="py-2 px-4">{{ event["title"] }}</td>
+        <td class="py-2 px-4">{{ event["date"].strftime("%d %B %Y") }}</td>
+        <td class="py-2 px-4">{{ event["time"] }}</td>
+        <td class="py-2 px-4">{{ event["audience"] }}</td>
+        <td class="py-2 px-4">{{ event["type"] }}</td>
+        <td class="py-2 px-4">
+          <form method="post" action="/event/delete/{{ event['_id'] }}">
+            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg">
+              Delete
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,192 @@
+{% extends "layout.html" %}
+{% block title %}Tests | Shiksha Sathi{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 p-6 min-h-screen">
+
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-8">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-800">📝 Test Management</h1>
+      <p class="text-gray-600 text-sm">Manage courses, batches, fees, and schedules</p>
+    </div>
+    <a href="/tests/new"
+       class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg shadow">
+       + Create Test
+    </a>
+  </div>
+
+  <!-- Filters -->
+  <form method="get" action="/tests"
+        class="flex flex-wrap gap-4 mb-8 p-4 bg-white rounded-xl shadow">
+    <div class="flex-1">
+      <label class="block text-sm font-medium mb-1">Search</label>
+      <input type="text" name="q" placeholder="Enter course name or subject"
+             value="{{ search_query if search_query is defined else '' }}"
+             class="w-full border px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Course</label>
+      <select name="course_id"
+              class="border px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+        <option value="">All Courses</option>
+        {% for c in courses %}
+          <option value="{{ c._id }}" {% if selected_course == c._id|string %}selected{% endif %}>
+            {{ c.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit"
+            class="px-4 py-2 bg-orange-600 text-white rounded-lg shadow hover:bg-orange-700">
+      Search
+    </button>
+  </form>
+
+  <!-- Grid of Tests -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% if tests %}
+      {% for t in tests %}
+        {% set students_present = t.students_present if t.students_present is defined else 0 %}
+        {% set max_students = t.max_students if t.max_students is defined else 0 %}
+
+        <!-- Test Card -->
+        <div class="bg-white rounded-xl shadow-md p-6 flex flex-col gap-4 hover:shadow-lg transition">
+
+          <!-- Top Row: Tags & Status -->
+          <div class="flex justify-between items-start">
+            <div class="flex flex-wrap gap-2">
+              {% if t.test_type %}
+                <span class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 text-xs font-medium">
+                  {{ t.test_type }}
+                </span>
+              {% endif %}
+              {% if t.subject %}
+                <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
+                  {{ t.subject }}
+                </span>
+              {% endif %}
+            </div>
+            <span class="px-3 py-1 rounded-full text-sm font-medium
+              {% if t.status == 'Scheduled' %} bg-blue-100 text-blue-700
+              {% elif t.status == 'Ongoing' %} bg-green-100 text-green-700
+              {% else %} bg-gray-100 text-gray-700 {% endif %}">
+              {{ t.status }}
+            </span>
+          </div>
+
+          <!-- Title & Optional Description -->
+          <div>
+            <h2 class="text-xl font-semibold text-gray-900 mb-1">{{ t.title }}</h2>
+            {% if t.description %}
+              <p class="text-gray-600 text-sm">{{ t.description }}</p>
+            {% endif %}
+          </div>
+
+          <!-- Date / Faculty -->
+          <div class="grid grid-cols-2 gap-4 text-sm text-gray-700">
+            <div>📅 {{ t.scheduled_date }}</div>
+            <div>⏰ {{ t.scheduled_time }}</div>
+            <div>📘 {{ t.course_name }}</div>
+            <div>👨‍🏫 {{ t.faculty_name }}</div>
+          </div>
+
+          <!-- Stats Strip -->
+          <div class="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-lg p-4 flex justify-around text-center">
+            <div>
+              <p class="text-2xl font-bold text-orange-700">{{ t.num_questions }}</p>
+              <p class="text-xs text-gray-600">Questions</p>
+            </div>
+            <div>
+              <p class="text-2xl font-bold text-orange-700">{{ t.total_marks }}</p>
+              <p class="text-xs text-gray-600">Total Marks</p>
+            </div>
+            <div>
+              <p class="text-2xl font-bold text-green-700">{{ t.duration }}</p>
+              <p class="text-xs text-gray-600">Duration</p>
+            </div>
+          </div>
+
+          <!-- Student Participation -->
+          <div>
+            <div class="flex justify-between text-sm font-medium mb-1">
+              <span>👥 Student Participation</span>
+              <span>{{ students_present }}/{{ max_students }}</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div class="bg-orange-500 h-2 rounded-full"
+                   style="width: {% if max_students > 0 %}{{ (students_present / max_students) * 100 }}%{% else %}0%{% endif %}">
+              </div>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">
+              {% if max_students > 0 %}
+                {{ ((students_present / max_students) * 100) | round(0) }}% completed
+              {% else %}0% completed{% endif %}
+            </p>
+          </div>
+
+          <!-- Action Buttons -->
+<div class="flex flex-wrap gap-3 mt-4">
+  {% if t.status == 'Scheduled' %}
+      <!-- Only for scheduled tests -->
+      <a href="/tests/{{ t._id }}"
+         class="flex-1 border border-gray-300 px-4 py-2 rounded-lg text-center hover:bg-gray-100">
+         ✏️ Edit Test
+      </a>
+      <a href="/tests/start/{{ t._id }}"
+         class="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-center">
+         ▶️ Start Test
+      </a>
+
+  {% elif t.status == 'Ongoing' %}
+      <!-- Only while ongoing -->
+      <a href="/tests/end/{{ t._id }}"
+         class="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-center">
+         ⏹ End Test
+      </a>
+      <a href="/tests/analytics/{{ t._id }}"
+         class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-center">
+         📝 Assign Marks
+      </a>
+
+  {% elif t.status == 'Completed' %}
+      <!-- After completion -->
+      {% if t.marks_assigned %}
+          <a href="/tests/results/{{ t._id }}"
+             class="flex-1 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-center">
+             📊 View Results
+          </a>
+          <a href="/tests/edit-marks/{{ t._id }}"
+             class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-center">
+             ✏️ Edit Marks
+          </a>
+      {% else %}
+          <a href="/tests/analytics/{{ t._id }}"
+             class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-center">
+             📝 Assign Marks
+          </a>
+          <a href="/tests/results/{{ t._id }}"
+             class="flex-1 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-center">
+             📊 View Results
+          </a>
+
+      {% endif %}
+     <!-- Delete Button (always shown for Completed tests) -->
+    <form action="/tests/delete/{{ t._id }}" method="post" onsubmit="return confirm('Are you sure you want to delete this test?');">
+        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg text-center w-full mt-1">
+            🗑 Delete Test
+        </button>
+    </form>
+  {% endif %}
+</div>
+
+        </div>
+        <!-- End Test Card -->
+
+      {% endfor %}
+    {% else %}
+      <p class="col-span-full text-center text-gray-500">No tests found for this institute.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

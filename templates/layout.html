@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ sidebarOpen: false }" class="scroll-smooth" xmlns:x-transition="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}Sikhsha Sathi{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/alpinejs" defer></script>
+  <style>
+    /* Custom scrollbar for sidebar */
+    aside::-webkit-scrollbar {
+      width: 6px;
+    }
+    aside::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    aside::-webkit-scrollbar-thumb {
+      background-color: #34d399; /* Tailwind emerald-400 */
+      border-radius: 3px;
+    }
+    /* Smooth background transition for active links */
+    a[data-active="true"] {
+      @apply bg-green-200 text-green-900 font-semibold shadow-inner;
+    }
+    /* Make the entire flex container scrollable in all directions */
+    .flex.overflow-hidden {
+      overflow: auto !important;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col font-sans text-gray-800">
+
+  <!-- Navbar -->
+  <header class="bg-green-700 text-white shadow-lg sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-3 md:py-4">
+      <div class="flex items-center space-x-4">
+        <button
+          @click="sidebarOpen = !sidebarOpen"
+          class="md:hidden p-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition"
+          aria-label="Toggle sidebar"
+        >
+          <!-- Hamburger -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <span class="font-extrabold text-xl md:text-2xl tracking-wide select-none">Sikhsha Sathi</span>
+      </div>
+      <nav>
+        <a href="/logout"
+           class="text-green-100 hover:text-white hover:underline font-medium transition"
+           @mouseover=" $el.style.textDecoration = 'underline'"
+           @mouseout=" $el.style.textDecoration = 'none' "
+        >Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside
+  class="bg-white shadow-lg w-64 p-6 flex flex-col overflow-y-auto fixed inset-y-0 left-0 transform md:relative md:translate-x-0 transition-transform duration-300 ease-in-out z-40"
+  :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
+  aria-label="Sidebar Navigation"
+>
+  <!-- === Shiksha Sathi Header === -->
+  <div class="mb-8">
+    <h1 class="text-2xl font-extrabold text-green-800 leading-tight">
+      Shiksha Sathi
+    </h1>
+    <p class="text-sm text-gray-600">Coaching Management System</p>
+    <span class="mt-1 inline-block bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5 rounded">
+      Institute
+    </span>
+  </div>
+      <nav class="space-y-1 text-green-800 font-semibold" role="menu" aria-orientation="vertical" tabindex="-1">
+        <a href="/institute-dashboard"
+           class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+           :class="window.location.pathname === '/institute-dashboard' ? 'bg-green-200 text-green-900 shadow-inner' : ''"
+           role="menuitem" tabindex="0"
+           :data-active="window.location.pathname === '/institute-dashboard'"
+        >
+          <span class="text-2xl select-none">🏠</span> Dashboard
+        </a>
+        <a href="/students"
+           class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+           :class="window.location.pathname === '/students' ? 'bg-green-200 text-green-900 shadow-inner' : ''"
+           role="menuitem" tabindex="0"
+           :data-active="window.location.pathname === '/students'"
+        >
+          <span class="text-2xl select-none">👨‍🎓</span> Students
+        </a>
+        <a href="/faculty"
+           class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+           :class="window.location.pathname === '/faculty' ? 'bg-green-200 text-green-900 shadow-inner' : ''"
+           role="menuitem" tabindex="0"
+           :data-active="window.location.pathname === '/faculty'"
+        >
+          <span class="text-2xl select-none">👨‍🏫 </span> Faculty
+        </a>
+        <a href="/course"
+           class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+           :class="window.location.pathname === '/course' ? 'bg-green-200 text-green-900 shadow-inner' : ''"
+           role="menuitem" tabindex="0"
+           :data-active="window.location.pathname === '/course'"
+        >
+          <span class="text-2xl select-none">📘</span> Courses
+        </a>
+        <a href="/fees"
+           class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+           :class="window.location.pathname === '/fees' ? 'bg-green-200 text-green-900 shadow-inner' : ''"
+           role="menuitem" tabindex="0"
+           :data-active="window.location.pathname === '/fees'"
+        >
+          <span class="text-2xl select-none">💲</span> Fees
+        </a>
+        <a href="/tests"
+           class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+           :class="window.location.pathname === '/tests' ? 'bg-green-200 text-green-900 shadow-inner' : ''"
+           role="menuitem" tabindex="0"
+           :data-active="window.location.pathname === '/tests'"
+        >
+          <span class="text-2xl select-none">📝</span> Tests
+        </a>
+        <a href="/materials"
+           class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+           :class="window.location.pathname === '/materials' ? 'bg-green-200 text-green-900 shadow-inner' : ''"
+           role="menuitem" tabindex="0"
+           :data-active="window.location.pathname === '/materials'"
+        >
+          <span class="text-2xl select-none">📚</span> Materials
+        </a>
+        <a href="/attendance"
+           class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+           :class="window.location.pathname === '/attendance' ? 'bg-green-200 text-green-900 shadow-inner' : ''"
+           role="menuitem" tabindex="0"
+           :data-active="window.location.pathname === '/attendance'"
+        >
+          <span class="text-2xl select-none">📅</span> Attendance
+        </a>
+        <a href="/reports"
+           class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+           :class="window.location.pathname === '/reports' ? 'bg-green-200 text-green-900 shadow-inner' : ''"
+           role="menuitem" tabindex="0"
+           :data-active="window.location.pathname === '/reports'"
+        >
+          <span class="text-2xl select-none">📊</span> Reports
+        </a>
+      </nav>
+
+      <!-- Bihar Special Box -->
+  <div class="mt-auto p-4 rounded-xl bg-gradient-to-r from-orange-100 to-red-50 border border-orange-300 shadow">
+    <span class="inline-block bg-orange-200 text-orange-800 text-xs font-bold px-2 py-1 rounded-full mb-2">
+      Bihar Special
+    </span>
+    <p class="text-sm text-orange-900 font-semibold">
+      Designed for Tier 3–4 cities
+    </p>
+  </div>
+      <div class="mt-6">
+  <a href="/settings"
+     class="flex items-center gap-3 p-3 rounded-lg bg-gray-100 hover:bg-green-100 text-gray-700 hover:text-green-900 shadow transition">
+    <span class="text-2xl">⚙️</span>
+    <span class="font-semibold">Settings</span>
+  </a>
+</div>
+    </aside>
+
+    <!-- Overlay for small screens when sidebar is open -->
+    <div
+      x-show="sidebarOpen"
+      @click="sidebarOpen = false"
+      class="fixed inset-0 bg-black bg-opacity-30 z-30 md:hidden transition-opacity"
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-30"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-30"
+      x-transition:leave-end="opacity-0"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+      {% block content %}
+      {% endblock %}
+    </main>
+
+  </div>
+
+</body>
+</html>

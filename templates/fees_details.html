@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ student.name }} - Fee Details{% endblock %}
+
+{% block content %}
+<div class="p-6 max-w-3xl mx-auto">
+
+  <!-- Student Info Card -->
+  <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200 mb-6">
+    <div class="flex justify-between items-center mb-4">
+      <div>
+        <h2 class="text-2xl font-bold">{{ student.name }}</h2>
+        <p class="text-sm text-gray-500">📞 {{ student.phone }}</p>
+        <p class="text-sm text-gray-500 mt-1">🏘️ {{ student.village }}</p>
+      </div>
+      <span class="text-sm text-gray-500">{{ student.course_name }}</span>
+    </div>
+
+    <!-- Fee Status -->
+    <div class="flex items-center gap-3 mb-3">
+      {% if student.payment_status == "Paid" %}
+        <span class="px-3 py-1 text-xs font-semibold bg-green-100 text-green-700 rounded-full">Paid</span>
+      {% elif student.payment_status == "Partial" %}
+        <span class="px-3 py-1 text-xs font-semibold bg-yellow-100 text-yellow-700 rounded-full">Partial</span>
+      {% elif student.payment_status == "Pending" %}
+        <span class="px-3 py-1 text-xs font-semibold bg-red-100 text-red-700 rounded-full">Pending</span>
+      {% else %}
+        <span class="px-3 py-1 text-xs font-semibold bg-purple-100 text-purple-700 rounded-full">Pay Later</span>
+      {% endif %}
+      <p class="text-sm text-gray-600">Total: ₹{{ student.total_fee }} | Paid: ₹{{ student.paid_amount }} | Pending: ₹{{ student.pending_amount }}</p>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="w-full bg-gray-200 rounded-full h-3">
+      <div class="bg-green-500 h-3 rounded-full transition-all duration-500" style="width: {{ (student.paid_amount / student.total_fee * 100) if student.total_fee > 0 else 0 }}%"></div>
+    </div>
+  </div>
+
+  <!-- Payment History Table -->
+  <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
+    <h3 class="text-xl font-semibold mb-4">Payment History</h3>
+    {% if payments %}
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="p-2 border">Amount (₹)</th>
+          <th class="p-2 border">Date</th>
+          <th class="p-2 border">Method</th>
+          <th class="p-2 border">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in payments %}
+        <tr class="hover:bg-gray-50">
+          <td class="p-2 border">{{ p.amount }}</td>
+          <td class="p-2 border">{{ p.date }}</td>
+          <td class="p-2 border">{{ p.method }}</td>
+          <td class="p-2 border">{{ p.notes or '-' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="text-gray-500">No payments yet.</p>
+    {% endif %}
+  </div>
+
+  <!-- Actions -->
+  <div class="mt-6 flex justify-end">
+    <a href="/fees" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded">Back to Dashboard</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,185 @@
+{% extends "layout.html" %}
+
+{% block title %}Faculty Management | Shiksha Sathi{% endblock %}
+
+{% block content %}
+<div class="p-6">
+
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-2xl font-bold">👨‍🏫 Faculty Management</h1>
+      <p class="text-gray-600 text-sm">Manage teaching staff, assignments, and performance</p>
+    </div>
+    <!-- Add Faculty button -->
+    <button onclick="document.getElementById('addFacultyModal').classList.remove('hidden')"
+            class="bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2">
+      <span class="text-lg">➕</span> Add New Faculty
+    </button>
+  </div>
+
+  <!-- Search & Filter -->
+  <div class="flex gap-4 mb-6">
+    <form method="get" action="/faculty" class="flex flex-1 gap-2">
+      <input type="text" name="search" placeholder="🔍 Search by name, email, or subject..."
+             value="{{ request.query_params.get('search','') }}"
+             class="w-full border px-4 py-2 rounded" />
+      <select name="subject" class="border px-3 py-2 rounded">
+        <option value="">All Subjects</option>
+        {% for s in subjects %}
+          <option value="{{ s }}" {% if request.query_params.get('subject') == s %}selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Filter</button>
+    </form>
+  </div>
+
+  <!-- Faculty Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for f in faculties %}
+    <div class="bg-white shadow rounded-lg p-6 relative">
+      <!-- Status -->
+      <span class="absolute top-4 right-4 px-3 py-1 text-xs rounded-full
+                   {% if f.status == 'Inactive' %}
+                     bg-gray-200 text-gray-700
+                   {% else %}
+                     bg-green-100 text-green-700
+                   {% endif %}">
+        {{ f.status or "Active" }}
+      </span>
+
+      <!-- Avatar & Name -->
+      <div class="flex items-center gap-4 mb-4">
+        <div class="w-12 h-12 flex items-center justify-center rounded-full bg-green-100 text-green-700 text-2xl">
+          👤
+        </div>
+        <div>
+          <h2 class="font-semibold text-lg">{{ f.name }}</h2>
+          <p class="text-sm text-gray-600">{{ f.address }}</p>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="space-y-1 text-sm text-gray-700 mb-4">
+        <p>📞 {{ f.phone }}</p>
+        <p>📧 {{ f.email }}</p>
+        <p>🎓 {{ f.qualification }}</p>
+        <p>⌛ Experience: {{ f.experience }}</p>
+      </div>
+
+      <!-- Subjects -->
+      <div class="mb-4">
+        <p class="font-medium text-gray-700 text-sm mb-1">Subjects:</p>
+        <div class="flex flex-wrap gap-2">
+          {% for s in f.subjects %}
+          <span class="bg-blue-100 text-blue-700 px-2 py-1 text-xs rounded">{{ s }}</span>
+          {% endfor %}
+        </div>
+      </div>
+
+     <!-- Batches -->
+<div class="mb-4">
+  <p class="font-medium text-gray-700 text-sm mb-1">Assigned Batches:</p>
+  <div class="flex flex-wrap gap-2">
+    {% for b in f.batch %}
+      <span class="bg-purple-100 text-purple-700 px-2 py-1 text-xs rounded">{{ b }}</span>
+    {% else %}
+      <span class="text-gray-500 text-xs">No batches assigned</span>
+    {% endfor %}
+  </div>
+</div>
+
+
+      <!-- Salary & Join -->
+      <div class="flex justify-between items-center text-sm text-gray-600 mb-4">
+        <span class="text-green-600 font-semibold">₹{{ f.monthly_salary }}/month</span>
+        <span>📅 Joined: {{ f.joining_date }}</span>
+      </div>
+
+      <!-- Actions -->
+<div class="flex justify-end gap-2">
+  <a href="/faculty/{{ f._id }}"
+     class="px-3 py-1 bg-gray-200 rounded text-sm">View</a>
+  <a href="/faculty/{{ f._id }}"
+     class="px-3 py-1 bg-blue-600 text-white rounded text-sm">Edit</a>
+
+  <!-- Delete Button (form for POST request) -->
+  <form method="post" action="/faculty/delete/{{ f._id }}" onsubmit="return confirm('Are you sure you want to delete this faculty?');">
+    <button type="submit" class="px-3 py-1 bg-red-600 text-white rounded text-sm">Delete</button>
+  </form>
+</div>
+
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Add Faculty Modal -->
+<div id="addFacultyModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+  <div class="bg-white w-full max-w-2xl rounded-lg shadow-lg p-6 relative">
+    <button onclick="document.getElementById('addFacultyModal').classList.add('hidden')"
+            class="absolute top-3 right-3 text-gray-600 hover:text-black">✖</button>
+    <h2 class="text-xl font-semibold mb-4">Add New Faculty Member</h2>
+    <form method="post" action="/faculty/add" class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="text-sm">Full Name *</label>
+        <input type="text" name="name" class="w-full border px-3 py-2 rounded" required>
+      </div>
+      <div>
+        <label class="text-sm">Phone Number *</label>
+        <input type="text" name="phone" class="w-full border px-3 py-2 rounded" required>
+      </div>
+      <div>
+        <label class="text-sm">Email *</label>
+        <input type="email" name="email" class="w-full border px-3 py-2 rounded" required>
+      </div>
+      <div>
+        <label class="text-sm">Qualification *</label>
+        <input type="text" name="qualification" class="w-full border px-3 py-2 rounded" required>
+      </div>
+      <div>
+        <label class="text-sm">Experience</label>
+        <input type="text" name="experience" class="w-full border px-3 py-2 rounded">
+      </div>
+      <div>
+        <label class="text-sm">Monthly Salary</label>
+        <input type="text" name="monthly_salary" class="w-full border px-3 py-2 rounded">
+      </div>
+      <div>
+        <label class="text-sm">Subjects *</label>
+        <input type="text" name="subjects" placeholder="Physics, Math" class="w-full border px-3 py-2 rounded">
+      </div>
+      <!-- Multiple Batch Selection (Optional) -->
+<div class="col-span-2">
+  <label class="text-sm font-medium text-gray-700">Assign Batches (Courses)</label>
+  <div class="mt-2 space-y-2">
+    {% for c in courses %}
+      <label class="flex items-center space-x-2">
+        <input type="checkbox" name="batch" value="{{ c._id }}" class="rounded border-gray-300">
+        <span class="text-gray-700">{{ c.name }}</span>
+      </label>
+    {% endfor %}
+  </div>
+  <p class="text-xs text-gray-500">You may leave this empty if no batch assignment is needed.</p>
+</div>
+
+
+
+      <div class="col-span-2">
+        <label class="text-sm">Address</label>
+        <input type="text" name="address" class="w-full border px-3 py-2 rounded">
+      </div>
+       <!-- ✅ Joining Date -->
+      <div class="col-span-2">
+        <label class="text-sm">Joining Date</label>
+        <input type="date" name="joining_date" class="w-full border px-3 py-2 rounded">
+      </div>
+      <div class="col-span-2 flex justify-end gap-2 mt-4">
+        <button type="button" onclick="document.getElementById('addFacultyModal').classList.add('hidden')"
+                class="px-4 py-2 bg-gray-200 rounded">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded">Add Faculty</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

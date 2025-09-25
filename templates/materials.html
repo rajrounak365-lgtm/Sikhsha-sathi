@@ -1,0 +1,157 @@
+{% extends "layout.html" %}
+{% block title %}Materials | Sikhsha Sathi{% endblock %}
+
+{% block content %}
+<!-- Display backend error and auto-open modal if upload fails -->
+{% if error %}
+  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    ⚠ {{ error }}
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById('addModal').classList.remove('hidden');
+    });
+  </script>
+{% endif %}
+
+<div class="flex justify-between items-center mb-6">
+
+  <h1 class="text-3xl font-bold flex items-center gap-2">📚 Learning Materials</h1>
+  <button onclick="document.getElementById('addModal').classList.remove('hidden')"
+          class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg">+ Upload Material</button>
+</div>
+
+<!-- Search + Filter -->
+<form method="get" action="/materials" class="flex gap-4 mb-6">
+  <input type="text" name="q" placeholder="🔍 Search materials by title, description, or tags..."
+         class="flex-1 border px-3 py-2 rounded-lg" value="{{ request.query_params.get('q', '') }}">
+
+  <select name="course" class="border px-3 py-2 rounded-lg">
+    <option value="">All Courses</option>
+    {% for c in courses %}
+      <option value="{{ c._id }}" {% if request.query_params.get('course') == c._id|string %}selected{% endif %}>{{ c.name }}</option>
+    {% endfor %}
+  </select>
+
+  <select name="type" class="border px-3 py-2 rounded-lg">
+    <option value="">All Types</option>
+    <option value="Notes" {% if request.query_params.get('type') == 'Notes' %}selected{% endif %}>Notes</option>
+    <option value="Practice Set" {% if request.query_params.get('type') == 'Practice Set' %}selected{% endif %}>Practice Set</option>
+    <option value="Video" {% if request.query_params.get('type') == 'Video' %}selected{% endif %}>Video</option>
+  </select>
+
+  <button type="submit" class="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700">Filter</button>
+</form>
+
+<!-- Grid of Materials -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  {% for m in materials %}
+  <div class="bg-white rounded-lg shadow-md p-5 flex flex-col justify-between">
+
+    <!-- Type + Subject -->
+    <div class="flex justify-between items-center mb-2">
+      <span class="text-xs font-semibold px-2 py-1 rounded-full
+                   {% if m.material_type == 'Notes' %}bg-blue-100 text-blue-600
+                   {% elif m.material_type == 'Practice Set' %}bg-green-100 text-green-600
+                   {% elif m.material_type == 'Video' %}bg-red-100 text-red-600
+                   {% else %}bg-gray-100 text-gray-600{% endif %}">
+        {{ m.material_type }}
+      </span>
+      <span class="text-xs text-gray-600">{{ m.subject }}</span>
+    </div>
+
+    <!-- Title + Description -->
+    <h2 class="font-semibold text-lg mb-1">{{ m.title }}</h2>
+    <p class="text-sm text-gray-600 line-clamp-2">{{ m.description }}</p>
+
+    <!-- Metadata -->
+    <div class="text-sm text-gray-500 mt-3 space-y-1">
+      <p>📘 {{ m.course_name }}</p>
+      <p>👨‍🏫 {{ m.uploaded_by }}</p>
+      <p>📅 {{ m.created_at.strftime('%d/%m/%Y') if m.created_at }}</p>
+      <p>⬇️ {{ m.downloads }} downloads</p>
+    </div>
+
+    <!-- Tags -->
+    <div class="flex flex-wrap gap-2 mt-3">
+      {% for t in m.tags %}
+        <span class="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-600">{{ t }}</span>
+      {% endfor %}
+    </div>
+
+    <!-- Files -->
+    {% if m.files %}
+      <p class="text-sm mt-3 font-semibold text-gray-700">Total Files: {{ m.files | length }}</p>
+      <ul class="list-disc list-inside text-sm text-gray-600">
+        {% for f in m.files %}
+          <li>
+{{ f.file_name }} ({{ ((f.file_size | default(0)) / 1024 / 1024) | round(2) }} MB)
+            <a href="/material/download/{{ m._id }}?file={{ f.file_name }}" class="text-orange-600 hover:underline ml-2">Download</a>
+          </li>
+        {% endfor %}
+      </ul>
+      <a href="/material/download/{{ m._id }}"
+         class="mt-2 inline-block px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-semibold">
+        ⬇ Download All Files
+      </a>
+    {% endif %}
+
+    <!-- Action Buttons -->
+    <div class="mt-4 flex gap-2">
+      <a href="/material/{{ m._id }}" class="flex-1 border border-gray-300 text-gray-700 text-center py-2 rounded-lg font-semibold">Edit</a>
+    </div>
+
+    <!-- Share Link -->
+    <div class="mt-2">
+      <button type="button"
+              onclick="navigator.clipboard.writeText(window.location.origin + '/material/preview/{{ m._id }}'); alert('Link copied!')"
+              class="w-full border border-gray-300 text-gray-700 text-center py-2 rounded-lg font-semibold">Share Link</button>
+    </div>
+
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Add Material Modal -->
+<div id="addModal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-[500px]">
+    <h2 class="text-xl font-bold mb-4">➕ Upload Material</h2>
+    <form method="post" action="/material/add" enctype="multipart/form-data" class="space-y-3">
+      <input type="text" name="title" placeholder="Title" class="w-full border px-3 py-2 rounded-lg" required>
+      <input type="text" name="subject" placeholder="Subject" class="w-full border px-3 py-2 rounded-lg" required>
+
+      <select name="material_type" class="w-full border px-3 py-2 rounded-lg" required>
+        <option value="">Select Type</option>
+        <option value="Notes">Notes</option>
+        <option value="Practice Set">Practice Set</option>
+        <option value="Video">Video</option>
+      </select>
+
+      <select name="course" class="w-full border px-3 py-2 rounded-lg" required>
+        {% for c in courses %}
+          <option value="{{ c._id }}">{{ c.name }}</option>
+        {% endfor %}
+      </select>
+
+      <select name="faculty_id" class="w-full border px-3 py-2 rounded-lg" required>
+        <option value="">Select Faculty</option>
+        {% for f in faculties %}
+          <option value="{{ f._id }}">{{ f.name }}{% if f.batch %} ({{ f.batch | join(', ') }}){% endif %}</option>
+        {% endfor %}
+      </select>
+
+      <input type="text" name="tags" placeholder="Tags (comma separated)" class="w-full border px-3 py-2 rounded-lg">
+      <textarea name="description" placeholder="Description" class="w-full border px-3 py-2 rounded-lg"></textarea>
+      <input type="file" name="files" multiple required class="w-full">
+
+      <div class="flex justify-end gap-3">
+        <button type="button" onclick="document.getElementById('addModal').classList.add('hidden')"
+                class="px-4 py-2 bg-gray-200 rounded-lg">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-orange-600 text-white rounded-lg">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

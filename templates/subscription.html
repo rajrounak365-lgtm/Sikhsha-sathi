@@ -1,0 +1,43 @@
+{% extends "layout_admin.html" %}
+{% block title %}Subscriptions | Shiksha Sathi{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 min-h-screen p-6">
+  <!-- Header -->
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">📜 Subscriptions</h1>
+
+  <!-- Subscription List -->
+  <div class="bg-white rounded-xl shadow-md p-6">
+    <table class="min-w-full border border-gray-200">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 text-left text-gray-700">#</th>
+          <th class="px-4 py-2 text-left text-gray-700">Plan</th>
+          <th class="px-4 py-2 text-left text-gray-700">Price</th>
+          <th class="px-4 py-2 text-left text-gray-700">Start Date</th>
+          <th class="px-4 py-2 text-left text-gray-700">End Date</th>
+          <th class="px-4 py-2 text-left text-gray-700">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-t">
+          <td class="px-4 py-2">1</td>
+          <td class="px-4 py-2">Basic Plan</td>
+          <td class="px-4 py-2">₹499</td>
+          <td class="px-4 py-2">2025-09-01</td>
+          <td class="px-4 py-2">2025-12-01</td>
+          <td class="px-4 py-2 text-green-600 font-semibold">Active</td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">2</td>
+          <td class="px-4 py-2">Premium Plan</td>
+          <td class="px-4 py-2">₹1499</td>
+          <td class="px-4 py-2">2025-01-01</td>
+          <td class="px-4 py-2">2025-04-01</td>
+          <td class="px-4 py-2 text-red-600 font-semibold">Expired</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
