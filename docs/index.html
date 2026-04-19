@@ -869,50 +869,75 @@
 
     /* Footer */
     .footer {
-      background: #e2e8f0;
-      border-top: 1.5px solid var(--border);
-      padding: 4rem 1.5rem 3rem;
-      color: var(--muted-text);
+      background: #0f172a;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 4rem 1.5rem 2rem;
+      color: #94a3b8;
       font-size: 0.95rem;
       user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      opacity: 0.5;
     }
     .footer-grid {
       display: grid;
-      gap: 2.5rem;
+      gap: 2rem;
       max-width: 1200px;
-      margin: 0 auto 2.5rem;
-      grid-template-columns: 1fr;
-      color: var(--muted-text);
+      margin: 0 auto 3.5rem;
+      grid-template-columns: 1.5fr 1fr 1fr 1.25fr;
+      position: relative;
+      z-index: 10;
+    }
+    @media (max-width: 960px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 640px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
     }
     .footer-brand {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.85rem;
       margin-bottom: 1.5rem;
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: var(--primary);
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: white;
       user-select: none;
     }
     .footer-brand .logo-icon {
-      width: 2.5rem;
-      height: 2.5rem;
-      background: transparent;
-      box-shadow: none;
-      color: var(--primary);
+      width: 2.75rem;
+      height: 2.75rem;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      color: white;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(94, 89, 230, 0.4);
     }
     .footer-brand .logo-text {
       background: none;
-      -webkit-text-fill-color: var(--primary);
+      -webkit-text-fill-color: white;
       font-weight: 800;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       user-select: none;
     }
     .footer p {
       max-width: 320px;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
       font-size: 1rem;
-      color: var(--muted-text);
+      color: #94a3b8;
+      line-height: 1.7;
       user-select: text;
     }
     .social-links {
@@ -920,58 +945,79 @@
       gap: 1rem;
     }
     .social-link {
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: var(--radius-md);
-      background: rgba(94, 89, 230, 0.12);
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--primary);
-      font-weight: 700;
+      color: #cbd5e1;
       font-size: 1.25rem;
       text-decoration: none;
-      box-shadow: 0 3px 10px rgba(94, 89, 230, 0.15);
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: all 0.3s ease;
       user-select: none;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
     .social-link:hover {
       background: var(--primary);
       color: white;
-      box-shadow: 0 5px 18px var(--shadow-light);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(94, 89, 230, 0.4);
+      border-color: var(--primary);
     }
     .footer-section h3 {
       font-weight: 700;
-      margin-bottom: 1rem;
-      font-size: 1.25rem;
-      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+      font-size: 1.15rem;
+      color: white;
       user-select: none;
+      position: relative;
+      display: inline-block;
+    }
+    .footer-section h3::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -0.5rem;
+      width: 2rem; height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
     }
     .footer-section ul {
       list-style: none;
       padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
     }
     .footer-section a {
-      color: var(--muted-text);
+      color: #94a3b8;
       text-decoration: none;
       font-size: 1rem;
-      transition: color 0.3s ease;
+      transition: all 0.3s ease;
       user-select: text;
+      position: relative;
+      display: inline-block;
     }
     .footer-section a:hover {
-      color: var(--primary);
+      color: white;
+      transform: translateX(5px);
     }
     .footer-bottom {
-      border-top: 1.5px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       padding-top: 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 1.5rem;
       font-size: 0.9rem;
-      color: var(--muted-text);
+      color: #64748b;
       user-select: none;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
     }
     .footer-links {
       display: flex;
@@ -980,29 +1026,33 @@
     }
     .footer-links a {
       user-select: text;
+      color: #64748b;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .footer-links a:hover {
+      color: white;
     }
     .footer-section.bg-gray-800 {
-      background: #3730a3;
-      padding: 2rem 1.5rem;
-      border-radius: var(--radius-md);
-      color: white;
-    }
-    .footer-section.bg-gray-800 a {
-      color: #c7d2fe;
-    }
-    .footer-section.bg-gray-800 a:hover {
-      color: #a5b4fc;
-    }
-    .footer-section.bg-gray-800 h3 {
-      color: white;
+      color: #cbd5e1;
     }
     .footer-section.bg-gray-800 ul {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.85rem;
+    }
+    .footer-section.bg-gray-800 a {
+      display: flex;
+      align-items: center;
+      color: #cbd5e1;
+    }
+    .footer-section.bg-gray-800 a:hover {
+      color: white;
+      transform: translateX(0) scale(1.02);
     }
     .footer-section.bg-gray-800 svg {
       margin-right: 0.5rem;
+      color: var(--primary-light);
     }
     /* Modal */
     .modal-overlay {
@@ -1315,8 +1365,8 @@
         <a href="javascript:void(0)" id="openPlansLinkMobile" role="menuitem" tabindex="-1" aria-haspopup="dialog" aria-controls="plansModal">Subscription</a>
         <a href="#solutions" role="menuitem" tabindex="-1">Solutions</a>
         <a href="#about" role="menuitem" tabindex="-1">About</a>
-          <a href="https://sikhsha-sathi.onrender.com/" target="_blank" rel="noopener" class="btn btn-ghost" tabindex="0">Login</a>
-          <a href="https://sikhsha-sathi.onrender.com/" target="_blank" rel="noopener" class="btn btn-cta" tabindex="0">Get Started</a>
+        <button class="btn btn-ghost" style="width: 100%; margin-top: 1rem;" tabindex="-1">Login</button>
+        <button class="btn btn-cta" style="width: 100%; margin-top: 0.5rem;" tabindex="-1">Get Started</button>
       </div>
     </div>
   </nav>
@@ -1368,7 +1418,7 @@
 
         <div class="hero-image" aria-hidden="true">
           <img
-            src="hero-education.jpg"
+            src="/static/hero-education.jpg"
             alt="Modern Indian classroom with digital learning"
             loading="lazy"
             width="600"
@@ -1541,7 +1591,7 @@
         </div>
         <div aria-hidden="true">
           <img
-            src="problem-solution.jpg"
+            src="/static/problem-solution.jpg"
             alt="Educational institute management challenges"
             loading="lazy"
             width="520"
@@ -1758,10 +1808,9 @@
             >₹</div
           >
           <h3 id="feature4-title">Online Payments</h3>
-<p id="feature4-desc">
-   Generate dynamic payment links and send link to students email and reconcile collections automatically. 
-</p>
-
+          <p id="feature4-desc">
+            Generate payment links, accept online fees via Razorpay/UPI, auto-receipts, and reconciliation.
+          </p>
         </article>
 
         <article class="feature-card" tabindex="0" aria-labelledby="feature5-title" aria-describedby="feature5-desc">
@@ -1906,7 +1955,7 @@
           </div>
           <div class="dashboard-image">
             <img
-              src="dashboard.png"
+              src="/static/dashboard.png"
               alt="Sikhsha Sathi Dashboard Preview"
               loading="lazy"
               width="900"
@@ -2241,69 +2290,35 @@
           </ul>
         </section>
 
-        <section
-          class="footer-section bg-gray-800"
-          aria-labelledby="footer-contact-title"
-          role="region"
-        >
+        <section class="footer-section bg-gray-800" aria-labelledby="footer-contact-title" role="region">
           <h3 id="footer-contact-title">Get in Touch</h3>
+          <p style="margin-bottom: 1.5rem; font-size: 0.95rem; color: #94a3b8; line-height: 1.6;">
+            Have questions or need help setting up? Reach out to our team for dedicated support.
+          </p>
           <ul>
             <li>
-              <a
-                href="mailto:sathisikhsha@gmail.com"
-                class="flex items-center gap-1"
-                tabindex="0"
-                ><svg xmlns="http://www.w3.org/2000/svg"
-     width="16"
-     height="16"
-     fill="currentColor"
-     viewBox="0 0 24 24"
-     stroke="none"
-     aria-hidden="true"
-     focusable="false">
-
-                >
-                  <rect x="3" y="5" width="18" height="14" rx="2" ry="2" />
-                  <path d="M3 5l9 7 9-7" />
+              <a href="mailto:sathisikhsha@gmail.com" class="flex items-center gap-1" tabindex="0" style="padding: 0.25rem 0;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true" style="margin-right: 0.5rem; color: var(--primary-light);">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
-                sathisikhsha@gmail.com</a
-              >
+                <span>sathisikhsha@gmail.com</span>
+              </a>
             </li>
             <li>
-              <a href="tel:+919572073615" class="flex items-center gap-1" tabindex="0"
-                ><svg xmlns="http://www.w3.org/2000/svg"
-     width="16"
-     height="16"
-     fill="currentColor"
-     viewBox="0 0 24 24"
-     stroke="none"
-     aria-hidden="true"
-     focusable="false">
-
-                >
-                  <path
-                    d="M22 16.92v3a2 2 0 01-2.18 2 19.86 19.86 0 01-8.63-3.05 19.5 19.5 0 01-6-6A19.86 19.86 0 014.08 4.18 2 2 0 016 2h3a2 2 0 012 1.72c.13.87.37 1.72.72 2.53a2 2 0 01-.45 2.11L10 9.5a16 16 0 006 6l.14-.14a2 2 0 012.11-.45c.81.35 1.66.59 2.53.72A2 2 0 0122 16.92z"
-                  />
+              <a href="tel:+919899984983" class="flex items-center gap-1" tabindex="0" style="padding: 0.25rem 0;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true" style="margin-right: 0.5rem; color: var(--primary-light);">
+                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.86 19.86 0 01-8.63-3.05 19.5 19.5 0 01-6-6A19.86 19.86 0 014.08 4.18 2 2 0 016 2h3a2 2 0 012 1.72c.13.87.37 1.72.72 2.53a2 2 0 01-.45 2.11L10 9.5a16 16 0 006 6l.14-.14a2 2 0 012.11-.45c.81.35 1.66.59 2.53.72A2 2 0 0122 16.92z"></path>
                 </svg>
-                +91 95720 73615</a
-              >
+                <span>+91 95720 73615</span>
+              </a>
             </li>
-            <li class="flex items-center gap-1" tabindex="0" aria-label="Location: Patna, Bihar, India" style="color: #c7d2fe;">
-              <svg xmlns="http://www.w3.org/2000/svg"
-     width="16"
-     height="16"
-     fill="currentColor"
-     viewBox="0 0 24 24"
-     stroke="none"
-     aria-hidden="true"
-     focusable="false">
-
-              >
-                <path
-                  d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"
-                />
+            <li class="flex items-center gap-1" tabindex="0" aria-label="Location: Patna, Bihar, India" style="padding: 0.25rem 0; display: flex; align-items: center; color: #cbd5e1;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true" style="margin-right: 0.5rem; color: var(--primary-light);">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
               </svg>
-              Patna, Bihar, India
+              <span>Patna, Bihar, India</span>
             </li>
           </ul>
         </section>
@@ -2374,12 +2389,11 @@
                 font-weight: 600;
               "
             >
-            <li>✔ Starter features unlocked</li>
-          <li>✔ Manage 1 institute</li>
-          <li>✔ 100 students, 5 Faculty</li>
-          <li>✔ Bulk Add Students and Voice Assistant for Students Add</li>
-          <li>✔ Manage Fees and Attendance</li>
-          <li>✔ Monthly Analytics and Reports</li>
+              <li>✔️ Up to 30 students</li>
+              <li>✔️ Basic dashboard access</li>
+              <li>✔️ Student, Faculty & Attendance modules</li>
+              <li>✔️ 1 Faculty login</li>
+              <li>🚫 No AI Assistant, Analytics, or Multi-branch</li>
             </ul>
           </section>
 
@@ -2413,12 +2427,11 @@
                 font-weight: 600;
               "
             >
-          <li>✔ Manage 1 institute</li>
-          <li>✔ 100 students, 5 Faculty</li>
-          <li>✔ Bulk Add Students and Voice Assistant for Students Add</li>
-          <li>✔ Manual upload materials & reports</li>
-         <li>✔ Manage Fees and Attendance</li>
-          <li>✔ Monthly Analytics and Reports</li>
+              <li>✔️ Up to 100 students</li>
+              <li>✔️ 3 Faculty accounts</li>
+              <li>✔️ Attendance, Fees & Reports automation</li>
+              <li>✔️ Student notifications & receipts</li>
+              <li>🚫 No Multi-branch or AI tools</li>
             </ul>
           </section>
 
@@ -2452,13 +2465,12 @@
                 font-weight: 600;
               "
             >
-          <li>✔ Up to Add 3 institutes</li>
-          <li>✔ 15 faculty, 300 students</li>
-          <li>✔ Bulk Add Students and Voice Assistant for Students Add</li>
-          <li>✔ AI test & material generation</li>
-          <li>✔ Fees reminders & payment gateway</li>
-          <li>✔ Faculty Invitation Link</li>
-          <li>✔ Faculty Dashboard and Mange Attendance and More</li>
+              <li>✔️ Up to 300 students</li>
+              <li>✔️ 10 Faculty accounts</li>
+              <li>✔️ Multi-branch dashboard</li>
+              <li>✔️ Smart Reports & Online Payments</li>
+              <li>✔️ Priority email support</li>
+              <li>🚫 Limited AI content generation</li>
             </ul>
           </section>
 
@@ -2493,13 +2505,12 @@
                 font-weight: 700;
               "
             >
-             <li>✔ Unlimited institutes,Students and Faculty</li>
-          <li>✔ Bulk Add Students and Voice Assistant for Students Add</li>
-          <li>✔ Advanced analytics dashboard</li>
-          <li>✔ unlimited AI Generated Materials</li>
-          <li>✔ Fees reminders & payment gateway</li>
-          <li>✔ Advanced Reports and Advanced Fee Tracking</li>
-            <li>⭐ 24×7 priority support</li>
+              <li>✔️ Unlimited students & faculty</li>
+              <li>✔️ AI Assistant for attendance & report automation</li>
+              <li>✔️ Advanced analytics & growth insights</li>
+              <li>✔️ Custom branding & domain integration</li>
+              <li>✔️ Dedicated success manager</li>
+              <li>⭐ 24×7 priority support</li>
             </ul>
           </section>
         </div>
