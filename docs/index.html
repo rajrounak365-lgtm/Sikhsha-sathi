@@ -1,2222 +1,2237 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sikhsha Sathi - Digital Education Management for Indian Institutes</title>
-  <meta
-    name="description"
-    content="Transform your educational institute with Sikhsha Sathi. Manage students, faculty, courses, fees, and attendance from one powerful platform. Perfect for institutes in Bihar, UP, and tier-2/3 cities."
-  />
-  <meta
-    name="keywords"
-    content="education management, institute management, student management, online fee payment, educational software India, Bihar education, digital institute"
-  />
-  <style>
-    /* Reset & Base */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html {
-      scroll-behavior: smooth;
-      font-size: 16px;
-      scroll-padding-top: 5rem;
-    }
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-        sans-serif;
-      line-height: 1.6;
-      color: #1a1a2e;
-      background: #f9fafb;
-      overflow-x: hidden;
-    }
-    /* Variables */
-    :root {
-      --primary: #5e59e6;
-      --primary-light: #7d7cee;
-      --primary-dark: #4a44ca;
-      --secondary: #fb7121;
-      --secondary-light: #fb8445;
-      --success: #22c55e;
-      --danger: #ef4444;
-      --muted-bg: #e6e9f2;
-      --muted-text: #6b7280;
-      --border: #d7dbeb;
-      --text-dark: #111827;
-      --card-bg: #fff;
-      --shadow-light: rgba(94, 89, 230, 0.1);
-      --shadow-dark: rgba(0, 0, 0, 0.1);
-      --radius-md: 12px;
-      --radius-full: 9999px;
-      --transition: 0.3s ease;
-    }
-    /* Container */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-    /* Navbar */
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 1100;
-      background: rgba(255 255 255 / 0.95);
-      backdrop-filter: saturate(180%) blur(12px);
-      border-bottom: 1px solid var(--border);
-      box-shadow: none;
-      transition: box-shadow var(--transition);
-    }
-    .navbar.scrolled {
-      box-shadow: 0 4px 12px var(--shadow-dark);
-    }
-    .navbar-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 4.5rem;
-    }
-    .navbar-logo {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-      cursor: pointer;
-      user-select: none;
-    }
-    .logo-icon {
-      width: 3rem;
-      height: 3rem;
-      background: linear-gradient(135deg, var(--primary), #8b5cf6);
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 1.5rem;
-      box-shadow: 0 8px 15px var(--shadow-light);
-      transition: transform var(--transition);
-    }
-    .logo-icon:hover {
-      transform: scale(1.1);
-      box-shadow: 0 10px 20px var(--shadow-light);
-    }
-    .logo-text {
-      font-weight: 800;
-      font-size: 1.375rem;
-      background: linear-gradient(135deg, var(--primary), #8b5cf6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      cursor: default;
-      user-select: none;
-    }
-    .nav-links {
-      display: none;
-      gap: 2rem;
-      font-weight: 600;
-      font-size: 1rem;
-      color: var(--text-dark);
-    }
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text-dark);
-      position: relative;
-      padding: 0.25rem 0;
-      transition: color var(--transition);
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 0;
-      height: 2px;
-      background: var(--primary);
-      transition: width var(--transition);
-      border-radius: 1px;
-    }
-    .nav-links a:hover {
-      color: var(--primary);
-    }
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-    .nav-buttons {
-      display: none;
-      gap: 1rem;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.6rem 1.75rem;
-      border-radius: var(--radius-md);
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      border: none;
-      text-decoration: none;
-      transition: all var(--transition);
-      user-select: none;
-      box-shadow: 0 6px 12px var(--shadow-light);
-    }
-    .btn-primary,
-    .btn-hero {
-      background: var(--primary);
-      color: white;
-      box-shadow: 0 8px 20px var(--shadow-light);
-      font-weight: 800;
-      font-size: 1.125rem;
-      padding: 0.75rem 2.5rem;
-      border-radius: calc(var(--radius-md) * 1.2);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-    .btn-primary:hover,
-    .btn-hero:hover {
-      background: var(--primary-dark);
-      transform: scale(1.07);
-      box-shadow: 0 15px 30px var(--shadow-light);
-    }
-    .btn-cta {
-      background: var(--secondary);
-      color: white;
-      padding: 0.75rem 2.25rem;
-      font-size: 1.1rem;
-      font-weight: 700;
-      border-radius: var(--radius-md);
-      box-shadow: 0 10px 25px rgba(251, 113, 33, 0.2);
-      transition: background-color 0.3s ease;
-    }
-    .btn-cta:hover {
-      background: var(--secondary-light);
-      transform: scale(1.05);
-    }
-    .btn-outline {
-      background: transparent;
-      border: 2px solid var(--primary);
-      color: var(--primary);
-      font-weight: 600;
-      padding: 0.6rem 1.6rem;
-      border-radius: var(--radius-md);
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    .btn-outline:hover {
-      background: var(--primary);
-      color: white;
-    }
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-dark);
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      border-radius: var(--radius-md);
-      transition: background-color 0.3s ease;
-    }
-    .btn-ghost:hover {
-      background: var(--muted-bg);
-    }
-    /* Mobile Menu Button */
-    .menu-button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.5rem;
-      transition: transform 0.2s ease;
-      color: var(--text-dark);
-    }
-    .menu-button:hover {
-      transform: scale(1.1);
-    }
-    /* Mobile Menu */
-    .mobile-menu {
-      display: none;
-      padding: 1.5rem 0;
-      border-top: 1px solid var(--border);
-      background: var(--card-bg);
-      box-shadow: 0 10px 25px var(--shadow-light);
-      border-radius: 0 0 var(--radius-md) var(--radius-md);
-    }
-    .mobile-menu.active {
-      display: block;
-    }
-    .mobile-menu a {
-      display: block;
-      padding: 0.75rem 0;
-      font-weight: 600;
-      color: var(--text-dark);
-      text-decoration: none;
-      border-bottom: 1px solid var(--muted-bg);
-      transition: color var(--transition);
-    }
-    .mobile-menu a:last-child {
-      border-bottom: none;
-    }
-    .mobile-menu a:hover {
-      color: var(--primary);
-    }
-    .mobile-menu button.btn {
-      width: 100%;
-      margin-top: 1rem;
-      font-weight: 700;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sikhsha Sathi - Digital Education Management for Indian Institutes</title>
+    <meta name="description"
+        content="Transform your educational institute with Sikhsha Sathi. Manage students, faculty, courses, fees, and attendance from one powerful platform. Perfect for institutes in Bihar, UP, and tier-2/3 cities." />
+    <meta name="keywords"
+        content="education management, institute management, student management, online fee payment, educational software India, Bihar education, digital institute" />
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* Hero Section */
-    .hero {
-      min-height: 90vh;
-      display: flex;
-      align-items: center;
-      background: linear-gradient(
-        135deg,
-        rgba(94, 89, 230, 0.07),
-        #fff,
-        rgba(251, 113, 33, 0.07)
-      );
-      padding: 5rem 0 6rem;
-      overflow: hidden;
-      position: relative;
-    }
-    .hero-grid {
-      display: grid;
-      gap: 3.5rem;
-      grid-template-columns: 1fr;
-      align-items: center;
-    }
-    .hero-content {
-      animation: fadeInLeft 0.8s ease forwards;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.5rem 1.25rem;
-      background: rgba(94, 89, 230, 0.12);
-      border: 1.5px solid rgba(94, 89, 230, 0.24);
-      border-radius: var(--radius-full);
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--primary);
-      margin-bottom: 2.25rem;
-      user-select: none;
-      box-shadow: 0 0 12px rgba(94, 89, 230, 0.06);
-    }
-    .hero h1 {
-      font-weight: 900;
-      font-size: 2.75rem;
-      line-height: 1.15;
-      margin-bottom: 1.75rem;
-      color: var(--text-dark);
-      max-width: 480px;
-      user-select: none;
-    }
-    .gradient-text {
-      background: linear-gradient(135deg, var(--primary), #8b5cf6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      display: inline-block;
-    }
-    .hero p {
-      font-size: 1.2rem;
-      color: var(--muted-text);
-      max-width: 520px;
-      margin-bottom: 3rem;
-      line-height: 1.7;
-      user-select: none;
-    }
-    .hero-buttons {
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .btn-hero.inline-flex {
-      font-weight: 800;
-      font-size: 1.1rem;
-      padding: 0.8rem 2.75rem;
-      border-radius: calc(var(--radius-md) * 1.2);
-      box-shadow: 0 12px 30px var(--shadow-light);
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-      user-select: none;
-    }
-    .btn-hero.inline-flex:hover {
-      transform: scale(1.1);
-      box-shadow: 0 20px 45px var(--shadow-light);
-    }
-    .btn-outline.btn-lg {
-      border-radius: var(--radius-md);
-      font-weight: 600;
-      font-size: 1.05rem;
-      padding: 0.75rem 2.25rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      color: var(--primary);
-      border: 2.5px solid var(--primary);
-      background: transparent;
-      box-shadow: none;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      user-select: none;
-    }
-    .btn-outline.btn-lg:hover {
-      background: var(--primary);
-      color: white;
-      box-shadow: 0 12px 30px var(--shadow-light);
-    }
-    .btn-outline span {
-      font-size: 1.25rem;
-    }
-    .hero-image {
-      position: relative;
-      animation: fadeInRight 0.8s ease 0.3s forwards;
-      border-radius: var(--radius-md);
-      box-shadow: 0 20px 40px var(--shadow-light);
-      overflow: hidden;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    .hero-image img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: var(--radius-md);
-      object-fit: cover;
-      filter: drop-shadow(0 0 10px rgba(94, 89, 230, 0.1));
-      user-select: none;
-    }
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            scroll-padding-top: 5rem;
+        }
 
-    /* Sections */
-    section {
-      padding: 5rem 0 6rem;
-    }
-    .section-header {
-      max-width: 600px;
-      margin: 0 auto 4rem;
-      text-align: center;
-      user-select: none;
-    }
-    .section-badge {
-      display: inline-block;
-      padding: 0.5rem 1.25rem;
-      border-radius: var(--radius-full);
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      user-select: none;
-      box-shadow: 0 0 12px rgba(94, 89, 230, 0.1);
-    }
-    .section-title {
-      font-weight: 900;
-      font-size: 2.75rem;
-      line-height: 1.15;
-      margin-bottom: 1rem;
-      color: var(--text-dark);
-    }
-    .section-description {
-      font-size: 1.15rem;
-      color: var(--muted-text);
-      line-height: 1.75;
-      max-width: 480px;
-      margin: 0 auto;
-    }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+                sans-serif;
+            line-height: 1.6;
+            color: #1a1a2e;
+            background: #f9fafb;
+            overflow-x: hidden;
+        }
 
-    /* Problems Section */
-    .problems {
-      background: #f3f5fa;
-      padding-top: 6rem;
-      padding-bottom: 7rem;
-    }
-    .problems .section-badge {
-      background: rgba(239, 68, 68, 0.12);
-      border: 1.5px solid rgba(239, 68, 68, 0.3);
-      color: var(--danger);
-      box-shadow: 0 0 14px rgba(239, 68, 68, 0.1);
-    }
-    .problems-grid {
-      display: grid;
-      gap: 3rem;
-      grid-template-columns: 1fr;
-      align-items: center;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .problem-cards {
-      display: grid;
-      gap: 1.75rem;
-      grid-template-columns: 1fr;
-    }
-    .problem-card {
-      background: var(--card-bg);
-      border-radius: var(--radius-md);
-      padding: 1.75rem 2rem;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: default;
-      user-select: none;
-    }
-    .problem-card:hover {
-      transform: translateY(-6px) scale(1.03);
-      box-shadow: 0 18px 30px rgba(239, 68, 68, 0.15);
-    }
-    .problem-icon {
-      width: 3.5rem;
-      height: 3.5rem;
-      border-radius: var(--radius-md);
-      background: rgba(239, 68, 68, 0.12);
-      color: var(--danger);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1rem;
-      box-shadow: 0 0 12px rgba(239, 68, 68, 0.08);
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    .problem-card:hover .problem-icon {
-      background: var(--danger);
-      color: white;
-      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
-    }
-    .problem-card h3 {
-      font-weight: 700;
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
-      text-align: center;
-      color: var(--text-dark);
-    }
-    .problem-card p {
-      font-size: 1rem;
-      color: var(--muted-text);
-      text-align: center;
-      line-height: 1.6;
-    }
-    .problems-grid > div:last-child img {
-      border-radius: var(--radius-md);
-      box-shadow: 0 20px 40px var(--shadow-light);
-      width: 100%;
-      height: auto;
-      user-select: none;
-    }
+        /* Variables */
+        :root {
+            --primary: #5e59e6;
+            --primary-light: #7d7cee;
+            --primary-dark: #4a44ca;
+            --secondary: #fb7121;
+            --secondary-light: #fb8445;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --muted-bg: #e6e9f2;
+            --muted-text: #6b7280;
+            --border: #d7dbeb;
+            --text-dark: #111827;
+            --card-bg: #fff;
+            --shadow-light: rgba(94, 89, 230, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.1);
+            --radius-md: 12px;
+            --radius-full: 9999px;
+            --transition: 0.3s ease;
+        }
 
-    /* Solutions Section */
-    .solutions {
-      background: linear-gradient(180deg, #fff, rgba(94, 89, 230, 0.07));
-      padding-top: 6rem;
-      padding-bottom: 7rem;
-    }
-    .solutions .section-badge {
-      background: rgba(34, 197, 94, 0.12);
-      border: 1.5px solid rgba(34, 197, 94, 0.3);
-      color: var(--success);
-      box-shadow: 0 0 15px rgba(34, 197, 94, 0.1);
-    }
-    .benefits-grid {
-      display: grid;
-      gap: 2.5rem;
-      grid-template-columns: 1fr;
-      max-width: 1120px;
-      margin: 0 auto 3rem;
-    }
-    .benefit-card {
-      background: var(--card-bg);
-      border-radius: var(--radius-md);
-      padding: 2rem 2.25rem;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: default;
-      user-select: none;
-      text-align: center;
-    }
-    .benefit-card:hover {
-      transform: translateY(-6px) scale(1.04);
-      box-shadow: 0 22px 40px rgba(94, 89, 230, 0.15);
-    }
-    .benefit-icon {
-      font-size: 2.25rem;
-      width: 4.5rem;
-      height: 4.5rem;
-      border-radius: var(--radius-md);
-      margin: 0 auto 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      background: linear-gradient(135deg, var(--primary), #8b5cf6);
-      box-shadow: 0 5px 12px rgba(94, 89, 230, 0.3);
-      transition: background-color 0.3s ease;
-    }
-    .benefit-card:hover .benefit-icon {
-      background: var(--primary-dark);
-      box-shadow: 0 8px 20px rgba(94, 89, 230, 0.5);
-    }
-    .benefit-card h3 {
-      font-size: 1.375rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      color: var(--text-dark);
-    }
-    .benefit-card p {
-      font-size: 1rem;
-      color: var(--muted-text);
-      line-height: 1.6;
-      user-select: none;
-    }
-    .solutions > div > button {
-      margin-top: 2rem;
-      font-weight: 800;
-      font-size: 1.125rem;
-      padding: 0.85rem 3rem;
-      box-shadow: 0 12px 30px var(--shadow-light);
-      border-radius: calc(var(--radius-md) * 1.2);
-      cursor: pointer;
-      border: none;
-      background: var(--secondary);
-      color: white;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      user-select: none;
-    }
-    .solutions > div > button:hover {
-      background: var(--secondary-light);
-      transform: scale(1.07);
-      box-shadow: 0 20px 45px rgba(251, 113, 33, 0.3);
-    }
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
 
-    /* Features Section */
-    #features {
-      padding-top: 6rem;
-      padding-bottom: 7rem;
-    }
-    #features .section-badge {
-      background: rgba(94, 89, 230, 0.12);
-      border: 1.5px solid rgba(94, 89, 230, 0.25);
-      color: var(--primary);
-      box-shadow: 0 0 15px rgba(94, 89, 230, 0.12);
-    }
-    .features-grid {
-      display: grid;
-      gap: 2rem;
-      grid-template-columns: 1fr;
-      max-width: 1140px;
-      margin: 0 auto;
-    }
-    .feature-card {
-      background: #f7f8fc;
-      border-radius: var(--radius-md);
-      padding: 2rem 2.25rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-      border: 2px solid transparent;
-      cursor: default;
-      user-select: none;
-      text-align: center;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
-    }
-    .feature-card:hover {
-      border-color: rgba(94, 89, 230, 0.3);
-      transform: translateY(-6px) scale(1.04);
-      box-shadow: 0 22px 40px rgba(94, 89, 230, 0.15);
-    }
-    .feature-icon {
-      width: 3.75rem;
-      height: 3.75rem;
-      border-radius: var(--radius-md);
-      margin: 0 auto 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 2rem;
-      box-shadow: 0 5px 12px rgba(94, 89, 230, 0.3);
-      transition: background-color 0.3s ease;
-    }
-    .feature-card:hover .feature-icon {
-      background-color: var(--primary-dark);
-      box-shadow: 0 8px 20px rgba(94, 89, 230, 0.5);
-    }
-    .feature-card h3 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-      color: var(--text-dark);
-    }
-    .feature-card p {
-      font-size: 1rem;
-      color: var(--muted-text);
-      line-height: 1.6;
-    }
+        /* Navbar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1100;
+            background: rgba(255 255 255 / 0.95);
+            backdrop-filter: saturate(180%) blur(12px);
+            border-bottom: 1px solid var(--border);
+            box-shadow: none;
+            transition: box-shadow var(--transition);
+        }
 
-    /* Dashboard Section */
-    .dashboard {
-      background: #f3f5fa;
-      padding-top: 6rem;
-      padding-bottom: 7rem;
-    }
-    .dashboard-preview {
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .dashboard-preview .section-badge {
-      background: rgba(94, 89, 230, 0.12);
-      border: 1.5px solid rgba(94, 89, 230, 0.3);
-      color: var(--primary);
-      box-shadow: 0 0 15px rgba(94, 89, 230, 0.12);
-    }
-    .browser-mockup {
-      background: var(--card-bg);
-      border: 2.5px solid var(--border);
-      border-radius: var(--radius-md);
-      box-shadow: 0 20px 40px var(--shadow-light);
-      overflow: hidden;
-      margin-top: 3rem;
-      user-select: none;
-    }
-    .browser-bar {
-      background: rgba(210, 220, 230, 0.6);
-      border-bottom: 1px solid var(--border);
-      padding: 0.75rem 1.25rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .browser-dots {
-      display: flex;
-      gap: 0.6rem;
-    }
-    .browser-dot {
-      width: 0.85rem;
-      height: 0.85rem;
-      border-radius: 50%;
-      box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s ease;
-    }
-    .browser-dot.red {
-      background: #ef4444;
-    }
-    .browser-dot.yellow {
-      background: #f59e0b;
-    }
-    .browser-dot.green {
-      background: #10b981;
-    }
-    .browser-url {
-      flex: 1;
-      margin-left: 1rem;
-      background: var(--muted-bg);
-      padding: 0.3rem 0.85rem;
-      border-radius: 0.5rem;
-      font-size: 0.85rem;
-      color: var(--muted-text);
-      user-select: text;
-      font-family: 'Fira Mono', monospace;
-    }
-    .dashboard-image img {
-      width: 100%;
-      height: auto;
-      display: block;
-      user-select: none;
-    }
-    .dashboard-preview > button.btn-hero {
-      margin-top: 4rem;
-      font-weight: 900;
-      font-size: 1.2rem;
-      padding: 0.85rem 3rem;
-      border-radius: calc(var(--radius-md) * 1.3);
-      box-shadow: 0 14px 35px var(--shadow-light);
-      user-select: none;
-    }
-    .dashboard-preview > button.btn-hero:hover {
-      background: var(--primary-dark);
-      transform: scale(1.08);
-      box-shadow: 0 24px 55px var(--shadow-light);
-    }
+        .navbar.scrolled {
+            box-shadow: 0 4px 12px var(--shadow-dark);
+        }
 
-    /* CTA Section */
-    .cta {
-      background: linear-gradient(135deg, var(--primary), #8b5cf6);
-      color: white;
-      padding: 5rem 1.5rem 6rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      user-select: none;
-    }
-    .cta-content {
-      max-width: 640px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 10;
-    }
-    .cta .section-badge {
-      background: rgba(255 255 255 / 0.25);
-      border: 1.5px solid rgba(255 255 255 / 0.4);
-      backdrop-filter: blur(12px);
-      color: white;
-      font-weight: 700;
-      font-size: 1.1rem;
-      padding: 0.5rem 1.5rem;
-      border-radius: var(--radius-full);
-      margin-bottom: 1.5rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      user-select: none;
-      box-shadow: 0 0 12px rgba(255 255 255 / 0.6);
-    }
-    .cta h2 {
-      font-size: 2.75rem;
-      font-weight: 900;
-      margin-bottom: 1.25rem;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    }
-    .cta p {
-      font-size: 1.25rem;
-      color: rgba(255 255 255 / 0.9);
-      margin-bottom: 2.5rem;
-      line-height: 1.6;
-      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-    }
-    .cta-features {
-      display: flex;
-      justify-content: center;
-      gap: 2.25rem;
-      flex-wrap: wrap;
-      margin-bottom: 3rem;
-      font-weight: 600;
-      font-size: 1.1rem;
-      user-select: none;
-    }
-    .cta-feature {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      color: white;
-      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.05));
-    }
-    .cta-feature span:first-child {
-      font-size: 1.6rem;
-      line-height: 1;
-      color: #e0e7ff;
-      user-select: none;
-      filter: drop-shadow(0 0 5px rgba(255 255 255 / 0.9));
-    }
-    .cta-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .btn-white {
-      background: white;
-      color: var(--primary);
-      font-weight: 800;
-      font-size: 1.1rem;
-      padding: 0.75rem 3rem;
-      border-radius: calc(var(--radius-md) * 1.2);
-      box-shadow: 0 12px 30px rgba(255 255 255 / 0.9);
-      user-select: none;
-      transition: background-color 0.3s ease, color 0.3s ease,
-        box-shadow 0.3s ease;
-    }
-    .btn-white:hover {
-      background: #f3f4ff;
-      box-shadow: 0 20px 45px rgba(255 255 255 / 0.9);
-      transform: scale(1.05);
-    }
-    .btn-outline-white {
-      background: transparent;
-      border: 2.5px solid white;
-      color: white;
-      font-weight: 700;
-      font-size: 1.05rem;
-      padding: 0.75rem 2.75rem;
-      border-radius: var(--radius-md);
-      transition: background-color 0.3s ease, color 0.3s ease;
-      user-select: none;
-    }
-    .btn-outline-white:hover {
-      background: white;
-      color: var(--primary);
-      box-shadow: 0 12px 30px rgba(255 255 255 / 0.9);
-      transform: scale(1.05);
-    }
-    .cta .section-badge span:first-child {
-      font-size: 1.3rem;
-    }
-    .cta .section-badge span:last-child {
-      font-weight: 700;
-    }
-    .cta > div:last-child {
-      padding-top: 2rem;
-      border-top: 1.5px solid rgba(255 255 255 / 0.3);
-      margin-top: 2rem;
-      font-weight: 600;
-      font-size: 1rem;
-      user-select: none;
-    }
-    .cta > div:last-child > div {
-      display: flex;
-      justify-content: center;
-      gap: 1.25rem;
-      flex-wrap: wrap;
-      color: rgba(255 255 255 / 0.85);
-      font-weight: 600;
-      font-size: 1.05rem;
-    }
-    .cta > div:last-child > div > span {
-      user-select: text;
-    }
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 4.5rem;
+        }
 
-    /* Footer */
-    .footer {
-      background: #0f172a;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 4rem 1.5rem 2rem;
-      color: #94a3b8;
-      font-size: 0.95rem;
-      user-select: none;
-      position: relative;
-      overflow: hidden;
-    }
-    .footer::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--primary), transparent);
-      opacity: 0.5;
-    }
-    .footer-grid {
-      display: grid;
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto 3.5rem;
-      grid-template-columns: 1.5fr 1fr 1fr 1.25fr;
-      position: relative;
-      z-index: 10;
-    }
-    @media (max-width: 960px) {
-      .footer-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    @media (max-width: 640px) {
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .footer-brand {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      margin-bottom: 1.5rem;
-      font-weight: 800;
-      font-size: 1.5rem;
-      color: white;
-      user-select: none;
-    }
-    .footer-brand .logo-icon {
-      width: 2.75rem;
-      height: 2.75rem;
-      background: linear-gradient(135deg, var(--primary), #8b5cf6);
-      color: white;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 15px rgba(94, 89, 230, 0.4);
-    }
-    .footer-brand .logo-text {
-      background: none;
-      -webkit-text-fill-color: white;
-      font-weight: 800;
-      font-size: 1.5rem;
-      user-select: none;
-    }
-    .footer p {
-      max-width: 320px;
-      margin-bottom: 1.75rem;
-      font-size: 1rem;
-      color: #94a3b8;
-      line-height: 1.7;
-      user-select: text;
-    }
-    .social-links {
-      display: flex;
-      gap: 1rem;
-    }
-    .social-link {
-      width: 2.75rem;
-      height: 2.75rem;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #cbd5e1;
-      font-size: 1.25rem;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      user-select: none;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    .social-link:hover {
-      background: var(--primary);
-      color: white;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(94, 89, 230, 0.4);
-      border-color: var(--primary);
-    }
-    .footer-section h3 {
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      font-size: 1.15rem;
-      color: white;
-      user-select: none;
-      position: relative;
-      display: inline-block;
-    }
-    .footer-section h3::after {
-      content: '';
-      position: absolute;
-      left: 0; bottom: -0.5rem;
-      width: 2rem; height: 3px;
-      background: var(--primary);
-      border-radius: 2px;
-    }
-    .footer-section ul {
-      list-style: none;
-      padding-left: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-    .footer-section a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      user-select: text;
-      position: relative;
-      display: inline-block;
-    }
-    .footer-section a:hover {
-      color: white;
-      transform: translateX(5px);
-    }
-    .footer-bottom {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding-top: 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      font-size: 0.9rem;
-      color: #64748b;
-      user-select: none;
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 10;
-    }
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .footer-links a {
-      user-select: text;
-      color: #64748b;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    .footer-links a:hover {
-      color: white;
-    }
-    .footer-section.bg-gray-800 {
-      color: #cbd5e1;
-    }
-    .footer-section.bg-gray-800 ul {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-    .footer-section.bg-gray-800 a {
-      display: flex;
-      align-items: center;
-      color: #cbd5e1;
-    }
-    .footer-section.bg-gray-800 a:hover {
-      color: white;
-      transform: translateX(0) scale(1.02);
-    }
-    .footer-section.bg-gray-800 svg {
-      margin-right: 0.5rem;
-      color: var(--primary-light);
-    }
-    /* Modal */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(10, 11, 13, 0.7);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2200;
-      padding: 1.25rem;
-      overflow-y: auto;
-    }
-    .modal-overlay.active {
-      display: flex;
-    }
-    .modal {
-      width: 100%;
-      max-width: 720px;
-      background: white;
-      border-radius: var(--radius-md);
-      box-shadow: 0 25px 50px rgba(10, 11, 13, 0.3);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-    .modal-header,
-    .modal-footer {
-      padding: 1.25rem 1.5rem;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .modal-footer {
-      border-top: 1px solid var(--border);
-      border-bottom: none;
-      justify-content: flex-end;
-    }
-    .modal h3 {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--text-dark);
-      user-select: none;
-    }
-    .close-modal {
-      background: transparent;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: var(--muted-text);
-      transition: color 0.3s ease;
-      user-select: none;
-    }
-    .close-modal:hover {
-      color: var(--danger);
-    }
-    .modal-body {
-      padding: 1.5rem 1.5rem;
-      max-height: 70vh;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--primary-light) transparent;
-    }
-    .modal-body::-webkit-scrollbar {
-      width: 8px;
-    }
-    .modal-body::-webkit-scrollbar-thumb {
-      background-color: var(--primary-light);
-      border-radius: 8px;
-    }
-    /* Form */
-    .form-grid {
-      display: grid;
-      gap: 1rem;
-    }
-    .form-grid.two-cols {
-      grid-template-columns: 1fr;
-    }
-    @media (min-width: 640px) {
-      .form-grid.two-cols {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    label {
-      font-size: 0.95rem;
-      color: var(--text-dark);
-      display: block;
-      margin-bottom: 0.3rem;
-      font-weight: 600;
-      user-select: none;
-    }
-    input[type='text'],
-    input[type='email'],
-    input[type='tel'],
-    input[type='datetime-local'],
-    textarea {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border: 1.8px solid var(--border);
-      border-radius: var(--radius-md);
-      font-size: 1rem;
-      background: #fafafa;
-      color: var(--text-dark);
-      resize: vertical;
-      transition: border-color 0.3s ease;
-      font-family: 'Inter', sans-serif;
-    }
-    input[type='text']:focus,
-    input[type='email']:focus,
-    input[type='tel']:focus,
-    input[type='datetime-local']:focus,
-    textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-      background: #fff;
-      box-shadow: 0 0 6px var(--primary-light);
-    }
-    textarea {
-      min-height: 120px;
-    }
-    hr {
-      border: none;
-      border-top: 1.5px solid var(--border);
-      margin: 1.75rem 0;
-    }
-    /* Form Status */
-    .form-status {
-      margin-top: 0.75rem;
-      font-size: 1rem;
-      min-height: 1.25rem;
-      font-weight: 600;
-    }
-    /* Modal Buttons */
-    .btn-modal {
-      padding: 0.7rem 1.3rem;
-      border-radius: var(--radius-md);
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      user-select: none;
-      border: none;
-    }
-    .btn-submit {
-      background: var(--primary);
-      color: white;
-      box-shadow: 0 8px 20px var(--shadow-light);
-    }
-    .btn-submit:disabled {
-      background: var(--primary-light);
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-    .btn-submit:hover:enabled {
-      background: var(--primary-dark);
-      box-shadow: 0 12px 30px var(--shadow-light);
-    }
-    .btn-cancel {
-      background: transparent;
-      border: 2px solid var(--border);
-      color: var(--text-dark);
-      margin-right: 0.8rem;
-    }
-    .btn-cancel:hover {
-      background: var(--muted-bg);
-    }
-    /* Responsive */
-    @media (min-width: 768px) {
-      .nav-links {
-        display: flex;
-      }
-      .nav-buttons {
-        display: flex;
-      }
-      .menu-button {
-        display: none;
-      }
-      .hero-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .problem-cards {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .problems-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .benefits-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .features-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .footer-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .form-grid.two-cols {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    @media (min-width: 1024px) {
-      .hero h1 {
-        font-size: 3.75rem;
-      }
-      .section-title {
-        font-size: 3.25rem;
-      }
-      .benefits-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-      .features-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-      .footer-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-      .form-grid.two-cols {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    /* Animations */
-    @keyframes fadeInLeft {
-      0% {
-        opacity: 0;
-        transform: translateX(-30px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-    @keyframes fadeInRight {
-      0% {
-        opacity: 0;
-        transform: translateX(30px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-  </style>
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .logo-icon {
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 15px var(--shadow-light);
+            transition: transform var(--transition);
+        }
+
+        .logo-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px var(--shadow-light);
+        }
+
+        .logo-text {
+            font-weight: 800;
+            font-size: 1.375rem;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: default;
+            user-select: none;
+        }
+
+        .nav-links {
+            display: none;
+            gap: 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            position: relative;
+            padding: 0.25rem 0;
+            transition: color var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width var(--transition);
+            border-radius: 1px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-buttons {
+            display: none;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.75rem;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            transition: all var(--transition);
+            user-select: none;
+            box-shadow: 0 6px 12px var(--shadow-light);
+        }
+
+        .btn-primary,
+        .btn-hero {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 8px 20px var(--shadow-light);
+            font-weight: 800;
+            font-size: 1.125rem;
+            padding: 0.75rem 2.5rem;
+            border-radius: calc(var(--radius-md) * 1.2);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .btn-primary:hover,
+        .btn-hero:hover {
+            background: var(--primary-dark);
+            transform: scale(1.07);
+            box-shadow: 0 15px 30px var(--shadow-light);
+        }
+
+        .btn-cta {
+            background: var(--secondary);
+            color: white;
+            padding: 0.75rem 2.25rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: var(--radius-md);
+            box-shadow: 0 10px 25px rgba(251, 113, 33, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-cta:hover {
+            background: var(--secondary-light);
+            transform: scale(1.05);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+            padding: 0.6rem 1.6rem;
+            border-radius: var(--radius-md);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-dark);
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-ghost:hover {
+            background: var(--muted-bg);
+        }
+
+        /* Mobile Menu Button */
+        .menu-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: transform 0.2s ease;
+            color: var(--text-dark);
+        }
+
+        .menu-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--border);
+            background: var(--card-bg);
+            box-shadow: 0 10px 25px var(--shadow-light);
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 0.75rem 0;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-bottom: 1px solid var(--muted-bg);
+            transition: color var(--transition);
+        }
+
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu button.btn {
+            width: 100%;
+            margin-top: 1rem;
+            font-weight: 700;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg,
+                    rgba(94, 89, 230, 0.07),
+                    #fff,
+                    rgba(251, 113, 33, 0.07));
+            padding: 5rem 0 6rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            gap: 3.5rem;
+            grid-template-columns: 1fr;
+            align-items: center;
+        }
+
+        .hero-content {
+            animation: fadeInLeft 0.8s ease forwards;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1.25rem;
+            background: rgba(94, 89, 230, 0.12);
+            border: 1.5px solid rgba(94, 89, 230, 0.24);
+            border-radius: var(--radius-full);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 2.25rem;
+            user-select: none;
+            box-shadow: 0 0 12px rgba(94, 89, 230, 0.06);
+        }
+
+        .hero h1 {
+            font-weight: 900;
+            font-size: 2.75rem;
+            line-height: 1.15;
+            margin-bottom: 1.75rem;
+            color: var(--text-dark);
+            max-width: 480px;
+            user-select: none;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--muted-text);
+            max-width: 520px;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+            user-select: none;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero.inline-flex {
+            font-weight: 800;
+            font-size: 1.1rem;
+            padding: 0.8rem 2.75rem;
+            border-radius: calc(var(--radius-md) * 1.2);
+            box-shadow: 0 12px 30px var(--shadow-light);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            user-select: none;
+        }
+
+        .btn-hero.inline-flex:hover {
+            transform: scale(1.1);
+            box-shadow: 0 20px 45px var(--shadow-light);
+        }
+
+        .btn-outline.btn-lg {
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 0.75rem 2.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--primary);
+            border: 2.5px solid var(--primary);
+            background: transparent;
+            box-shadow: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            user-select: none;
+        }
+
+        .btn-outline.btn-lg:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 12px 30px var(--shadow-light);
+        }
+
+        .btn-outline span {
+            font-size: 1.25rem;
+        }
+
+        .hero-image {
+            position: relative;
+            animation: fadeInRight 0.8s ease 0.3s forwards, float 6s ease-in-out infinite;
+            border-radius: var(--radius-md);
+            box-shadow: 0 20px 40px var(--shadow-light);
+            overflow: hidden;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: var(--radius-md);
+            object-fit: cover;
+            filter: drop-shadow(0 0 10px rgba(94, 89, 230, 0.1));
+            user-select: none;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 0 6rem;
+        }
+
+        .section-header {
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            text-align: center;
+            user-select: none;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.5rem 1.25rem;
+            border-radius: var(--radius-full);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            user-select: none;
+            box-shadow: 0 0 12px rgba(94, 89, 230, 0.1);
+        }
+
+        .section-title {
+            font-weight: 900;
+            font-size: 2.75rem;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .section-description {
+            font-size: 1.15rem;
+            color: var(--muted-text);
+            line-height: 1.75;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* Problems Section */
+        .problems {
+            background: #f3f5fa;
+            padding-top: 6rem;
+            padding-bottom: 7rem;
+        }
+
+        .problems .section-badge {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1.5px solid rgba(239, 68, 68, 0.3);
+            color: var(--danger);
+            box-shadow: 0 0 14px rgba(239, 68, 68, 0.1);
+        }
+
+        .problems-grid {
+            display: grid;
+            gap: 3rem;
+            grid-template-columns: 1fr;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .problem-cards {
+            display: grid;
+            gap: 1.75rem;
+            grid-template-columns: 1fr;
+        }
+
+        .problem-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-md);
+            padding: 1.75rem 2rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+            user-select: none;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 18px 30px rgba(239, 68, 68, 0.15);
+        }
+
+        .problem-icon {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: var(--radius-md);
+            background: rgba(239, 68, 68, 0.12);
+            color: var(--danger);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.08);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .problem-card:hover .problem-icon {
+            background: var(--danger);
+            color: white;
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+        }
+
+        .problem-card h3 {
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            color: var(--text-dark);
+        }
+
+        .problem-card p {
+            font-size: 1rem;
+            color: var(--muted-text);
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .problems-grid>div:last-child img {
+            border-radius: var(--radius-md);
+            box-shadow: 0 20px 40px var(--shadow-light);
+            width: 100%;
+            height: auto;
+            user-select: none;
+        }
+
+        /* Solutions Section */
+        .solutions {
+            background: linear-gradient(180deg, #fff, rgba(94, 89, 230, 0.07));
+            padding-top: 6rem;
+            padding-bottom: 7rem;
+        }
+
+        .solutions .section-badge {
+            background: rgba(34, 197, 94, 0.12);
+            border: 1.5px solid rgba(34, 197, 94, 0.3);
+            color: var(--success);
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.1);
+        }
+
+        .benefits-grid {
+            display: grid;
+            gap: 2.5rem;
+            grid-template-columns: 1fr;
+            max-width: 1120px;
+            margin: 0 auto 3rem;
+        }
+
+        .benefit-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-md);
+            padding: 2rem 2.25rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+            user-select: none;
+            text-align: center;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-6px) scale(1.04);
+            box-shadow: 0 22px 40px rgba(94, 89, 230, 0.15);
+        }
+
+        .benefit-icon {
+            font-size: 2.25rem;
+            width: 4.5rem;
+            height: 4.5rem;
+            border-radius: var(--radius-md);
+            margin: 0 auto 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            box-shadow: 0 5px 12px rgba(94, 89, 230, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        .benefit-card:hover .benefit-icon {
+            background: var(--primary-dark);
+            box-shadow: 0 8px 20px rgba(94, 89, 230, 0.5);
+        }
+
+        .benefit-card h3 {
+            font-size: 1.375rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-dark);
+        }
+
+        .benefit-card p {
+            font-size: 1rem;
+            color: var(--muted-text);
+            line-height: 1.6;
+            user-select: none;
+        }
+
+        .solutions>div>button {
+            margin-top: 2rem;
+            font-weight: 800;
+            font-size: 1.125rem;
+            padding: 0.85rem 3rem;
+            box-shadow: 0 12px 30px var(--shadow-light);
+            border-radius: calc(var(--radius-md) * 1.2);
+            cursor: pointer;
+            border: none;
+            background: var(--secondary);
+            color: white;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            user-select: none;
+        }
+
+        .solutions>div>button:hover {
+            background: var(--secondary-light);
+            transform: scale(1.07);
+            box-shadow: 0 20px 45px rgba(251, 113, 33, 0.3);
+        }
+
+        /* Features Section */
+        #features {
+            padding-top: 6rem;
+            padding-bottom: 7rem;
+        }
+
+        #features .section-badge {
+            background: rgba(94, 89, 230, 0.12);
+            border: 1.5px solid rgba(94, 89, 230, 0.25);
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(94, 89, 230, 0.12);
+        }
+
+        .features-grid {
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: 1fr;
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: #f7f8fc;
+            border-radius: var(--radius-md);
+            padding: 2rem 2.25rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            border: 2px solid transparent;
+            cursor: default;
+            user-select: none;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .feature-card:hover {
+            border-color: rgba(94, 89, 230, 0.3);
+            transform: translateY(-6px) scale(1.04);
+            box-shadow: 0 22px 40px rgba(94, 89, 230, 0.15);
+        }
+
+        .feature-icon {
+            width: 3.75rem;
+            height: 3.75rem;
+            border-radius: var(--radius-md);
+            margin: 0 auto 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 5px 12px rgba(94, 89, 230, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            background-color: var(--primary-dark);
+            box-shadow: 0 8px 20px rgba(94, 89, 230, 0.5);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: var(--text-dark);
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: var(--muted-text);
+            line-height: 1.6;
+        }
+
+        /* Dashboard Section */
+        .dashboard {
+            background: #f3f5fa;
+            padding-top: 6rem;
+            padding-bottom: 7rem;
+        }
+
+        .dashboard-preview {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .dashboard-preview .section-badge {
+            background: rgba(94, 89, 230, 0.12);
+            border: 1.5px solid rgba(94, 89, 230, 0.3);
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(94, 89, 230, 0.12);
+        }
+
+        .browser-mockup {
+            background: var(--card-bg);
+            border: 2.5px solid var(--border);
+            border-radius: var(--radius-md);
+            box-shadow: 0 20px 40px var(--shadow-light);
+            overflow: hidden;
+            margin-top: 3rem;
+            user-select: none;
+        }
+
+        .browser-bar {
+            background: rgba(210, 220, 230, 0.6);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .browser-dot {
+            width: 0.85rem;
+            height: 0.85rem;
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .browser-dot.red {
+            background: #ef4444;
+        }
+
+        .browser-dot.yellow {
+            background: #f59e0b;
+        }
+
+        .browser-dot.green {
+            background: #10b981;
+        }
+
+        .browser-url {
+            flex: 1;
+            margin-left: 1rem;
+            background: var(--muted-bg);
+            padding: 0.3rem 0.85rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--muted-text);
+            user-select: text;
+            font-family: 'Fira Mono', monospace;
+        }
+
+        .dashboard-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            user-select: none;
+        }
+
+        .dashboard-preview>button.btn-hero {
+            margin-top: 4rem;
+            font-weight: 900;
+            font-size: 1.2rem;
+            padding: 0.85rem 3rem;
+            border-radius: calc(var(--radius-md) * 1.3);
+            box-shadow: 0 14px 35px var(--shadow-light);
+            user-select: none;
+        }
+
+        .dashboard-preview>button.btn-hero:hover {
+            background: var(--primary-dark);
+            transform: scale(1.08);
+            box-shadow: 0 24px 55px var(--shadow-light);
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            color: white;
+            padding: 5rem 1.5rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .cta-content {
+            max-width: 640px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .cta .section-badge {
+            background: rgba(255 255 255 / 0.25);
+            border: 1.5px solid rgba(255 255 255 / 0.4);
+            backdrop-filter: blur(12px);
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: var(--radius-full);
+            margin-bottom: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            user-select: none;
+            box-shadow: 0 0 12px rgba(255 255 255 / 0.6);
+        }
+
+        .cta h2 {
+            font-size: 2.75rem;
+            font-weight: 900;
+            margin-bottom: 1.25rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .cta p {
+            font-size: 1.25rem;
+            color: rgba(255 255 255 / 0.9);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-features {
+            display: flex;
+            justify-content: center;
+            gap: 2.25rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            user-select: none;
+        }
+
+        .cta-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: white;
+            filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.05));
+        }
+
+        .cta-feature span:first-child {
+            font-size: 1.6rem;
+            line-height: 1;
+            color: #e0e7ff;
+            user-select: none;
+            filter: drop-shadow(0 0 5px rgba(255 255 255 / 0.9));
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 1.1rem;
+            padding: 0.75rem 3rem;
+            border-radius: calc(var(--radius-md) * 1.2);
+            box-shadow: 0 12px 30px rgba(255 255 255 / 0.9);
+            user-select: none;
+            transition: background-color 0.3s ease, color 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .btn-white:hover {
+            background: #f3f4ff;
+            box-shadow: 0 20px 45px rgba(255 255 255 / 0.9);
+            transform: scale(1.05);
+        }
+
+        .btn-outline-white {
+            background: transparent;
+            border: 2.5px solid white;
+            color: white;
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding: 0.75rem 2.75rem;
+            border-radius: var(--radius-md);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            user-select: none;
+        }
+
+        .btn-outline-white:hover {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 12px 30px rgba(255 255 255 / 0.9);
+            transform: scale(1.05);
+        }
+
+        .cta .section-badge span:first-child {
+            font-size: 1.3rem;
+        }
+
+        .cta .section-badge span:last-child {
+            font-weight: 700;
+        }
+
+        .cta>div:last-child {
+            padding-top: 2rem;
+            border-top: 1.5px solid rgba(255 255 255 / 0.3);
+            margin-top: 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            user-select: none;
+        }
+
+        .cta>div:last-child>div {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            color: rgba(255 255 255 / 0.85);
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .cta>div:last-child>div>span {
+            user-select: text;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 4rem 1.5rem 2rem;
+            color: #94a3b8;
+            font-size: 0.95rem;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.5;
+        }
+
+        .footer-grid {
+            display: grid;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 3.5rem;
+            grid-template-columns: 1.5fr 1fr 1fr 1.25fr;
+            position: relative;
+            z-index: 10;
+        }
+
+        @media (max-width: 960px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: white;
+            user-select: none;
+        }
+
+        .footer-brand .logo-icon {
+            width: 2.75rem;
+            height: 2.75rem;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            color: white;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(94, 89, 230, 0.4);
+        }
+
+        .footer-brand .logo-text {
+            background: none;
+            -webkit-text-fill-color: white;
+            font-weight: 800;
+            font-size: 1.5rem;
+            user-select: none;
+        }
+
+        .footer p {
+            max-width: 320px;
+            margin-bottom: 1.75rem;
+            font-size: 1rem;
+            color: #94a3b8;
+            line-height: 1.7;
+            user-select: text;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #cbd5e1;
+            font-size: 1.25rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            user-select: none;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(94, 89, 230, 0.4);
+            border-color: var(--primary);
+        }
+
+        .footer-section h3 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-size: 1.15rem;
+            color: white;
+            user-select: none;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -0.5rem;
+            width: 2rem;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .footer-section:not(.bg-gray-800) a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            user-select: text;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-section:not(.bg-gray-800) a::before {
+            content: '→';
+            margin-right: 0px;
+            font-size: 1.1rem;
+            width: 0;
+            opacity: 0;
+            color: var(--primary-light);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .footer-section:not(.bg-gray-800) a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-section:not(.bg-gray-800) a:hover::before {
+            opacity: 1;
+            width: 20px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+            color: #64748b;
+            user-select: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            user-select: text;
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-section.bg-gray-800 {
+            color: #cbd5e1;
+        }
+
+        .footer-section.bg-gray-800 ul {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .footer-section.bg-gray-800 a {
+            display: flex;
+            align-items: center;
+            color: #cbd5e1;
+        }
+
+        .footer-section.bg-gray-800 a:hover {
+            color: white;
+            transform: translateX(0) scale(1.02);
+        }
+
+        .footer-section.bg-gray-800 svg {
+            margin-right: 0.5rem;
+            color: var(--primary-light);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 11, 13, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2200;
+            padding: 1.25rem;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            width: 100%;
+            max-width: 720px;
+            background: white;
+            border-radius: var(--radius-md);
+            box-shadow: 0 25px 50px rgba(10, 11, 13, 0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header,
+        .modal-footer {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--border);
+            border-bottom: none;
+            justify-content: flex-end;
+        }
+
+        .modal h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            user-select: none;
+        }
+
+        .close-modal {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--muted-text);
+            transition: color 0.3s ease;
+            user-select: none;
+        }
+
+        .close-modal:hover {
+            color: var(--danger);
+        }
+
+        .modal-body {
+            padding: 1.5rem 1.5rem;
+            max-height: 70vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-light) transparent;
+        }
+
+        .modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background-color: var(--primary-light);
+            border-radius: 8px;
+        }
+
+        /* Form */
+        .form-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .form-grid.two-cols {
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 640px) {
+            .form-grid.two-cols {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        label {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+            user-select: none;
+        }
+
+        input[type='text'],
+        input[type='email'],
+        input[type='tel'],
+        input[type='datetime-local'],
+        textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1.8px solid var(--border);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            background: #fafafa;
+            color: var(--text-dark);
+            resize: vertical;
+            transition: border-color 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        input[type='text']:focus,
+        input[type='email']:focus,
+        input[type='tel']:focus,
+        input[type='datetime-local']:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 6px var(--primary-light);
+        }
+
+        textarea {
+            min-height: 120px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1.5px solid var(--border);
+            margin: 1.75rem 0;
+        }
+
+        /* Form Status */
+        .form-status {
+            margin-top: 0.75rem;
+            font-size: 1rem;
+            min-height: 1.25rem;
+            font-weight: 600;
+        }
+
+        /* Modal Buttons */
+        .btn-modal {
+            padding: 0.7rem 1.3rem;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            user-select: none;
+            border: none;
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 8px 20px var(--shadow-light);
+        }
+
+        .btn-submit:disabled {
+            background: var(--primary-light);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-submit:hover:enabled {
+            background: var(--primary-dark);
+            box-shadow: 0 12px 30px var(--shadow-light);
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text-dark);
+            margin-right: 0.8rem;
+        }
+
+        .btn-cancel:hover {
+            background: var(--muted-bg);
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+            }
+
+            .nav-buttons {
+                display: flex;
+            }
+
+            .menu-button {
+                display: none;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .problem-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .problems-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-grid.two-cols {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero h1 {
+                font-size: 3.75rem;
+            }
+
+            .section-title {
+                font-size: 3.25rem;
+            }
+
+            .benefits-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .form-grid.two-cols {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            0% {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 {
+            transition-delay: 100ms;
+        }
+
+        .reveal-delay-2 {
+            transition-delay: 200ms;
+        }
+
+        .reveal-delay-3 {
+            transition-delay: 300ms;
+        }
+
+        .reveal-delay-4 {
+            transition-delay: 400ms;
+        }
+    </style>
 </head>
+
 <body>
-  <!-- Navbar -->
-  <nav class="navbar" id="navbar">
-    <div class="container">
-      <div class="navbar-container">
-        <a href="#" class="navbar-logo" aria-label="Sikhsha Sathi Home">
-          <div class="logo-icon" aria-hidden="true">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              width="24"
-              height="24"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path d="M22 10L12 5 2 10l10 5 10-5z" />
-              <path d="M6 12v5a6 6 0 0012 0v-5" />
-            </svg>
-          </div>
-          <span class="logo-text">Sikhsha Sathi</span>
-        </a>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="navbar-container">
+                <a href="#" class="navbar-logo" aria-label="Sikhsha Sathi Home">
+                    <div class="logo-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"
+                            aria-hidden="true" focusable="false">
+                            <path d="M22 10L12 5 2 10l10 5 10-5z" />
+                            <path d="M6 12v5a6 6 0 0012 0v-5" />
+                        </svg>
+                    </div>
+                    <span class="logo-text">Sikhsha Sathi</span>
+                </a>
 
-        <div class="nav-links" role="navigation" aria-label="Primary">
-          <a href="#features" tabindex="0">Features</a>
-          <a href="#solutions" tabindex="0">Solutions</a>
-          <a href="#about" tabindex="0">About</a>
-          <a href="javascript:void(0)" id="openPlansLinkDesktop" tabindex="0" aria-haspopup="dialog" aria-controls="plansModal">Subscription</a>
-        </div>
+                <div class="nav-links" role="navigation" aria-label="Primary">
+                    <a href="#features" tabindex="0">Features</a>
+                    <a href="#solutions" tabindex="0">Solutions</a>
+                    <a href="#about" tabindex="0">About</a>
+                    <a href="javascript:void(0)" id="openPlansLinkDesktop" tabindex="0" aria-haspopup="dialog"
+                        aria-controls="plansModal">Subscription</a>
+                </div>
 
-        <div class="nav-buttons">
-          <a href="https://sikhsha-sathi.up.railway.app/" target="_blank" rel="noopener" class="btn btn-ghost" tabindex="0">Login</a>
-          <a href="https://sikhsha-sathi.up.railway.app/" target="_blank" rel="noopener" class="btn btn-cta" tabindex="0">Get Started</a>
-        </div>
+                <div class="nav-buttons">
+                    <a href="https://sikhsha-sathi.up.railway.app/" target="_blank" rel="noopener" class="btn btn-ghost"
+                        tabindex="0">Login</a>
+                    <a href="https://sikhsha-sathi.up.railway.app/" target="_blank" rel="noopener" class="btn btn-cta"
+                        tabindex="0">Get Started</a>
+                </div>
 
-        <button
-          class="menu-button"
-          aria-label="Toggle menu"
-          aria-expanded="false"
-          aria-controls="mobileMenu"
-          onclick="toggleMenu()"
-        >
-          <svg
-            width="28"
-            height="28"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
-      </div>
-
-      <div class="mobile-menu" id="mobileMenu" role="menu" aria-label="Mobile navigation">
-        <a href="#features" role="menuitem" tabindex="-1">Features</a>
-        <a href="javascript:void(0)" id="openPlansLinkMobile" role="menuitem" tabindex="-1" aria-haspopup="dialog" aria-controls="plansModal">Subscription</a>
-        <a href="#solutions" role="menuitem" tabindex="-1">Solutions</a>
-        <a href="#about" role="menuitem" tabindex="-1">About</a>
-        <button class="btn btn-ghost" style="width: 100%; margin-top: 1rem;" tabindex="-1">Login</button>
-        <button class="btn btn-cta" style="width: 100%; margin-top: 0.5rem;" tabindex="-1">Get Started</button>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <section class="hero" role="region" aria-labelledby="hero-title">
-    <div class="container">
-      <div class="hero-grid">
-        <div class="hero-content">
-          <div class="hero-badge" aria-label="Education badge">
-            <span aria-hidden="true">🎓</span>
-            <span>Transform Your Institute Digitally</span>
-          </div>
-          <h1 id="hero-title">
-            Complete Digital<br />
-            <span class="gradient-text">Education Management</span><br />
-            for Modern Institutes
-          </h1>
-          <p>
-            Sikhsha Sathi empowers educational institutes across India—especially
-            in Bihar, UP, and tier-2/3 cities—to go completely paperless.
-            Manage students, faculty, courses, fees, and more from one powerful
-            dashboard.
-          </p>
-          <div class="hero-buttons">
-  <a
-    href="https://sikhsha-sathi.up.railway.app/"
-    target="_blank"
-    rel="noopener"
-    class="btn btn-hero inline-flex"
-    aria-label="Start Free Trial"
-    tabindex="0"
-  >
-    Start Free Trial<span aria-hidden="true"> →</span>
-  </a>
-
-  <a
-    href="https://youtu.be/Fndd0hdTEzw?si=w4yLr3s8a1asQCIe"
-    target="_blank"
-    rel="noopener"
-    class="btn btn-outline btn-lg"
-    aria-label="Watch Demo"
-  >
-    <span aria-hidden="true">📖</span> Watch Demo
-  </a>
-</div>
-
-        </div>
-
-        <div class="hero-image" aria-hidden="true">
-          <img
-            src="hero-education.jpg"
-            alt="Modern Indian classroom with digital learning"
-            loading="lazy"
-            width="600"
-            height="400"
-          />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Problems Section -->
-  <section class="problems" id="problems" role="region" aria-labelledby="problems-title">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-badge">The Challenges You Face Daily</div>
-        <h2 class="section-title" id="problems-title">
-          Running an Institute in Small Cities is <span style="color: var(--danger);">Tough</span>
-        </h2>
-        <p class="section-description">
-          Especially in Bihar, UP, and tier-2/3 cities where resources are limited and digital infrastructure is still developing. We understand your pain points.
-        </p>
-      </div>
-      <div class="problems-grid" aria-label="List of common problems">
-        <div class="problem-cards">
-          <article class="problem-card" tabindex="0" aria-labelledby="problem1-title" aria-describedby="problem1-desc">
-            <div class="problem-icon" aria-hidden="true">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="24"
-                height="24"
-              >
-                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                <polyline points="14 2 14 8 20 8" />
-              </svg>
-            </div>
-            <h3 id="problem1-title">Paper-Based Chaos</h3>
-            <p id="problem1-desc">
-              Drowning in registers, files, and ledgers? Manual record-keeping leads to errors, lost data, and wasted time.
-            </p>
-          </article>
-
-          <article class="problem-card" tabindex="0" aria-labelledby="problem2-title" aria-describedby="problem2-desc">
-            <div class="problem-icon" aria-hidden="true" style="background: #fef3c7; color: #b45309;">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="24"
-                height="24"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
-              </svg>
-            </div>
-            <h3 id="problem2-title">Time-Consuming Tasks</h3>
-            <p id="problem2-desc">
-              Hours spent on attendance, fee collection, and report generation that could be automated in minutes.
-            </p>
-          </article>
-
-          <article class="problem-card" tabindex="0" aria-labelledby="problem3-title" aria-describedby="problem3-desc">
-            <div class="problem-icon" aria-hidden="true" style="background: #dcfce7; color: #15803d;">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="28"
-                height="28"
-              >
-                <path d="M6 6h12" />
-                <path d="M6 10h12" />
-                <path d="M6 6c5 0 8 3 8 7H6l8 8" />
-              </svg>
-            </div>
-            <h3 id="problem3-title">Payment Tracking Nightmares</h3>
-            <p id="problem3-desc">
-              Difficulty tracking pending fees, manual receipt generation, and reconciliation headaches every month.
-            </p>
-          </article>
-
-          <article class="problem-card" tabindex="0" aria-labelledby="problem4-title" aria-describedby="problem4-desc">
-            <div class="problem-icon" aria-hidden="true" style="background: #e0e7ff; color: #4338ca;">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="24"
-                height="24"
-              >
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-              </svg>
-            </div>
-            <h3 id="problem4-title">Multiple Branch Management</h3>
-            <p id="problem4-desc">
-              Managing multiple locations with separate data, no unified view, and coordination challenges.
-            </p>
-          </article>
-
-          <article class="problem-card" tabindex="0" aria-labelledby="problem5-title" aria-describedby="problem5-desc">
-            <div class="problem-icon" aria-hidden="true" style="background: #ede9fe; color: #7c3aed;">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="24"
-                height="24"
-              >
-                <line x1="12" y1="20" x2="12" y2="10" />
-                <line x1="18" y1="20" x2="18" y2="4" />
-                <line x1="6" y1="20" x2="6" y2="16" />
-              </svg>
-            </div>
-            <h3 id="problem5-title">Manual Report Creation</h3>
-            <p id="problem5-desc">
-              Creating attendance reports, performance analysis, and administrative reports manually takes days.
-            </p>
-          </article>
-
-          <article class="problem-card" tabindex="0" aria-labelledby="problem6-title" aria-describedby="problem6-desc">
-            <div class="problem-icon" aria-hidden="true" style="background: #fef3c7; color: #b45309;">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="24"
-                height="24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 9v2m0 4h.01M5.07 19h13.86L12 4 5.07 19z"
-                />
-              </svg>
-            </div>
-            <h3 id="problem6-title">Communication Gaps</h3>
-            <p id="problem6-desc">
-              Difficulty sending notifications, reminders, and updates to students and parents efficiently.
-            </p>
-          </article>
-        </div>
-        <div aria-hidden="true">
-          <img
-            src="problem-solution.jpg"
-            alt="Educational institute management challenges"
-            loading="lazy"
-            width="520"
-            height="480"
-            style="border-radius: var(--radius-md); box-shadow: 0 20px 40px var(--shadow-light)"
-          />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Solutions Section -->
-  <section class="solutions" id="solutions" role="region" aria-labelledby="solutions-title">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-badge">The Sikhsha Sathi Solution</div>
-        <h2 class="section-title" id="solutions-title">
-          Go <span class="gradient-text">Completely Digital</span> in One Day
-        </h2>
-        <p class="section-description">
-          Transform your educational institute with our all-in-one platform designed specifically for Indian institutes in small cities.
-        </p>
-      </div>
-
-      <div class="benefits-grid" aria-label="Benefits of Sikhsha Sathi">
-        <section class="benefit-card" tabindex="0" aria-labelledby="benefit1-title" aria-describedby="benefit1-desc">
-          <div class="benefit-icon" aria-hidden="true">⚡</div>
-          <h3 id="benefit1-title">10x Faster Operations</h3>
-          <p id="benefit1-desc">
-            Automate attendance, fees, reports, and reduce manual work from hours to minutes.
-          </p>
-        </section>
-
-        <section class="benefit-card" tabindex="0" aria-labelledby="benefit2-title" aria-describedby="benefit2-desc">
-          <div class="benefit-icon" aria-hidden="true">☁️</div>
-          <h3 id="benefit2-title">100% Cloud-Based</h3>
-          <p id="benefit2-desc">
-            Access your institute data from anywhere, anytime. No servers, no IT headaches.
-          </p>
-        </section>
-
-        <section class="benefit-card" tabindex="0" aria-labelledby="benefit3-title" aria-describedby="benefit3-desc">
-          <div class="benefit-icon" aria-hidden="true">🛡️</div>
-          <h3 id="benefit3-title">Secure & Reliable</h3>
-          <p id="benefit3-desc">
-            Bank-grade security with automatic backups. Your data is safe and always available.
-          </p>
-        </section>
-
-        <section class="benefit-card" tabindex="0" aria-labelledby="benefit4-title" aria-describedby="benefit4-desc">
-          <div class="benefit-icon" aria-hidden="true">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-8 w-8"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-              focusable="false"
-              style="color: #22c55e;"
-            >
-              <rect x="6" y="2" width="12" height="20" rx="3" ry="3" />
-              <circle cx="12" cy="18" r="1" fill="currentColor" />
-            </svg>
-          </div>
-          <h3 id="benefit4-title">Mobile-First Design</h3>
-          <p id="benefit4-desc">
-            Works perfectly on phones, tablets, and computers. Manage on the go.
-          </p>
-        </section>
-
-        <section class="benefit-card" tabindex="0" aria-labelledby="benefit5-title" aria-describedby="benefit5-desc">
-          <div class="benefit-icon" aria-hidden="true">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-8 w-8"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-              focusable="false"
-              style="color: #16a34a;"
-            >
-              <rect x="4" y="12" width="3" height="9" fill="currentColor" />
-              <rect x="10" y="8" width="3" height="13" fill="currentColor" />
-              <rect x="16" y="4" width="3" height="17" fill="currentColor" />
-            </svg>
-          </div>
-          <h3 id="benefit5-title">Growth-Focused</h3>
-          <p id="benefit5-desc">
-            AI insights help you make better decisions and grow your institute faster.
-          </p>
-        </section>
-
-        <section class="benefit-card" tabindex="0" aria-labelledby="benefit6-title" aria-describedby="benefit6-desc">
-          <div class="benefit-icon" aria-hidden="true">✓</div>
-          <h3 id="benefit6-title">Easy to Use</h3>
-          <p id="benefit6-desc">
-            No technical knowledge needed. Get started in minutes with our simple interface.
-          </p>
-        </section>
-      </div>
-
-      <div style="text-align: center;">
-        <button class="btn btn-cta btn-lg" aria-label="Start Your Digital Journey Today">
-          Start Your Digital Journey Today <span aria-hidden="true">✓</span>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features Section -->
-  <section id="features" role="region" aria-labelledby="features-title">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-badge">Powerful Features</div>
-        <h2 class="section-title" id="features-title">
-          Everything You Need in <span class="gradient-text">One Platform</span>
-        </h2>
-        <p class="section-description">
-          From student enrollment to fee collection, from AI-powered tools to detailed analytics—we've got you covered.
-        </p>
-      </div>
-
-      <div class="features-grid" aria-label="Feature list">
-        <article class="feature-card" tabindex="0" aria-labelledby="feature1-title" aria-describedby="feature1-desc">
-          <div class="feature-icon" style="background: #3b82f6;" aria-hidden="true">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              width="28"
-              height="28"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
-          </div>
-          <h3 id="feature1-title">Student Management</h3>
-          <p id="feature1-desc">
-            Complete student records, bulk imports, voice assistant for quick entry, and smart search capabilities.
-          </p>
-        </article>
-
-        <article class="feature-card" tabindex="0" aria-labelledby="feature2-title" aria-describedby="feature2-desc">
-          <div class="feature-icon" style="background: #a855f7;" aria-hidden="true">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              width="28"
-              height="28"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path d="M22 10L12 5 2 10l10 5 10-5z" />
-              <path d="M6 12v5a6 6 0 0012 0v-5" />
-            </svg>
-          </div>
-          <h3 id="feature2-title">Faculty Portal</h3>
-          <p id="feature2-desc">
-            Invite teachers, grant permissions, manage classes, and provide dedicated faculty dashboard access.
-          </p>
-        </article>
-
-        <article class="feature-card" tabindex="0" aria-labelledby="feature3-title" aria-describedby="feature3-desc">
-          <div class="feature-icon" style="background: #22c55e;" aria-hidden="true">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              width="28"
-              height="28"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path d="M12 6l8 4-8 4-8-4 8-4z" />
-              <path d="M4 10v8a2 2 0 002 2h12a2 2 0 002-2v-8" />
-            </svg>
-          </div>
-          <h3 id="feature3-title">Course & Content</h3>
-          <p id="feature3-desc">
-            Create courses, upload materials, AI-generated content, and manage modules with ease.
-          </p>
-        </article>
-
-        <article class="feature-card" tabindex="0" aria-labelledby="feature4-title" aria-describedby="feature4-desc">
-          <div
-            class="feature-icon"
-            style="background: #f97316; font-size: 2.5rem; font-weight: 900; display: flex; align-items: center; justify-content: center;"
-            aria-hidden="true"
-            >₹</div
-          >
-          <h3 id="feature4-title">Online Payments</h3>
-          <p id="feature4-desc">
-            Generate payment links, accept online fees via Razorpay/UPI, auto-receipts, and reconciliation.
-          </p>
-        </article>
-
-        <article class="feature-card" tabindex="0" aria-labelledby="feature5-title" aria-describedby="feature5-desc">
-          <div class="feature-icon" style="background: #ec4899;" aria-hidden="true">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              width="28"
-              height="28"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <rect x="6" y="7" width="12" height="10" rx="2" ry="2" />
-              <circle cx="9" cy="12" r="1.5" fill="currentColor" />
-              <circle cx="15" cy="12" r="1.5" fill="currentColor" />
-              <line x1="12" y1="17" x2="12" y2="19" />
-              <line x1="8" y1="21" x2="16" y2="21" />
-              <rect x="10" y="2" width="4" height="3" rx="1" ry="1" />
-            </svg>
-          </div>
-          <h3 id="feature5-title">AI Assistant</h3>
-          <p id="feature5-desc">
-            Voice commands for data entry, AI-generated tests & materials, and smart insights on trends.
-          </p>
-        </article>
-
-        <article class="feature-card" tabindex="0" aria-labelledby="feature6-title" aria-describedby="feature6-desc">
-          <div class="feature-icon" style="background: #06b6d4;" aria-hidden="true">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              width="28"
-              height="28"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <h3 id="feature6-title">Tests & Assessments</h3>
-          <p id="feature6-desc">
-            Create tests, auto-generate questions, online grading, result publishing, and export reports.
-          </p>
-        </article>
-
-        <article class="feature-card" tabindex="0" aria-labelledby="feature7-title" aria-describedby="feature7-desc">
-          <div class="feature-icon" style="background: #ef4444;" aria-hidden="true">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              width="28"
-              height="28"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-              <line x1="3" y1="10" x2="21" y2="10" />
-              <line x1="8" y1="2" x2="8" y2="6" />
-              <line x1="16" y1="2" x2="16" y2="6" />
-            </svg>
-          </div>
-          <h3 id="feature7-title">Attendance & Reports</h3>
-          <p id="feature7-desc">
-            Digital attendance marking, monthly trends, visual graphs, and one-click PDF exports.
-          </p>
-        </article>
-
-        <article class="feature-card" tabindex="0" aria-labelledby="feature8-title" aria-describedby="feature8-desc">
-          <div class="feature-icon" style="background: #6366f1;" aria-hidden="true">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              width="28"
-              height="28"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <rect x="4" y="10" width="4" height="10" fill="currentColor" />
-              <rect x="10" y="6" width="4" height="14" fill="currentColor" />
-              <rect x="16" y="2" width="4" height="18" fill="currentColor" />
-            </svg>
-          </div>
-          <h3 id="feature8-title">Analytics Dashboard</h3>
-          <p id="feature8-desc">
-            Real-time metrics, revenue tracking, student insights, and AI-powered recommendations.
-          </p>
-        </article>
-      </div>
-
-      <div style="margin-top: 3rem; text-align: center;">
-        <p style="color: var(--muted-text); font-weight: 600; max-width: 700px; margin: 0 auto;">
-          Plus: Multi-institute management, library shifts, events & announcements, automated notifications, and more…
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Dashboard Section -->
-  <section class="dashboard" role="region" aria-labelledby="dashboard-title">
-    <div class="container">
-      <div class="dashboard-preview">
-        <div class="section-header">
-          <div class="section-badge" aria-hidden="true" style="background: rgba(94, 89, 230, 0.12); border: 1.5px solid rgba(94, 89, 230, 0.25); color: var(--primary); box-shadow: 0 0 15px rgba(94, 89, 230, 0.12);">
-            <span aria-hidden="true">✨</span> <span>Beautiful Dashboard</span>
-          </div>
-          <h2 class="section-title" id="dashboard-title">
-            Manage Everything from <span class="gradient-text">One Screen</span>
-          </h2>
-          <p class="section-description">
-            Intuitive, clean, and powerful dashboard designed for Indian educators. See all your key metrics at a glance.
-          </p>
-        </div>
-
-        <div class="browser-mockup" aria-label="Dashboard preview">
-          <div class="browser-bar" aria-hidden="true">
-            <div class="browser-dots">
-              <div class="browser-dot red"></div>
-              <div class="browser-dot yellow"></div>
-              <div class="browser-dot green"></div>
-            </div>
-            <div class="browser-url">https://sikhsha-sathi.up.railway.app/institute-dashboard</div>
-          </div>
-          <div class="dashboard-image">
-            <img
-              src="dashboard.png"
-              alt="Sikhsha Sathi Dashboard Preview"
-              loading="lazy"
-              width="900"
-              height="480"
-            />
-          </div>
-        </div>
-
-        <button class="btn btn-hero" aria-label="See Demo Dashboard" style="margin-top: 5rem;">
-          See Demo Dashboard <span aria-hidden="true">→</span>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="cta" role="region" aria-labelledby="cta-title">
-    <div class="container">
-      <div class="cta-content">
-        <div class="section-badge" aria-hidden="true">
-          <span>✨</span>
-          <span>Limited Time Offer</span>
-        </div>
-
-        <h2 id="cta-title">Start Your Digital Transformation Today</h2>
-
-        <p>
- We’re on a mission to make institute management simple and smart.
-        Join our early adopters and experience how Sikhsha Sathi helps automate admissions, attendance, fees, and reports — all in one place.
-      </p>
-
-        <div class="cta-features" aria-label="CTA features">
-          <div class="cta-feature" tabindex="0">
-            <span aria-hidden="true">✓</span>
-            <span>7-day free trial</span>
-          </div>
-          <div class="cta-feature" tabindex="0">
-            <span aria-hidden="true">✓</span>
-            <span>No credit card needed</span>
-          </div>
-          <div class="cta-feature" tabindex="0">
-            <span aria-hidden="true">✓</span>
-            <span>Free onboarding support</span>
-          </div>
-        </div>
-
-        <div class="cta-buttons" role="group" aria-label="Call to action buttons">
-          <a
-            href="https://sikhsha-sathi.up.railway.app"
-            target="_blank"
-            rel="noopener"
-            class="btn btn-white btn-lg"
-            aria-label="Get Started Free"
-            tabindex="0"
-            >Get Started Free <span aria-hidden="true">→</span></a
-          >
-          <button
-            id="scheduleDemoBtn"
-            class="btn btn-outline-white btn-lg"
-            aria-haspopup="dialog"
-            aria-controls="scheduleModal"
-            aria-expanded="false"
-            type="button"
-            tabindex="0"
-          >
-            Schedule Demo
-          </button>
-
-          <!-- Modal -->
-          <div
-            id="scheduleModal"
-            class="modal-overlay"
-            aria-hidden="true"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="scheduleModalTitle"
-            tabindex="-1"
-          >
-            <div class="modal" role="document">
-              <div class="modal-header">
-                <h3 id="scheduleModalTitle">Schedule a Demo</h3>
-                <button
-                  class="close-modal"
-                  id="closeModalBtn"
-                  aria-label="Close modal"
-                  type="button"
-                >
-                  ✕
+                <button class="menu-button" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu"
+                    onclick="toggleMenu()">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
                 </button>
-              </div>
-
-              <form id="scheduleForm" class="modal-body" autocomplete="on" novalidate>
-                <div class="form-grid two-cols">
-                  <div>
-                    <label for="name">Full name</label>
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      required
-                      placeholder="e.g., Rajesh Kumar"
-                      aria-required="true"
-                    />
-                  </div>
-                  <div>
-                    <label for="email">Email</label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      placeholder="you@institute.com"
-                      aria-required="true"
-                    />
-                  </div>
-                </div>
-
-                <div class="form-grid two-cols" style="margin-top: 1rem;">
-                  <div>
-                    <label for="phone">Phone</label>
-                    <input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      required
-                      placeholder="+91 98xxxx"
-                      aria-required="true"
-                    />
-                  </div>
-                  <div>
-                    <label for="institute">Institute / Branch</label>
-                    <input
-                      id="institute"
-                      name="institute"
-                      type="text"
-                      placeholder="Name of school/college"
-                      aria-required="false"
-                    />
-                  </div>
-                </div>
-
-                <div style="margin-top: 1rem;">
-                  <label for="datetime">Preferred date &amp; time</label>
-                  <input id="datetime" name="datetime" type="datetime-local" />
-                </div>
-
-                <div style="margin-top: 1rem;">
-                  <label for="message">Message (optional)</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    placeholder="Questions or notes..."
-                  ></textarea>
-                </div>
-
-                <hr />
-
-                <div class="form-status" id="formStatus" aria-live="polite"></div>
-
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn-modal btn-cancel"
-                    id="cancelBtn"
-                    aria-label="Cancel scheduling"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    class="btn-modal btn-submit"
-                    id="submitBtn"
-                    aria-label="Send demo request"
-                  >
-                    Send Request
-                  </button>
-                </div>
-              </form>
             </div>
-          </div>
-        </div>
 
-        <div
-          style="
+            <div class="mobile-menu" id="mobileMenu" role="menu" aria-label="Mobile navigation">
+                <a href="#features" role="menuitem" tabindex="-1">Features</a>
+                <a href="javascript:void(0)" id="openPlansLinkMobile" role="menuitem" tabindex="-1"
+                    aria-haspopup="dialog" aria-controls="plansModal">Subscription</a>
+                <a href="#solutions" role="menuitem" tabindex="-1">Solutions</a>
+                <a href="#about" role="menuitem" tabindex="-1">About</a>
+                <button class="btn btn-ghost" style="width: 100%; margin-top: 1rem;" tabindex="-1">Login</button>
+                <button class="btn btn-cta" style="width: 100%; margin-top: 0.5rem;" tabindex="-1">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" role="region" aria-labelledby="hero-title">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge" aria-label="Education badge">
+                        <span aria-hidden="true">🎓</span>
+                        <span>Transform Your Institute Digitally</span>
+                    </div>
+                    <h1 id="hero-title">
+                        Complete Digital<br />
+                        <span class="gradient-text">Education Management</span><br />
+                        for Modern Institutes
+                    </h1>
+                    <p>
+                        Sikhsha Sathi empowers educational institutes across India—especially
+                        in Bihar, UP, and tier-2/3 cities—to go completely paperless.
+                        Manage students, faculty, courses, fees, and more from one powerful
+                        dashboard.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="https://sikhsha-sathi.up.railway.app/" target="_blank" rel="noopener"
+                            class="btn btn-hero inline-flex" aria-label="Start Free Trial" tabindex="0">
+                            Start Free Trial<span aria-hidden="true"> →</span>
+                        </a>
+
+                        <a href="https://youtu.be/Fndd0hdTEzw?si=w4yLr3s8a1asQCIe" target="_blank" rel="noopener"
+                            class="btn btn-outline btn-lg" aria-label="Watch Demo">
+                            <span aria-hidden="true">📖</span> Watch Demo
+                        </a>
+                    </div>
+
+                </div>
+
+                <div class="hero-image" aria-hidden="true">
+                    <img src="hero-education.jpg" alt="Modern Indian classroom with digital learning" loading="lazy"
+                        width="600" height="400" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problems Section -->
+    <section class="problems" id="problems" role="region" aria-labelledby="problems-title">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">The Challenges You Face Daily</div>
+                <h2 class="section-title" id="problems-title">
+                    Running an Institute in Small Cities is <span style="color: var(--danger);">Tough</span>
+                </h2>
+                <p class="section-description">
+                    Especially in Bihar, UP, and tier-2/3 cities where resources are limited and digital infrastructure
+                    is still developing. We understand your pain points.
+                </p>
+            </div>
+            <div class="problems-grid" aria-label="List of common problems">
+                <div class="problem-cards">
+                    <article class="problem-card" tabindex="0" aria-labelledby="problem1-title"
+                        aria-describedby="problem1-desc">
+                        <div class="problem-icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                width="24" height="24">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                            </svg>
+                        </div>
+                        <h3 id="problem1-title">Paper-Based Chaos</h3>
+                        <p id="problem1-desc">
+                            Drowning in registers, files, and ledgers? Manual record-keeping leads to errors, lost data,
+                            and wasted time.
+                        </p>
+                    </article>
+
+                    <article class="problem-card" tabindex="0" aria-labelledby="problem2-title"
+                        aria-describedby="problem2-desc">
+                        <div class="problem-icon" aria-hidden="true" style="background: #fef3c7; color: #b45309;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                width="24" height="24">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                        </div>
+                        <h3 id="problem2-title">Time-Consuming Tasks</h3>
+                        <p id="problem2-desc">
+                            Hours spent on attendance, fee collection, and report generation that could be automated in
+                            minutes.
+                        </p>
+                    </article>
+
+                    <article class="problem-card" tabindex="0" aria-labelledby="problem3-title"
+                        aria-describedby="problem3-desc">
+                        <div class="problem-icon" aria-hidden="true" style="background: #dcfce7; color: #15803d;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                width="28" height="28">
+                                <path d="M6 6h12" />
+                                <path d="M6 10h12" />
+                                <path d="M6 6c5 0 8 3 8 7H6l8 8" />
+                            </svg>
+                        </div>
+                        <h3 id="problem3-title">Payment Tracking Nightmares</h3>
+                        <p id="problem3-desc">
+                            Difficulty tracking pending fees, manual receipt generation, and reconciliation headaches
+                            every month.
+                        </p>
+                    </article>
+
+                    <article class="problem-card" tabindex="0" aria-labelledby="problem4-title"
+                        aria-describedby="problem4-desc">
+                        <div class="problem-icon" aria-hidden="true" style="background: #e0e7ff; color: #4338ca;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                width="24" height="24">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                        </div>
+                        <h3 id="problem4-title">Multiple Branch Management</h3>
+                        <p id="problem4-desc">
+                            Managing multiple locations with separate data, no unified view, and coordination
+                            challenges.
+                        </p>
+                    </article>
+
+                    <article class="problem-card" tabindex="0" aria-labelledby="problem5-title"
+                        aria-describedby="problem5-desc">
+                        <div class="problem-icon" aria-hidden="true" style="background: #ede9fe; color: #7c3aed;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                width="24" height="24">
+                                <line x1="12" y1="20" x2="12" y2="10" />
+                                <line x1="18" y1="20" x2="18" y2="4" />
+                                <line x1="6" y1="20" x2="6" y2="16" />
+                            </svg>
+                        </div>
+                        <h3 id="problem5-title">Manual Report Creation</h3>
+                        <p id="problem5-desc">
+                            Creating attendance reports, performance analysis, and administrative reports manually takes
+                            days.
+                        </p>
+                    </article>
+
+                    <article class="problem-card" tabindex="0" aria-labelledby="problem6-title"
+                        aria-describedby="problem6-desc">
+                        <div class="problem-icon" aria-hidden="true" style="background: #fef3c7; color: #b45309;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                width="24" height="24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01M5.07 19h13.86L12 4 5.07 19z" />
+                            </svg>
+                        </div>
+                        <h3 id="problem6-title">Communication Gaps</h3>
+                        <p id="problem6-desc">
+                            Difficulty sending notifications, reminders, and updates to students and parents
+                            efficiently.
+                        </p>
+                    </article>
+                </div>
+                <div aria-hidden="true">
+                    <img src="problem-solution.jpg" alt="Educational institute management challenges" loading="lazy"
+                        width="520" height="480"
+                        style="border-radius: var(--radius-md); box-shadow: 0 20px 40px var(--shadow-light)" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section class="solutions" id="solutions" role="region" aria-labelledby="solutions-title">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">The Sikhsha Sathi Solution</div>
+                <h2 class="section-title" id="solutions-title">
+                    Go <span class="gradient-text">Completely Digital</span> in One Day
+                </h2>
+                <p class="section-description">
+                    Transform your educational institute with our all-in-one platform designed specifically for Indian
+                    institutes in small cities.
+                </p>
+            </div>
+
+            <div class="benefits-grid" aria-label="Benefits of Sikhsha Sathi">
+                <section class="benefit-card" tabindex="0" aria-labelledby="benefit1-title"
+                    aria-describedby="benefit1-desc">
+                    <div class="benefit-icon" aria-hidden="true">⚡</div>
+                    <h3 id="benefit1-title">10x Faster Operations</h3>
+                    <p id="benefit1-desc">
+                        Automate attendance, fees, reports, and reduce manual work from hours to minutes.
+                    </p>
+                </section>
+
+                <section class="benefit-card" tabindex="0" aria-labelledby="benefit2-title"
+                    aria-describedby="benefit2-desc">
+                    <div class="benefit-icon" aria-hidden="true">☁️</div>
+                    <h3 id="benefit2-title">100% Cloud-Based</h3>
+                    <p id="benefit2-desc">
+                        Access your institute data from anywhere, anytime. No servers, no IT headaches.
+                    </p>
+                </section>
+
+                <section class="benefit-card" tabindex="0" aria-labelledby="benefit3-title"
+                    aria-describedby="benefit3-desc">
+                    <div class="benefit-icon" aria-hidden="true">🛡️</div>
+                    <h3 id="benefit3-title">Secure & Reliable</h3>
+                    <p id="benefit3-desc">
+                        Bank-grade security with automatic backups. Your data is safe and always available.
+                    </p>
+                </section>
+
+                <section class="benefit-card" tabindex="0" aria-labelledby="benefit4-title"
+                    aria-describedby="benefit4-desc">
+                    <div class="benefit-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true" focusable="false" style="color: #22c55e;">
+                            <rect x="6" y="2" width="12" height="20" rx="3" ry="3" />
+                            <circle cx="12" cy="18" r="1" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <h3 id="benefit4-title">Mobile-First Design</h3>
+                    <p id="benefit4-desc">
+                        Works perfectly on phones, tablets, and computers. Manage on the go.
+                    </p>
+                </section>
+
+                <section class="benefit-card" tabindex="0" aria-labelledby="benefit5-title"
+                    aria-describedby="benefit5-desc">
+                    <div class="benefit-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true" focusable="false" style="color: #16a34a;">
+                            <rect x="4" y="12" width="3" height="9" fill="currentColor" />
+                            <rect x="10" y="8" width="3" height="13" fill="currentColor" />
+                            <rect x="16" y="4" width="3" height="17" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <h3 id="benefit5-title">Growth-Focused</h3>
+                    <p id="benefit5-desc">
+                        AI insights help you make better decisions and grow your institute faster.
+                    </p>
+                </section>
+
+                <section class="benefit-card" tabindex="0" aria-labelledby="benefit6-title"
+                    aria-describedby="benefit6-desc">
+                    <div class="benefit-icon" aria-hidden="true">✓</div>
+                    <h3 id="benefit6-title">Easy to Use</h3>
+                    <p id="benefit6-desc">
+                        No technical knowledge needed. Get started in minutes with our simple interface.
+                    </p>
+                </section>
+            </div>
+
+            <div style="text-align: center;">
+                <button class="btn btn-cta btn-lg" aria-label="Start Your Digital Journey Today">
+                    Start Your Digital Journey Today <span aria-hidden="true">✓</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" role="region" aria-labelledby="features-title">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Powerful Features</div>
+                <h2 class="section-title" id="features-title">
+                    Everything You Need in <span class="gradient-text">One Platform</span>
+                </h2>
+                <p class="section-description">
+                    From student enrollment to fee collection, from AI-powered tools to detailed analytics—we've got you
+                    covered.
+                </p>
+            </div>
+
+            <div class="features-grid" aria-label="Feature list">
+                <article class="feature-card" tabindex="0" aria-labelledby="feature1-title"
+                    aria-describedby="feature1-desc">
+                    <div class="feature-icon" style="background: #3b82f6;" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"
+                            aria-hidden="true" focusable="false">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                    </div>
+                    <h3 id="feature1-title">Student Management</h3>
+                    <p id="feature1-desc">
+                        Complete student records, bulk imports, voice assistant for quick entry, and smart search
+                        capabilities.
+                    </p>
+                </article>
+
+                <article class="feature-card" tabindex="0" aria-labelledby="feature2-title"
+                    aria-describedby="feature2-desc">
+                    <div class="feature-icon" style="background: #a855f7;" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"
+                            aria-hidden="true" focusable="false">
+                            <path d="M22 10L12 5 2 10l10 5 10-5z" />
+                            <path d="M6 12v5a6 6 0 0012 0v-5" />
+                        </svg>
+                    </div>
+                    <h3 id="feature2-title">Faculty Portal</h3>
+                    <p id="feature2-desc">
+                        Invite teachers, grant permissions, manage classes, and provide dedicated faculty dashboard
+                        access.
+                    </p>
+                </article>
+
+                <article class="feature-card" tabindex="0" aria-labelledby="feature3-title"
+                    aria-describedby="feature3-desc">
+                    <div class="feature-icon" style="background: #22c55e;" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"
+                            aria-hidden="true" focusable="false">
+                            <path d="M12 6l8 4-8 4-8-4 8-4z" />
+                            <path d="M4 10v8a2 2 0 002 2h12a2 2 0 002-2v-8" />
+                        </svg>
+                    </div>
+                    <h3 id="feature3-title">Course & Content</h3>
+                    <p id="feature3-desc">
+                        Create courses, upload materials, AI-generated content, and manage modules with ease.
+                    </p>
+                </article>
+
+                <article class="feature-card" tabindex="0" aria-labelledby="feature4-title"
+                    aria-describedby="feature4-desc">
+                    <div class="feature-icon"
+                        style="background: #f97316; font-size: 2.5rem; font-weight: 900; display: flex; align-items: center; justify-content: center;"
+                        aria-hidden="true">₹</div>
+                    <h3 id="feature4-title">Online Payments</h3>
+                    <p id="feature4-desc">
+                        Generate payment links, accept online fees via Razorpay/UPI, auto-receipts, and reconciliation.
+                    </p>
+                </article>
+
+                <article class="feature-card" tabindex="0" aria-labelledby="feature5-title"
+                    aria-describedby="feature5-desc">
+                    <div class="feature-icon" style="background: #ec4899;" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"
+                            aria-hidden="true" focusable="false">
+                            <rect x="6" y="7" width="12" height="10" rx="2" ry="2" />
+                            <circle cx="9" cy="12" r="1.5" fill="currentColor" />
+                            <circle cx="15" cy="12" r="1.5" fill="currentColor" />
+                            <line x1="12" y1="17" x2="12" y2="19" />
+                            <line x1="8" y1="21" x2="16" y2="21" />
+                            <rect x="10" y="2" width="4" height="3" rx="1" ry="1" />
+                        </svg>
+                    </div>
+                    <h3 id="feature5-title">AI Assistant</h3>
+                    <p id="feature5-desc">
+                        Voice commands for data entry, AI-generated tests & materials, and smart insights on trends.
+                    </p>
+                </article>
+
+                <article class="feature-card" tabindex="0" aria-labelledby="feature6-title"
+                    aria-describedby="feature6-desc">
+                    <div class="feature-icon" style="background: #06b6d4;" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"
+                            aria-hidden="true" focusable="false">
+                            <path d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <h3 id="feature6-title">Tests & Assessments</h3>
+                    <p id="feature6-desc">
+                        Create tests, auto-generate questions, online grading, result publishing, and export reports.
+                    </p>
+                </article>
+
+                <article class="feature-card" tabindex="0" aria-labelledby="feature7-title"
+                    aria-describedby="feature7-desc">
+                    <div class="feature-icon" style="background: #ef4444;" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"
+                            aria-hidden="true" focusable="false">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                            <line x1="8" y1="2" x2="8" y2="6" />
+                            <line x1="16" y1="2" x2="16" y2="6" />
+                        </svg>
+                    </div>
+                    <h3 id="feature7-title">Attendance & Reports</h3>
+                    <p id="feature7-desc">
+                        Digital attendance marking, monthly trends, visual graphs, and one-click PDF exports.
+                    </p>
+                </article>
+
+                <article class="feature-card" tabindex="0" aria-labelledby="feature8-title"
+                    aria-describedby="feature8-desc">
+                    <div class="feature-icon" style="background: #6366f1;" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"
+                            aria-hidden="true" focusable="false">
+                            <rect x="4" y="10" width="4" height="10" fill="currentColor" />
+                            <rect x="10" y="6" width="4" height="14" fill="currentColor" />
+                            <rect x="16" y="2" width="4" height="18" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <h3 id="feature8-title">Analytics Dashboard</h3>
+                    <p id="feature8-desc">
+                        Real-time metrics, revenue tracking, student insights, and AI-powered recommendations.
+                    </p>
+                </article>
+            </div>
+
+            <div style="margin-top: 3rem; text-align: center;">
+                <p style="color: var(--muted-text); font-weight: 600; max-width: 700px; margin: 0 auto;">
+                    Plus: Multi-institute management, library shifts, events & announcements, automated notifications,
+                    and more…
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard" role="region" aria-labelledby="dashboard-title">
+        <div class="container">
+            <div class="dashboard-preview">
+                <div class="section-header">
+                    <div class="section-badge" aria-hidden="true"
+                        style="background: rgba(94, 89, 230, 0.12); border: 1.5px solid rgba(94, 89, 230, 0.25); color: var(--primary); box-shadow: 0 0 15px rgba(94, 89, 230, 0.12);">
+                        <span aria-hidden="true">✨</span> <span>Beautiful Dashboard</span>
+                    </div>
+                    <h2 class="section-title" id="dashboard-title">
+                        Manage Everything from <span class="gradient-text">One Screen</span>
+                    </h2>
+                    <p class="section-description">
+                        Intuitive, clean, and powerful dashboard designed for Indian educators. See all your key metrics
+                        at a glance.
+                    </p>
+                </div>
+
+                <div class="browser-mockup" aria-label="Dashboard preview">
+                    <div class="browser-bar" aria-hidden="true">
+                        <div class="browser-dots">
+                            <div class="browser-dot red"></div>
+                            <div class="browser-dot yellow"></div>
+                            <div class="browser-dot green"></div>
+                        </div>
+                        <div class="browser-url">https://sikhsha-sathi.up.railway.app/institute-dashboard</div>
+                    </div>
+                    <div class="dashboard-image">
+                        <img src="dashboard.png" alt="Sikhsha Sathi Dashboard Preview" loading="lazy" width="900"
+                            height="480" />
+                    </div>
+                </div>
+
+                <button class="btn btn-hero" aria-label="See Demo Dashboard" style="margin-top: 5rem;">
+                    See Demo Dashboard <span aria-hidden="true">→</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" role="region" aria-labelledby="cta-title">
+        <div class="container">
+            <div class="cta-content">
+                <div class="section-badge" aria-hidden="true">
+                    <span>✨</span>
+                    <span>Limited Time Offer</span>
+                </div>
+
+                <h2 id="cta-title">Start Your Digital Transformation Today</h2>
+
+                <p>
+                    We’re on a mission to make institute management simple and smart.
+                    Join our early adopters and experience how Sikhsha Sathi helps automate admissions, attendance,
+                    fees, and reports — all in one place.
+                </p>
+
+                <div class="cta-features" aria-label="CTA features">
+                    <div class="cta-feature" tabindex="0">
+                        <span aria-hidden="true">✓</span>
+                        <span>7-day free trial</span>
+                    </div>
+                    <div class="cta-feature" tabindex="0">
+                        <span aria-hidden="true">✓</span>
+                        <span>No credit card needed</span>
+                    </div>
+                    <div class="cta-feature" tabindex="0">
+                        <span aria-hidden="true">✓</span>
+                        <span>Free onboarding support</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons" role="group" aria-label="Call to action buttons">
+                    <a href="https://sikhsha-sathi.up.railway.app" target="_blank" rel="noopener"
+                        class="btn btn-white btn-lg" aria-label="Get Started Free" tabindex="0">Get Started Free <span
+                            aria-hidden="true">→</span></a>
+                    <button id="scheduleDemoBtn" class="btn btn-outline-white btn-lg" aria-haspopup="dialog"
+                        aria-controls="scheduleModal" aria-expanded="false" type="button" tabindex="0">
+                        Schedule Demo
+                    </button>
+
+                    <!-- Modal -->
+                    <div id="scheduleModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true"
+                        aria-labelledby="scheduleModalTitle" tabindex="-1">
+                        <div class="modal" role="document">
+                            <div class="modal-header">
+                                <h3 id="scheduleModalTitle">Schedule a Demo</h3>
+                                <button class="close-modal" id="closeModalBtn" aria-label="Close modal" type="button">
+                                    ✕
+                                </button>
+                            </div>
+
+                            <form id="scheduleForm" class="modal-body" autocomplete="on" novalidate>
+                                <div class="form-grid two-cols">
+                                    <div>
+                                        <label for="name">Full name</label>
+                                        <input id="name" name="name" type="text" required
+                                            placeholder="e.g., Rajesh Kumar" aria-required="true" />
+                                    </div>
+                                    <div>
+                                        <label for="email">Email</label>
+                                        <input id="email" name="email" type="email" required
+                                            placeholder="you@institute.com" aria-required="true" />
+                                    </div>
+                                </div>
+
+                                <div class="form-grid two-cols" style="margin-top: 1rem;">
+                                    <div>
+                                        <label for="phone">Phone</label>
+                                        <input id="phone" name="phone" type="tel" required placeholder="+91 98xxxx"
+                                            aria-required="true" />
+                                    </div>
+                                    <div>
+                                        <label for="institute">Institute / Branch</label>
+                                        <input id="institute" name="institute" type="text"
+                                            placeholder="Name of school/college" aria-required="false" />
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 1rem;">
+                                    <label for="datetime">Preferred date &amp; time</label>
+                                    <input id="datetime" name="datetime" type="datetime-local" />
+                                </div>
+
+                                <div style="margin-top: 1rem;">
+                                    <label for="message">Message (optional)</label>
+                                    <textarea id="message" name="message"
+                                        placeholder="Questions or notes..."></textarea>
+                                </div>
+
+                                <hr />
+
+                                <div class="form-status" id="formStatus" aria-live="polite"></div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn-modal btn-cancel" id="cancelBtn"
+                                        aria-label="Cancel scheduling">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="btn-modal btn-submit" id="submitBtn"
+                                        aria-label="Send demo request">
+                                        Send Request
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="
             padding-top: 2rem;
             border-top: 1.5px solid rgba(255 255 255 / 0.3);
             margin-top: 2rem;
             font-weight: 600;
             font-size: 1.05rem;
-          "
-          aria-label="Trusted regions"
-        >
-          <p>Trusted by institutes in</p>
-          <div
-            style="
+          " aria-label="Trusted regions">
+                    <p>Trusted by institutes in</p>
+                    <div style="
               display: flex;
               justify-content: center;
               flex-wrap: wrap;
               gap: 1rem;
               color: rgba(255 255 255 / 0.9);
-            "
-          >
-            <span>Bihar</span>
-            <span style="opacity: 0.5;">•</span>
-            <span>Uttar Pradesh</span>
-            <span style="opacity: 0.5;">•</span>
-            <span>Jharkhand</span>
-            <span style="opacity: 0.5;">•</span>
-            <span>West Bengal</span>
-            <span style="opacity: 0.5;">•</span>
-            <span>Madhya Pradesh</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <div class="footer-grid">
-        <section aria-labelledby="footer-brand-title">
-          <div class="footer-brand" id="footer-brand-title">
-            <div class="logo-icon" aria-hidden="true">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="20"
-                height="20"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <path d="M22 10L12 5 2 10l10 5 10-5z" />
-                <path d="M6 12v5a6 6 0 0012 0v-5" />
-              </svg>
+            ">
+                        <span>Bihar</span>
+                        <span style="opacity: 0.5;">•</span>
+                        <span>Uttar Pradesh</span>
+                        <span style="opacity: 0.5;">•</span>
+                        <span>Jharkhand</span>
+                        <span style="opacity: 0.5;">•</span>
+                        <span>West Bengal</span>
+                        <span style="opacity: 0.5;">•</span>
+                        <span>Madhya Pradesh</span>
+                    </div>
+                </div>
             </div>
-            <span class="logo-text">Sikhsha Sathi</span>
-          </div>
-          <p>
-            Empowering educational institutes across India with complete digital
-            management solutions. Go paperless, grow faster.
-          </p>
-          <div class="social-links" aria-label="Social media links">
-  <a href="#" class="social-link" aria-label="Facebook" tabindex="0" rel="noopener" target="_blank">
-    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M22.675 0h-21.35C.597 0 0 .597 0 1.325v21.351C0 23.403.597 24 1.325
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <section aria-labelledby="footer-brand-title">
+                    <div class="footer-brand" id="footer-brand-title">
+                        <div class="logo-icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                width="20" height="20" aria-hidden="true" focusable="false">
+                                <path d="M22 10L12 5 2 10l10 5 10-5z" />
+                                <path d="M6 12v5a6 6 0 0012 0v-5" />
+                            </svg>
+                        </div>
+                        <span class="logo-text">Sikhsha Sathi</span>
+                    </div>
+                    <p>
+                        Empowering educational institutes across India with complete digital
+                        management solutions. Go paperless, grow faster.
+                    </p>
+                    <div class="social-links" aria-label="Social media links">
+                        <a href="#" class="social-link" aria-label="Facebook" tabindex="0" rel="noopener"
+                            target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M22.675 0h-21.35C.597 0 0 .597 0 1.325v21.351C0 23.403.597 24 1.325
       24h11.495v-9.294H9.691v-3.622h3.129V8.413c0-3.1 1.893-4.788 4.659-4.788
       1.325 0 2.463.099 2.794.143v3.24l-1.917.001c-1.504 0-1.796.715-1.796
       1.763v2.311h3.587l-.467 3.622h-3.12V24h6.116C23.403 24 24
-      23.403 24 22.676V1.325C24 .597 23.403 0 22.675 0z"/>
-    </svg>
-  </a>
+      23.403 24 22.676V1.325C24 .597 23.403 0 22.675 0z" />
+                            </svg>
+                        </a>
 
-  <a href="https://x.com/rajrounak121" class="social-link" aria-label="Twitter" tabindex="0" rel="noopener" target="_blank">
-    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775
+                        <a href="https://x.com/rajrounak121" class="social-link" aria-label="Twitter" tabindex="0"
+                            rel="noopener" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775
       1.014-.611 1.794-1.574 2.163-2.723-.951.564-2.005.974-3.127
       1.195-.897-.957-2.178-1.555-3.594-1.555-2.72
       0-4.924 2.204-4.924 4.924 0 .39.045.765.127
@@ -2230,13 +2245,15 @@
       2.179 1.397 4.768 2.212 7.557
       2.212 9.054 0 14-7.496 14-13.986
       0-.21 0-.423-.015-.633.962-.689
-      1.8-1.56 2.46-2.548z"/>
-    </svg>
-  </a>
+      1.8-1.56 2.46-2.548z" />
+                            </svg>
+                        </a>
 
-  <a href="https://www.linkedin.com/in/rounak-raj-761400267/" class="social-link" aria-label="LinkedIn" tabindex="0" rel="noopener" target="_blank">
-    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M19 0h-14C2.239 0 0 2.239 0 5v14c0
+                        <a href="https://www.linkedin.com/in/rounak-raj-761400267/" class="social-link"
+                            aria-label="LinkedIn" tabindex="0" rel="noopener" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M19 0h-14C2.239 0 0 2.239 0 5v14c0
       2.761 2.239 5 5 5h14c2.761 0 5-2.239
       5-5V5c0-2.761-2.239-5-5-5zm-11.75
       20H3.5v-11h3.75v11zM5.375
@@ -2246,13 +2263,15 @@
       2.188zM20.5 20h-3.75v-5.604c0-1.336-.027-3.053-1.86-3.053-1.863
       0-2.148 1.456-2.148 2.958V20H9v-11h3.6v1.507h.051c.501-.951
       1.725-1.955 3.551-1.955 3.799 0 4.298 2.502
-      4.298 5.756V20z"/>
-    </svg>
-  </a>
+      4.298 5.756V20z" />
+                            </svg>
+                        </a>
 
-  <a href="https://youtu.be/Fndd0hdTEzw" class="social-link" aria-label="YouTube" tabindex="0" rel="noopener" target="_blank">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M23.498 6.186a2.998 2.998 0 0 0-2.113-2.12C19.458
+                        <a href="https://youtu.be/Fndd0hdTEzw" class="social-link" aria-label="YouTube" tabindex="0"
+                            rel="noopener" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M23.498 6.186a2.998 2.998 0 0 0-2.113-2.12C19.458
       3.5 12 3.5 12 3.5s-7.458 0-9.385.566a2.998 2.998
       0 0 0-2.113 2.12A31.533 31.533 0 0 0
       0 12a31.533 31.533 0 0 0 .502
@@ -2261,419 +2280,498 @@
       0 9.385-.566a2.998 2.998 0 0 0
       2.113-2.12A31.533 31.533 0 0 0 24
       12a31.533 31.533 0 0 0-.502-5.814zM9.75
-      15.568V8.432L15.818 12l-6.068 3.568z"/>
-    </svg>
-  </a>
-</div>
+      15.568V8.432L15.818 12l-6.068 3.568z" />
+                            </svg>
+                        </a>
+                    </div>
 
-        </section>
+                </section>
 
-        <section class="footer-section" aria-labelledby="footer-product-title">
-          <h3 id="footer-product-title">Product</h3>
-          <ul>
-            <li><a href="#features" tabindex="0">Features</a></li>
-            <li><a href="javascript:void(0)" id="openPlansLinkDesktop" tabindex="0" aria-haspopup="dialog" aria-controls="plansModal">Subscription</a></li>
-            <li><a href="#" tabindex="0">Integrations</a></li>
-            <li><a href="#" tabindex="0">API Documentation</a></li>
-            <li><a href="#" tabindex="0">Changelog</a></li>
-          </ul>
-        </section>
+                <section class="footer-section" aria-labelledby="footer-product-title">
+                    <h3 id="footer-product-title">Quick Links</h3>
+                    <ul>
+                        <li><a href="#features" tabindex="0">Features & Modules</a></li>
+                        <li><a href="#solutions" tabindex="0">Our Solutions</a></li>
+                        <li><a href="javascript:void(0)" id="openPlansLinkDesktop" tabindex="0" aria-haspopup="dialog"
+                                aria-controls="plansModal">Pricing & Plans</a></li>
+                    </ul>
+                </section>
 
-        <section class="footer-section" aria-labelledby="footer-company-title">
-          <h3 id="footer-company-title">Company</h3>
-          <ul>
-            <li><a href="#about" tabindex="0">About Us</a></li>
-            <li><a href="#" tabindex="0">Careers</a></li>
-            <li><a href="#" tabindex="0">Blog</a></li>
-            <li><a href="#" tabindex="0">Case Studies</a></li>
-            <li><a href="#" tabindex="0">Contact</a></li>
-          </ul>
-        </section>
+                <section class="footer-section" aria-labelledby="footer-company-title">
+                    <h3 id="footer-company-title">Company</h3>
+                    <ul>
+                        <li><a href="#about" tabindex="0">About Us</a></li>
+                        <li><a href="#" tabindex="0">Help & Support</a></li>
+                        <li><a href="#" tabindex="0">Contact Us</a></li>
+                    </ul>
+                </section>
 
-        <section class="footer-section bg-gray-800" aria-labelledby="footer-contact-title" role="region">
-          <h3 id="footer-contact-title">Get in Touch</h3>
-          <p style="margin-bottom: 1.5rem; font-size: 0.95rem; color: #94a3b8; line-height: 1.6;">
-            Have questions or need help setting up? Reach out to our team for dedicated support.
-          </p>
-          <ul>
-            <li>
-              <a href="mailto:sathisikhsha@gmail.com" class="flex items-center gap-1" tabindex="0" style="padding: 0.25rem 0;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true" style="margin-right: 0.5rem; color: var(--primary-light);">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                <span>sathisikhsha@gmail.com</span>
-              </a>
-            </li>
-            <li>
-              <a href="tel:+919899984983" class="flex items-center gap-1" tabindex="0" style="padding: 0.25rem 0;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true" style="margin-right: 0.5rem; color: var(--primary-light);">
-                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.86 19.86 0 01-8.63-3.05 19.5 19.5 0 01-6-6A19.86 19.86 0 014.08 4.18 2 2 0 016 2h3a2 2 0 012 1.72c.13.87.37 1.72.72 2.53a2 2 0 01-.45 2.11L10 9.5a16 16 0 006 6l.14-.14a2 2 0 012.11-.45c.81.35 1.66.59 2.53.72A2 2 0 0122 16.92z"></path>
-                </svg>
-                <span>+91 95720 73615</span>
-              </a>
-            </li>
-            <li class="flex items-center gap-1" tabindex="0" aria-label="Location: Patna, Bihar, India" style="padding: 0.25rem 0; display: flex; align-items: center; color: #cbd5e1;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true" style="margin-right: 0.5rem; color: var(--primary-light);">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-              <span>Patna, Bihar, India</span>
-            </li>
-          </ul>
-        </section>
-      </div>
+                <section class="footer-section bg-gray-800" aria-labelledby="footer-contact-title" role="region">
+                    <h3 id="footer-contact-title">Get in Touch</h3>
+                    <p style="margin-bottom: 1.5rem; font-size: 0.95rem; color: #94a3b8; line-height: 1.6;">
+                        Have questions or need help setting up? Reach out to our team for dedicated support.
+                    </p>
+                    <ul>
+                        <li>
+                            <a href="mailto:sathisikhsha@gmail.com" class="flex items-center gap-1" tabindex="0"
+                                style="padding: 0.25rem 0;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"
+                                    style="margin-right: 0.5rem; color: var(--primary-light);">
+                                    <path
+                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                    </path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                                <span>sathisikhsha@gmail.com</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:+919572073615" class="flex items-center gap-1" tabindex="0"
+                                style="padding: 0.25rem 0;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"
+                                    style="margin-right: 0.5rem; color: var(--primary-light);">
+                                    <path
+                                        d="M22 16.92v3a2 2 0 01-2.18 2 19.86 19.86 0 01-8.63-3.05 19.5 19.5 0 01-6-6A19.86 19.86 0 014.08 4.18 2 2 0 016 2h3a2 2 0 012 1.72c.13.87.37 1.72.72 2.53a2 2 0 01-.45 2.11L10 9.5a16 16 0 006 6l.14-.14a2 2 0 012.11-.45c.81.35 1.66.59 2.53.72A2 2 0 0122 16.92z">
+                                    </path>
+                                </svg>
+                                <span>+91 95720 73615</span>
+                            </a>
+                        </li>
+                        <li class="flex items-center gap-1" tabindex="0" aria-label="Location: Patna, Bihar, India"
+                            style="padding: 0.25rem 0; display: flex; align-items: center; color: #cbd5e1;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                viewBox="0 0 24 24" aria-hidden="true"
+                                style="margin-right: 0.5rem; color: var(--primary-light);">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <span>Patna, Bihar, India</span>
+                        </li>
+                    </ul>
+                </section>
+            </div>
 
-      <div class="footer-bottom">
-        <p>© 2025 Sikhsha Sathi. All rights reserved.</p>
-        <div class="footer-links" role="navigation" aria-label="Footer policies">
-          <a href="#" tabindex="0">Privacy Policy</a>
-          <a href="#" tabindex="0">Terms of Service</a>
-          <a href="#" tabindex="0">Cookie Policy</a>
+            <div class="footer-bottom">
+                <p>© 2026 Sikhsha Sathi. All rights reserved.</p>
+                <div class="footer-links" role="navigation" aria-label="Footer policies">
+                    <a href="javascript:void(0)" class="policy-link" data-policy="privacy" tabindex="0">Privacy Policy</a>
+                    <a href="javascript:void(0)" class="policy-link" data-policy="terms" tabindex="0">Terms of Service</a>
+                    <a href="javascript:void(0)" class="policy-link" data-policy="cookie" tabindex="0">Cookie Policy</a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </footer>
+    </footer>
 
-  <!-- Subscription Plans Modal -->
-  <div
-    id="plansModal"
-    class="modal-overlay"
-    aria-hidden="true"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="plansModalTitle"
-    tabindex="-1"
-  >
-    <div class="modal" role="document">
-      <div class="modal-header">
-        <h3 id="plansModalTitle">Subscription Plans – Choose What Fits You</h3>
-        <button
-          class="close-modal"
-          id="closePlansBtn"
-          aria-label="Close modal"
-          type="button"
-        >
-          ✕
-        </button>
-      </div>
-      <div class="modal-body">
-        <div style="display: grid; gap: 1.5rem;">
-          <!-- TRIAL -->
-          <section
-            style="
+    <!-- Subscription Plans Modal -->
+    <div id="plansModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true"
+        aria-labelledby="plansModalTitle" tabindex="-1">
+        <div class="modal" role="document">
+            <div class="modal-header">
+                <h3 id="plansModalTitle">Subscription Plans – Choose What Fits You</h3>
+                <button class="close-modal" id="closePlansBtn" aria-label="Close modal" type="button">
+                    ✕
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="display: grid; gap: 1.5rem;">
+                    <!-- TRIAL -->
+                    <section style="
               border: 1.5px solid var(--border);
               border-radius: var(--radius-md);
               padding: 1.25rem;
-            "
-            tabindex="0"
-            aria-labelledby="trial-plan-title"
-            aria-describedby="trial-plan-desc"
-          >
-            <h4
-              id="trial-plan-title"
-              style="color: var(--primary); font-size: 1.15rem; font-weight: 700;"
-            >
-              🎯 Trial Plan (7 Days Free)
-            </h4>
-            <p id="trial-plan-desc">
-              Perfect for new institutes exploring Sikhsha Sathi. Get hands-on
-              experience with all core features.
-            </p>
-            <ul
-              style="
+            " tabindex="0" aria-labelledby="trial-plan-title" aria-describedby="trial-plan-desc">
+                        <h4 id="trial-plan-title" style="color: var(--primary); font-size: 1.15rem; font-weight: 700;">
+                            🎯 Trial Plan (7 Days Free)
+                        </h4>
+                        <p id="trial-plan-desc">
+                            Perfect for new institutes exploring Sikhsha Sathi. Get hands-on
+                            experience with all core features.
+                        </p>
+                        <ul style="
                 margin-top: 0.5rem;
                 list-style: none;
                 padding-left: 0;
                 color: var(--text-dark);
                 font-weight: 600;
-              "
-            >
-              <li>✔️ Up to 30 students</li>
-              <li>✔️ Basic dashboard access</li>
-              <li>✔️ Student, Faculty & Attendance modules</li>
-              <li>✔️ 1 Faculty login</li>
-              <li>🚫 No AI Assistant, Analytics, or Multi-branch</li>
-            </ul>
-          </section>
+              ">
+                            <li>✔️ Up to 30 students</li>
+                            <li>✔️ Basic dashboard access</li>
+                            <li>✔️ Student, Faculty & Attendance modules</li>
+                            <li>✔️ 1 Faculty login</li>
+                            <li>🚫 No AI Assistant, Analytics, or Multi-branch</li>
+                        </ul>
+                    </section>
 
-          <!-- STARTER -->
-          <section
-            style="
+                    <!-- STARTER -->
+                    <section style="
               border: 1.5px solid var(--border);
               border-radius: var(--radius-md);
               padding: 1.25rem;
-            "
-            tabindex="0"
-            aria-labelledby="starter-plan-title"
-            aria-describedby="starter-plan-desc"
-          >
-            <h4
-              id="starter-plan-title"
-              style="color: hsl(220, 70%, 55%); font-size: 1.15rem; font-weight: 700;"
-            >
-              🌱 Starter Plan
-            </h4>
-            <p id="starter-plan-desc">
-              Ideal for small institutes, coaching centers, or single branches
-              looking to digitize operations.
-            </p>
-            <ul
-              style="
+            " tabindex="0" aria-labelledby="starter-plan-title" aria-describedby="starter-plan-desc">
+                        <h4 id="starter-plan-title"
+                            style="color: hsl(220, 70%, 55%); font-size: 1.15rem; font-weight: 700;">
+                            🌱 Starter Plan
+                        </h4>
+                        <p id="starter-plan-desc">
+                            Ideal for small institutes, coaching centers, or single branches
+                            looking to digitize operations.
+                        </p>
+                        <ul style="
                 margin-top: 0.5rem;
                 list-style: none;
                 padding-left: 0;
                 color: var(--text-dark);
                 font-weight: 600;
-              "
-            >
-              <li>✔️ Up to 100 students</li>
-              <li>✔️ 3 Faculty accounts</li>
-              <li>✔️ Attendance, Fees & Reports automation</li>
-              <li>✔️ Student notifications & receipts</li>
-              <li>🚫 No Multi-branch or AI tools</li>
-            </ul>
-          </section>
+              ">
+                            <li>✔️ Up to 100 students</li>
+                            <li>✔️ 3 Faculty accounts</li>
+                            <li>✔️ Attendance, Fees & Reports automation</li>
+                            <li>✔️ Student notifications & receipts</li>
+                            <li>🚫 No Multi-branch or AI tools</li>
+                        </ul>
+                    </section>
 
-          <!-- MEDIATOR -->
-          <section
-            style="
+                    <!-- MEDIATOR -->
+                    <section style="
               border: 1.5px solid var(--border);
               border-radius: var(--radius-md);
               padding: 1.25rem;
-            "
-            tabindex="0"
-            aria-labelledby="mediator-plan-title"
-            aria-describedby="mediator-plan-desc"
-          >
-            <h4
-              id="mediator-plan-title"
-              style="color: hsl(25, 90%, 55%); font-size: 1.15rem; font-weight: 700;"
-            >
-              🚀 Mediator Plan
-            </h4>
-            <p id="mediator-plan-desc">
-              For growing institutes with multiple classes or branches—expand
-              without complexity.
-            </p>
-            <ul
-              style="
+            " tabindex="0" aria-labelledby="mediator-plan-title" aria-describedby="mediator-plan-desc">
+                        <h4 id="mediator-plan-title"
+                            style="color: hsl(25, 90%, 55%); font-size: 1.15rem; font-weight: 700;">
+                            🚀 Mediator Plan
+                        </h4>
+                        <p id="mediator-plan-desc">
+                            For growing institutes with multiple classes or branches—expand
+                            without complexity.
+                        </p>
+                        <ul style="
                 margin-top: 0.5rem;
                 list-style: none;
                 padding-left: 0;
                 color: var(--text-dark);
                 font-weight: 600;
-              "
-            >
-              <li>✔️ Up to 300 students</li>
-              <li>✔️ 10 Faculty accounts</li>
-              <li>✔️ Multi-branch dashboard</li>
-              <li>✔️ Smart Reports & Online Payments</li>
-              <li>✔️ Priority email support</li>
-              <li>🚫 Limited AI content generation</li>
-            </ul>
-          </section>
+              ">
+                            <li>✔️ Up to 300 students</li>
+                            <li>✔️ 10 Faculty accounts</li>
+                            <li>✔️ Multi-branch dashboard</li>
+                            <li>✔️ Smart Reports & Online Payments</li>
+                            <li>✔️ Priority email support</li>
+                            <li>🚫 Limited AI content generation</li>
+                        </ul>
+                    </section>
 
-          <!-- FULL ACCESS -->
-          <section
-            style="
+                    <!-- FULL ACCESS -->
+                    <section style="
               border-radius: var(--radius-md);
               padding: 1.25rem;
               background: linear-gradient(135deg, var(--primary), #8b5cf6);
               color: white;
               box-shadow: 0 8px 20px rgba(94, 89, 230, 0.4);
-            "
-            tabindex="0"
-            aria-labelledby="fullaccess-plan-title"
-            aria-describedby="fullaccess-plan-desc"
-          >
-            <h4
-              id="fullaccess-plan-title"
-              style="font-size: 1.15rem; font-weight: 800;"
-            >
-              🏆 Full Access Plan
-            </h4>
-            <p id="fullaccess-plan-desc">
-              Designed for schools, colleges, and organizations that want full
-              control and growth analytics.
-            </p>
-            <ul
-              style="
+            " tabindex="0" aria-labelledby="fullaccess-plan-title" aria-describedby="fullaccess-plan-desc">
+                        <h4 id="fullaccess-plan-title" style="font-size: 1.15rem; font-weight: 800;">
+                            🏆 Full Access Plan
+                        </h4>
+                        <p id="fullaccess-plan-desc">
+                            Designed for schools, colleges, and organizations that want full
+                            control and growth analytics.
+                        </p>
+                        <ul style="
                 margin-top: 0.5rem;
                 list-style: none;
                 padding-left: 0;
                 font-weight: 700;
-              "
-            >
-              <li>✔️ Unlimited students & faculty</li>
-              <li>✔️ AI Assistant for attendance & report automation</li>
-              <li>✔️ Advanced analytics & growth insights</li>
-              <li>✔️ Custom branding & domain integration</li>
-              <li>✔️ Dedicated success manager</li>
-              <li>⭐ 24×7 priority support</li>
-            </ul>
-          </section>
+              ">
+                            <li>✔️ Unlimited students & faculty</li>
+                            <li>✔️ AI Assistant for attendance & report automation</li>
+                            <li>✔️ Advanced analytics & growth insights</li>
+                            <li>✔️ Custom branding & domain integration</li>
+                            <li>✔️ Dedicated success manager</li>
+                            <li>⭐ 24×7 priority support</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal btn-cancel" id="cancelPlansBtn"
+                    aria-label="Close subscription plans modal">
+                    Close
+                </button>
+                <a href="https://sikhsha-sathi.onrender.com" target="_blank" rel="noopener" class="btn-modal btn-submit"
+                    aria-label="Start Free Trial from subscription plans modal" tabindex="0">Start Free Trial</a>
+            </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn-modal btn-cancel"
-          id="cancelPlansBtn"
-          aria-label="Close subscription plans modal"
-        >
-          Close
-        </button>
-        <a
-          href="https://sikhsha-sathi.onrender.com"
-          target="_blank"
-          rel="noopener"
-          class="btn-modal btn-submit"
-          aria-label="Start Free Trial from subscription plans modal"
-          tabindex="0"
-          >Start Free Trial</a
-        >
-      </div>
     </div>
-  </div>
 
-  <!-- JavaScript -->
-  <script>
-    const navbar = document.getElementById('navbar');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const menuButton = document.querySelector('.menu-button');
-    const scheduleModal = document.getElementById('scheduleModal');
-    const scheduleDemoBtn = document.getElementById('scheduleDemoBtn');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const cancelBtn = document.getElementById('cancelBtn');
-    const scheduleForm = document.getElementById('scheduleForm');
-    const formStatus = document.getElementById('formStatus');
-    const submitBtn = document.getElementById('submitBtn');
+    <!-- Policy Modal -->
+    <div id="policyModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true"
+        aria-labelledby="policyModalTitle" tabindex="-1">
+        <div class="modal" role="document" style="background: linear-gradient(to bottom, #ffffff, #f8faff); border-top: 4px solid var(--primary); box-shadow: 0 30px 60px rgba(94, 89, 230, 0.2), 0 0 0 1px rgba(94, 89, 230, 0.1);">
+            <div class="modal-header" style="background: rgba(94, 89, 230, 0.03); border-bottom: 1px solid rgba(94, 89, 230, 0.1);">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="width: 2.75rem; height: 2.75rem; border-radius: 50%; background: linear-gradient(135deg, var(--primary-light), var(--primary)); display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 10px var(--shadow-light);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    </div>
+                    <h3 id="policyModalTitle" style="font-size: 1.35rem; color: var(--primary-dark); font-weight: 800; margin: 0;">Policy</h3>
+                </div>
+                <button class="close-modal" id="closePolicyBtn" aria-label="Close modal" type="button" style="background: white; border-radius: 50%; width: 2.25rem; height: 2.25rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); color: var(--text-dark);">
+                    ✕
+                </button>
+            </div>
+            <div class="modal-body" style="padding: 2rem 2.5rem;">
+                <div id="policyContent" style="color: var(--text-dark); line-height: 1.8; font-size: 1.05rem;">
+                    <!-- Content injected via JS -->
+                </div>
+            </div>
+            <div class="modal-footer" style="background: rgba(94, 89, 230, 0.03); border-top: 1px solid rgba(94, 89, 230, 0.1);">
+                <button type="button" class="btn-modal btn-submit" id="cancelPolicyBtn"
+                    aria-label="Close policy modal" style="margin-right: 0; padding: 0.6rem 2.5rem; border-radius: var(--radius-full);">
+                    Got it!
+                </button>
+            </div>
+        </div>
+    </div>
 
-    // Mobile menu toggle
-    function toggleMenu() {
-      mobileMenu.classList.toggle('active');
-      const expanded = menuButton.getAttribute('aria-expanded') === 'true';
-      menuButton.setAttribute('aria-expanded', !expanded);
-    }
+    <!-- JavaScript -->
+    <script>
+        const navbar = document.getElementById('navbar');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuButton = document.querySelector('.menu-button');
+        const scheduleModal = document.getElementById('scheduleModal');
+        const scheduleDemoBtn = document.getElementById('scheduleDemoBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const scheduleForm = document.getElementById('scheduleForm');
+        const formStatus = document.getElementById('formStatus');
+        const submitBtn = document.getElementById('submitBtn');
 
-    // Close mobile menu when clicking links
-    document.querySelectorAll('#mobileMenu a').forEach((link) => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        menuButton.setAttribute('aria-expanded', 'false');
-      });
-    });
+        // Mobile menu toggle
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+            const expanded = menuButton.getAttribute('aria-expanded') === 'true';
+            menuButton.setAttribute('aria-expanded', !expanded);
+        }
 
-    // Navbar scroll shadow effect
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 80) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-    });
-
-    // Modal open/close for demo scheduling
-    function openModal(modal) {
-      modal.classList.add('active');
-      modal.setAttribute('aria-hidden', 'false');
-      modal.querySelector('input, button, textarea, select').focus();
-    }
-    function closeModal(modal) {
-      modal.classList.remove('active');
-      modal.setAttribute('aria-hidden', 'true');
-      scheduleDemoBtn.focus();
-      formStatus.textContent = '';
-      scheduleForm.reset();
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Send Request';
-    }
-
-    scheduleDemoBtn.addEventListener('click', () => openModal(scheduleModal));
-    closeModalBtn.addEventListener('click', () => closeModal(scheduleModal));
-    cancelBtn.addEventListener('click', () => closeModal(scheduleModal));
-    scheduleModal.addEventListener('click', (e) => {
-      if (e.target === scheduleModal) closeModal(scheduleModal);
-    });
-
-    // Form submission with Formspree
-    const FORM_ENDPOINT = 'https://formspree.io/f/xjkpvlwq';
-
-    scheduleForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      formStatus.textContent = '';
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
-
-      const formData = new FormData(scheduleForm);
-      const emailVal = scheduleForm.querySelector('input[name="email"]')?.value;
-      if (emailVal) formData.set('_replyto', emailVal);
-      formData.set('_subject', 'Demo request from website');
-      formData.set('_language', navigator.language || 'en-US');
-
-      try {
-        const res = await fetch(FORM_ENDPOINT, {
-          method: 'POST',
-          headers: { Accept: 'application/json' },
-          body: formData,
+        // Close mobile menu when clicking links
+        document.querySelectorAll('#mobileMenu a').forEach((link) => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                menuButton.setAttribute('aria-expanded', 'false');
+            });
         });
 
-        const json = await res.json().catch(() => null);
-        if (res.ok) {
-          formStatus.style.color = 'green';
-          formStatus.textContent = 'Thanks — your demo request has been sent.';
-          submitBtn.textContent = 'Sent';
-          setTimeout(() => {
-            closeModal(scheduleModal);
-          }, 1500);
-        } else {
-          formStatus.style.color = 'crimson';
-          formStatus.textContent =
-            json?.error || json?.detail || 'Failed to send. Please try again later.';
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Send Request';
+        // Auto-add reveal class to sections
+        document.querySelectorAll('.section-header, .problem-card, .benefit-card, .feature-card, .browser-mockup, .cta-content').forEach((el, index) => {
+            el.classList.add('reveal');
+            if (el.classList.contains('problem-card') || el.classList.contains('benefit-card') || el.classList.contains('feature-card')) {
+                const delay = (index % 4) + 1;
+                el.classList.add(`reveal-delay-${delay}`);
+            }
+        });
+
+        // Scroll Reveal Observer
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // 3D Card Hover Effect
+        const tiltCards = document.querySelectorAll('.problem-card, .benefit-card, .feature-card, .browser-mockup');
+        tiltCards.forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -4;
+                const rotateY = ((x - centerX) / centerX) * 4;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                card.style.transition = 'transform 0.1s linear, box-shadow 0.3s ease';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+                card.style.transition = 'transform 0.5s ease, box-shadow 0.3s ease';
+            });
+        });
+
+        // Navbar scroll shadow effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Modal open/close for demo scheduling
+        function openModal(modal) {
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            modal.querySelector('input, button, textarea, select').focus();
         }
-      } catch (err) {
-        formStatus.style.color = 'crimson';
-        formStatus.textContent = 'Network error. Please try again later.';
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Send Request';
-      }
-    });
+        function closeModal(modal) {
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+            scheduleDemoBtn.focus();
+            formStatus.textContent = '';
+            scheduleForm.reset();
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Send Request';
+        }
 
-    // Subscription plans modal
-    const plansModal = document.getElementById('plansModal');
-    const openPlansLinks = document.querySelectorAll(
-      '#openPlansLink, #openPlansLinkDesktop, #openPlansLinkMobile'
-    );
-    const closePlansBtn = document.getElementById('closePlansBtn');
-    const cancelPlansBtn = document.getElementById('cancelPlansBtn');
+        scheduleDemoBtn.addEventListener('click', () => openModal(scheduleModal));
+        closeModalBtn.addEventListener('click', () => closeModal(scheduleModal));
+        cancelBtn.addEventListener('click', () => closeModal(scheduleModal));
+        scheduleModal.addEventListener('click', (e) => {
+            if (e.target === scheduleModal) closeModal(scheduleModal);
+        });
 
-    function openPlans() {
-      if (!plansModal) return;
-      plansModal.classList.add('active');
-      plansModal.setAttribute('aria-hidden', 'false');
-      plansModal.querySelector('a, button').focus();
-    }
-    function closePlans() {
-      if (!plansModal) return;
-      plansModal.classList.remove('active');
-      plansModal.setAttribute('aria-hidden', 'true');
-      openPlansLinks[0]?.focus();
-    }
+        // Form submission with Formspree
+        const FORM_ENDPOINT = 'https://formspree.io/f/xjkpvlwq';
 
-    openPlansLinks.forEach((link) =>
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        openPlans();
-      })
-    );
-    closePlansBtn?.addEventListener('click', closePlans);
-    cancelPlansBtn?.addEventListener('click', closePlans);
-    plansModal?.addEventListener('click', (e) => {
-      if (e.target === plansModal) closePlans();
-    });
-  </script>
+        scheduleForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            formStatus.textContent = '';
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            const formData = new FormData(scheduleForm);
+            const emailVal = scheduleForm.querySelector('input[name="email"]')?.value;
+            if (emailVal) formData.set('_replyto', emailVal);
+            formData.set('_subject', 'Demo request from website');
+            formData.set('_language', navigator.language || 'en-US');
+
+            try {
+                const res = await fetch(FORM_ENDPOINT, {
+                    method: 'POST',
+                    headers: { Accept: 'application/json' },
+                    body: formData,
+                });
+
+                const json = await res.json().catch(() => null);
+                if (res.ok) {
+                    formStatus.style.color = 'green';
+                    formStatus.textContent = 'Thanks — your demo request has been sent.';
+                    submitBtn.textContent = 'Sent';
+                    setTimeout(() => {
+                        closeModal(scheduleModal);
+                    }, 1500);
+                } else {
+                    formStatus.style.color = 'crimson';
+                    formStatus.textContent =
+                        json?.error || json?.detail || 'Failed to send. Please try again later.';
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Request';
+                }
+            } catch (err) {
+                formStatus.style.color = 'crimson';
+                formStatus.textContent = 'Network error. Please try again later.';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Request';
+            }
+        });
+
+        // Subscription plans modal
+        const plansModal = document.getElementById('plansModal');
+        const openPlansLinks = document.querySelectorAll(
+            '#openPlansLink, #openPlansLinkDesktop, #openPlansLinkMobile'
+        );
+        const closePlansBtn = document.getElementById('closePlansBtn');
+        const cancelPlansBtn = document.getElementById('cancelPlansBtn');
+
+        function openPlans() {
+            if (!plansModal) return;
+            plansModal.classList.add('active');
+            plansModal.setAttribute('aria-hidden', 'false');
+            plansModal.querySelector('a, button').focus();
+        }
+        function closePlans() {
+            if (!plansModal) return;
+            plansModal.classList.remove('active');
+            plansModal.setAttribute('aria-hidden', 'true');
+            openPlansLinks[0]?.focus();
+        }
+
+        openPlansLinks.forEach((link) =>
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                openPlans();
+            })
+        );
+        closePlansBtn?.addEventListener('click', closePlans);
+        cancelPlansBtn?.addEventListener('click', closePlans);
+        plansModal?.addEventListener('click', (e) => {
+            if (e.target === plansModal) closePlans();
+        });
+
+        // Policy Modals
+        const policyModal = document.getElementById('policyModal');
+        const policyModalTitle = document.getElementById('policyModalTitle');
+        const policyContent = document.getElementById('policyContent');
+        const policyLinks = document.querySelectorAll('.policy-link');
+        const closePolicyBtn = document.getElementById('closePolicyBtn');
+        const cancelPolicyBtn = document.getElementById('cancelPolicyBtn');
+
+        const policyData = {
+            'privacy': {
+                title: 'Privacy Policy',
+                text: '<p style="margin-bottom: 1rem;">Your privacy is important to us. This Privacy Policy explains how Sikhsha Sathi collects, uses, and shares your personal information.</p><p style="margin-bottom: 1rem;">We do not sell your data to third parties. All data is securely stored and used only for providing the best educational management experience.</p><p>If you have any questions about this policy, please contact us at sathisikhsha@gmail.com.</p>'
+            },
+            'terms': {
+                title: 'Terms of Service',
+                text: '<p style="margin-bottom: 1rem;">Welcome to Sikhsha Sathi. By using our platform, you agree to these Terms of Service. Our services are provided "as is", and we are not liable for any interruptions in service.</p><p style="margin-bottom: 1rem;">You are responsible for maintaining the confidentiality of your account credentials.</p><p>We reserve the right to update these terms at any time. Continued use of the platform constitutes acceptance of the new terms.</p>'
+            },
+            'cookie': {
+                title: 'Cookie Policy',
+                text: '<p style="margin-bottom: 1rem;">We use cookies to improve your experience on our site, analyze performance, and provide personalized content. By continuing to use Sikhsha Sathi, you consent to our use of cookies.</p><p>You can manage your cookie preferences through your browser settings.</p>'
+            }
+        };
+
+        function openPolicy(policyType) {
+            if (!policyModal || !policyData[policyType]) return;
+            policyModalTitle.textContent = policyData[policyType].title;
+            policyContent.innerHTML = policyData[policyType].text;
+            policyModal.classList.add('active');
+            policyModal.setAttribute('aria-hidden', 'false');
+            closePolicyBtn.focus();
+        }
+
+        function closePolicy() {
+            if (!policyModal) return;
+            policyModal.classList.remove('active');
+            policyModal.setAttribute('aria-hidden', 'true');
+        }
+
+        policyLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                openPolicy(link.getAttribute('data-policy'));
+            });
+        });
+
+        closePolicyBtn?.addEventListener('click', closePolicy);
+        cancelPolicyBtn?.addEventListener('click', closePolicy);
+        policyModal?.addEventListener('click', (e) => {
+            if (e.target === policyModal) closePolicy();
+        });
+    </script>
 </body>
+
 </html>
