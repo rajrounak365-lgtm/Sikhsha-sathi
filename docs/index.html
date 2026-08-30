@@ -9,6 +9,11 @@
         content="Transform your educational institute with Sikhsha Sathi. Manage students, faculty, courses, fees, and attendance from one powerful platform. Perfect for institutes in Bihar, UP, and tier-2/3 cities." />
     <meta name="keywords"
         content="education management, institute management, student management, online fee payment, educational software India, Bihar education, digital institute" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800;12..96,900&family=Onest:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
     <style>
         /* Reset & Base */
         * {
@@ -24,13 +29,39 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-                Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-                sans-serif;
-            line-height: 1.6;
+            font-family: 'Onest', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.65;
             color: #1a1a2e;
             background: #f9fafb;
             overflow-x: hidden;
+            font-optical-sizing: auto;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .logo-text,
+        .section-title,
+        .hero h1,
+        .benefit-card h3,
+        .feature-card h3,
+        .problem-card h3,
+        .cta h2,
+        .footer-brand {
+            font-family: 'Bricolage Grotesque', 'Onest', sans-serif;
+            font-optical-sizing: auto;
+        }
+
+        .section-badge,
+        .hero-badge,
+        .btn,
+        .nav-links a,
+        .announcement-bar,
+        .stat-label {
+            font-family: 'Onest', sans-serif;
         }
 
         /* Variables */
@@ -49,9 +80,12 @@
             --card-bg: #fff;
             --shadow-light: rgba(94, 89, 230, 0.1);
             --shadow-dark: rgba(0, 0, 0, 0.1);
-            --radius-md: 12px;
+            --radius-md: 14px;
             --radius-full: 9999px;
             --transition: 0.3s ease;
+            --gradient-primary: linear-gradient(135deg, #5e59e6 0%, #8b5cf6 50%, #a855f7 100%);
+            --gradient-warm: linear-gradient(135deg, #fb7121, #f59e0b);
+            --glow-primary: 0 0 30px rgba(94, 89, 230, 0.25);
         }
 
         /* Container */
@@ -61,20 +95,78 @@
             padding: 0 1.5rem;
         }
 
+        /* Announcement Bar */
+        .announcement-bar {
+            background: linear-gradient(90deg, #3730a3 0%, #5e59e6 40%, #8b5cf6 70%, #7c3aed 100%);
+            color: white;
+            text-align: center;
+            padding: 0.55rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .announcement-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -200%;
+            width: 80%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            animation: announceSweep 4s ease infinite;
+        }
+
+        @keyframes announceSweep {
+            0% {
+                left: -80%;
+            }
+
+            100% {
+                left: 200%;
+            }
+        }
+
+        .announcement-bar a {
+            color: #fde68a;
+            text-decoration: underline;
+            font-weight: 800;
+            margin-left: 0.4rem;
+        }
+
         /* Navbar */
         .navbar {
             position: sticky;
             top: 0;
             z-index: 1100;
-            background: rgba(255 255 255 / 0.95);
-            backdrop-filter: saturate(180%) blur(12px);
-            border-bottom: 1px solid var(--border);
+            background: rgba(255 255 255 / 0.97);
+            backdrop-filter: saturate(200%) blur(16px);
+            border-bottom: 1px solid rgba(94, 89, 230, 0.1);
             box-shadow: none;
             transition: box-shadow var(--transition);
         }
 
+        .navbar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .navbar.scrolled::before {
+            opacity: 1;
+        }
+
         .navbar.scrolled {
-            box-shadow: 0 4px 12px var(--shadow-dark);
+            box-shadow: 0 4px 20px rgba(94, 89, 230, 0.12), 0 1px 4px rgba(0, 0, 0, 0.06);
         }
 
         .navbar-container {
@@ -177,42 +269,64 @@
             text-decoration: none;
             transition: all var(--transition);
             user-select: none;
-            box-shadow: 0 6px 12px var(--shadow-light);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: 0.01em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+        }
+
+        .btn:active::after {
+            width: 300px;
+            height: 300px;
+            opacity: 0;
         }
 
         .btn-primary,
         .btn-hero {
-            background: var(--primary);
+            background: var(--gradient-primary);
             color: white;
-            box-shadow: 0 8px 20px var(--shadow-light);
+            box-shadow: 0 8px 24px rgba(94, 89, 230, 0.4);
             font-weight: 800;
-            font-size: 1.125rem;
-            padding: 0.75rem 2.5rem;
+            font-size: 1.1rem;
+            padding: 0.8rem 2.25rem;
             border-radius: calc(var(--radius-md) * 1.2);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            transition: transform 0.25s cubic-bezier(.22, .68, 0, 1.2), box-shadow 0.25s ease;
         }
 
         .btn-primary:hover,
         .btn-hero:hover {
-            background: var(--primary-dark);
-            transform: scale(1.07);
-            box-shadow: 0 15px 30px var(--shadow-light);
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 18px 40px rgba(94, 89, 230, 0.5);
         }
 
         .btn-cta {
-            background: var(--secondary);
+            background: linear-gradient(135deg, #fb7121, #f59e0b);
             color: white;
-            padding: 0.75rem 2.25rem;
-            font-size: 1.1rem;
-            font-weight: 700;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 800;
             border-radius: var(--radius-md);
-            box-shadow: 0 10px 25px rgba(251, 113, 33, 0.2);
-            transition: background-color 0.3s ease;
+            box-shadow: 0 10px 25px rgba(251, 113, 33, 0.35);
+            transition: transform 0.25s cubic-bezier(.22, .68, 0, 1.2), box-shadow 0.25s ease;
         }
 
         .btn-cta:hover {
-            background: var(--secondary-light);
-            transform: scale(1.05);
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 18px 35px rgba(251, 113, 33, 0.45);
         }
 
         .btn-outline {
@@ -297,16 +411,81 @@
 
         /* Hero Section */
         .hero {
-            min-height: 90vh;
+            min-height: 92vh;
             display: flex;
             align-items: center;
-            background: linear-gradient(135deg,
-                    rgba(94, 89, 230, 0.07),
-                    #fff,
-                    rgba(251, 113, 33, 0.07));
-            padding: 5rem 0 6rem;
+            background:
+                radial-gradient(ellipse 80% 60% at 10% 20%, rgba(94, 89, 230, 0.13) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 90% 80%, rgba(251, 113, 33, 0.10) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 40% at 60% 10%, rgba(139, 92, 246, 0.09) 0%, transparent 55%),
+                #fafbff;
+            padding: 5.5rem 0 7rem;
             overflow: hidden;
             position: relative;
+        }
+
+        /* Hero animated mesh */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(94, 89, 230, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.07) 0%, transparent 40%);
+            animation: heroMeshShift 12s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes heroMeshShift {
+            0% {
+                transform: scale(1) translate(0, 0);
+            }
+
+            100% {
+                transform: scale(1.05) translate(2%, -2%);
+            }
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero floating particles */
+        .hero-particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .hero-particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-20vh) scale(1);
+                opacity: 0;
+            }
         }
 
         .hero-grid {
@@ -324,43 +503,131 @@
             display: inline-flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.5rem 1.25rem;
-            background: rgba(94, 89, 230, 0.12);
-            border: 1.5px solid rgba(94, 89, 230, 0.24);
+            padding: 0.45rem 1.2rem 0.45rem 0.6rem;
+            background: rgba(94, 89, 230, 0.09);
+            border: 1.5px solid rgba(94, 89, 230, 0.22);
             border-radius: var(--radius-full);
-            font-size: 1rem;
-            font-weight: 600;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
             color: var(--primary);
-            margin-bottom: 2.25rem;
+            margin-bottom: 2rem;
             user-select: none;
-            box-shadow: 0 0 12px rgba(94, 89, 230, 0.06);
+            box-shadow: 0 0 18px rgba(94, 89, 230, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            animation: badgeShimmer 3s ease infinite;
+        }
+
+        @keyframes badgeShimmer {
+            0% {
+                left: -100%;
+            }
+
+            60% {
+                left: 130%;
+            }
+
+            100% {
+                left: 130%;
+            }
+        }
+
+        .hero-badge-dot {
+            width: 0.55rem;
+            height: 0.55rem;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 6px var(--primary);
+            animation: pulse-dot 1.8s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.4);
+                opacity: 0.6;
+            }
         }
 
         .hero h1 {
             font-weight: 900;
-            font-size: 2.75rem;
-            line-height: 1.15;
+            font-size: 2.85rem;
+            line-height: 1.12;
             margin-bottom: 1.75rem;
             color: var(--text-dark);
-            max-width: 480px;
+            max-width: 520px;
             user-select: none;
+            letter-spacing: -0.02em;
         }
 
         .gradient-text {
-            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            background: linear-gradient(135deg, #5e59e6 0%, #8b5cf6 50%, #a855f7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             display: inline-block;
+            position: relative;
         }
 
         .hero p {
-            font-size: 1.2rem;
-            color: var(--muted-text);
-            max-width: 520px;
-            margin-bottom: 3rem;
-            line-height: 1.7;
+            font-size: 1.15rem;
+            color: #4b5568;
+            max-width: 500px;
+            margin-bottom: 2.5rem;
+            line-height: 1.75;
             user-select: none;
+            font-weight: 400;
+        }
+
+        /* Hero stat chips */
+        .hero-stats {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2.5rem;
+        }
+
+        .hero-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.55rem 1.1rem;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(94, 89, 230, 0.15);
+            border-radius: var(--radius-full);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            white-space: nowrap;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .hero-stat:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(94, 89, 230, 0.15);
+        }
+
+        .hero-stat-icon {
+            font-size: 1rem;
         }
 
         .hero-buttons {
@@ -412,21 +679,30 @@
 
         .hero-image {
             position: relative;
-            animation: fadeInRight 0.8s ease 0.3s forwards, float 6s ease-in-out infinite;
-            border-radius: var(--radius-md);
-            box-shadow: 0 20px 40px var(--shadow-light);
+            animation: fadeInRight 0.8s ease 0.3s both, float 7s ease-in-out infinite;
+            border-radius: 20px;
             overflow: hidden;
             max-width: 600px;
             margin: 0 auto;
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(94, 89, 230, 0.4), rgba(168, 85, 247, 0.3), rgba(251, 113, 33, 0.3));
+            z-index: -1;
+            filter: blur(1px);
         }
 
         .hero-image img {
             width: 100%;
             height: auto;
             display: block;
-            border-radius: var(--radius-md);
+            border-radius: 18px;
             object-fit: cover;
-            filter: drop-shadow(0 0 10px rgba(94, 89, 230, 0.1));
+            box-shadow: 0 25px 60px rgba(94, 89, 230, 0.18), 0 8px 20px rgba(0, 0, 0, 0.08);
             user-select: none;
         }
 
@@ -443,44 +719,62 @@
         }
 
         .section-badge {
-            display: inline-block;
-            padding: 0.5rem 1.25rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 1.1rem;
             border-radius: var(--radius-full);
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
             user-select: none;
-            box-shadow: 0 0 12px rgba(94, 89, 230, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-badge::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: badgeShimmer 3.5s ease infinite 1s;
         }
 
         .section-title {
             font-weight: 900;
-            font-size: 2.75rem;
-            line-height: 1.15;
-            margin-bottom: 1rem;
+            font-size: 2.8rem;
+            line-height: 1.12;
+            margin-bottom: 1.1rem;
             color: var(--text-dark);
+            letter-spacing: -0.02em;
         }
 
         .section-description {
-            font-size: 1.15rem;
-            color: var(--muted-text);
-            line-height: 1.75;
+            font-size: 1.1rem;
+            color: #6b7280;
+            line-height: 1.8;
             max-width: 480px;
             margin: 0 auto;
+            font-weight: 400;
         }
 
         /* Problems Section */
         .problems {
-            background: #f3f5fa;
+            background: linear-gradient(180deg, #f0f2fa 0%, #f8f9fe 100%);
             padding-top: 6rem;
             padding-bottom: 7rem;
         }
 
         .problems .section-badge {
-            background: rgba(239, 68, 68, 0.12);
-            border: 1.5px solid rgba(239, 68, 68, 0.3);
-            color: var(--danger);
-            box-shadow: 0 0 14px rgba(239, 68, 68, 0.1);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1.5px solid rgba(239, 68, 68, 0.25);
+            color: #dc2626;
+            box-shadow: 0 0 18px rgba(239, 68, 68, 0.12);
         }
 
         .problems-grid {
@@ -499,18 +793,21 @@
         }
 
         .problem-card {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.85);
             border-radius: var(--radius-md);
             padding: 1.75rem 2rem;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: transform 0.3s cubic-bezier(.22, .68, 0, 1.2), box-shadow 0.3s ease, border-color 0.3s ease;
             cursor: default;
             user-select: none;
+            backdrop-filter: blur(6px);
         }
 
         .problem-card:hover {
-            transform: translateY(-6px) scale(1.03);
-            box-shadow: 0 18px 30px rgba(239, 68, 68, 0.15);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(239, 68, 68, 0.13);
+            border-color: rgba(239, 68, 68, 0.2);
         }
 
         .problem-icon {
@@ -579,52 +876,75 @@
         }
 
         .benefit-card {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: var(--radius-md);
-            padding: 2rem 2.25rem;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 2.25rem 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(94, 89, 230, 0.08);
+            transition: transform 0.3s cubic-bezier(.22, .68, 0, 1.2), box-shadow 0.35s ease, border-color 0.3s ease;
             cursor: default;
             user-select: none;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s ease;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .benefit-card:hover::before {
+            transform: scaleX(1);
         }
 
         .benefit-card:hover {
-            transform: translateY(-6px) scale(1.04);
-            box-shadow: 0 22px 40px rgba(94, 89, 230, 0.15);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 24px 45px rgba(94, 89, 230, 0.15);
+            border-color: rgba(94, 89, 230, 0.2);
         }
 
         .benefit-icon {
             font-size: 2.25rem;
-            width: 4.5rem;
-            height: 4.5rem;
-            border-radius: var(--radius-md);
-            margin: 0 auto 1.25rem;
+            width: 4.75rem;
+            height: 4.75rem;
+            border-radius: 16px;
+            margin: 0 auto 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            background: linear-gradient(135deg, var(--primary), #8b5cf6);
-            box-shadow: 0 5px 12px rgba(94, 89, 230, 0.3);
-            transition: background-color 0.3s ease;
+            background: var(--gradient-primary);
+            box-shadow: 0 8px 20px rgba(94, 89, 230, 0.35);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .benefit-card:hover .benefit-icon {
-            background: var(--primary-dark);
-            box-shadow: 0 8px 20px rgba(94, 89, 230, 0.5);
+            transform: scale(1.1) rotate(-3deg);
+            box-shadow: 0 12px 30px rgba(94, 89, 230, 0.5);
         }
 
         .benefit-card h3 {
-            font-size: 1.375rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 0.65rem;
             color: var(--text-dark);
+            letter-spacing: -0.01em;
         }
 
         .benefit-card p {
-            font-size: 1rem;
-            color: var(--muted-text);
-            line-height: 1.6;
+            font-size: 0.96rem;
+            color: #6b7280;
+            line-height: 1.65;
             user-select: none;
         }
 
@@ -671,58 +991,61 @@
         }
 
         .feature-card {
-            background: #f7f8fc;
+            background: rgba(255, 255, 255, 0.8);
             border-radius: var(--radius-md);
-            padding: 2rem 2.25rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            border: 2px solid transparent;
+            padding: 2rem 1.75rem;
+            transition: transform 0.3s cubic-bezier(.22, .68, 0, 1.2), box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+            border: 1.5px solid rgba(0, 0, 0, 0.05);
             cursor: default;
             user-select: none;
             text-align: center;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+            backdrop-filter: blur(4px);
         }
 
         .feature-card:hover {
-            border-color: rgba(94, 89, 230, 0.3);
-            transform: translateY(-6px) scale(1.04);
-            box-shadow: 0 22px 40px rgba(94, 89, 230, 0.15);
+            border-color: rgba(94, 89, 230, 0.25);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 24px 45px rgba(94, 89, 230, 0.14);
+            background: #fff;
         }
 
         .feature-icon {
             width: 3.75rem;
             height: 3.75rem;
-            border-radius: var(--radius-md);
+            border-radius: 14px;
             margin: 0 auto 1.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 2rem;
-            box-shadow: 0 5px 12px rgba(94, 89, 230, 0.3);
-            transition: background-color 0.3s ease;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .feature-card:hover .feature-icon {
-            background-color: var(--primary-dark);
-            box-shadow: 0 8px 20px rgba(94, 89, 230, 0.5);
+            transform: scale(1.12) rotate(-4deg);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
         }
 
         .feature-card h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.6rem;
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
             color: var(--text-dark);
+            letter-spacing: -0.01em;
         }
 
         .feature-card p {
-            font-size: 1rem;
-            color: var(--muted-text);
-            line-height: 1.6;
+            font-size: 0.92rem;
+            color: #6b7280;
+            line-height: 1.65;
         }
 
         /* Dashboard Section */
         .dashboard {
-            background: #f3f5fa;
+            background: linear-gradient(180deg, #f0f2fa 0%, #eef0f9 100%);
             padding-top: 6rem;
             padding-bottom: 7rem;
         }
@@ -742,18 +1065,29 @@
 
         .browser-mockup {
             background: var(--card-bg);
-            border: 2.5px solid var(--border);
-            border-radius: var(--radius-md);
-            box-shadow: 0 20px 40px var(--shadow-light);
+            border: 1.5px solid rgba(94, 89, 230, 0.15);
+            border-radius: 18px;
+            box-shadow:
+                0 30px 70px rgba(94, 89, 230, 0.15),
+                0 8px 20px rgba(0, 0, 0, 0.06),
+                0 0 0 1px rgba(94, 89, 230, 0.05);
             overflow: hidden;
             margin-top: 3rem;
             user-select: none;
+            transition: box-shadow 0.4s ease;
+        }
+
+        .browser-mockup:hover {
+            box-shadow:
+                0 40px 90px rgba(94, 89, 230, 0.2),
+                0 12px 30px rgba(0, 0, 0, 0.08),
+                0 0 0 1px rgba(94, 89, 230, 0.08);
         }
 
         .browser-bar {
-            background: rgba(210, 220, 230, 0.6);
-            border-bottom: 1px solid var(--border);
-            padding: 0.75rem 1.25rem;
+            background: linear-gradient(135deg, #f0f2f8 0%, #e8ebf4 100%);
+            border-bottom: 1px solid rgba(94, 89, 230, 0.1);
+            padding: 0.85rem 1.25rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
@@ -821,13 +1155,51 @@
 
         /* CTA Section */
         .cta {
-            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            background: linear-gradient(135deg, #3730a3 0%, #5e59e6 35%, #8b5cf6 65%, #7c3aed 100%);
             color: white;
-            padding: 5rem 1.5rem 6rem;
+            padding: 6rem 1.5rem 7rem;
             text-align: center;
             position: relative;
             overflow: hidden;
             user-select: none;
+        }
+
+        /* CTA animated orbs */
+        .cta::before,
+        .cta::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            pointer-events: none;
+            animation: orbFloat 10s ease-in-out infinite alternate;
+        }
+
+        .cta::before {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(251, 113, 33, 0.3) 0%, transparent 70%);
+            top: -200px;
+            right: -100px;
+        }
+
+        .cta::after {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%);
+            bottom: -150px;
+            left: -80px;
+            animation-delay: -5s;
+        }
+
+        @keyframes orbFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
         }
 
         .cta-content {
@@ -855,10 +1227,12 @@
         }
 
         .cta h2 {
-            font-size: 2.75rem;
+            font-size: 2.9rem;
             font-weight: 900;
             margin-bottom: 1.25rem;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+            letter-spacing: -0.02em;
+            line-height: 1.12;
         }
 
         .cta p {
@@ -974,14 +1348,26 @@
 
         /* Footer */
         .footer {
-            background: #0f172a;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 4rem 1.5rem 2rem;
+            background: linear-gradient(180deg, #0a0f1e 0%, #0f172a 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 5rem 1.5rem 2.5rem;
             color: #94a3b8;
             font-size: 0.95rem;
             user-select: none;
             position: relative;
             overflow: hidden;
+        }
+
+        /* Footer ambient glow */
+        .footer .footer-glow {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 300px;
+            background: radial-gradient(ellipse, rgba(94, 89, 230, 0.08) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         .footer::before {
@@ -1087,9 +1473,11 @@
         }
 
         .footer-section h3 {
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 1.5rem;
-            font-size: 1.15rem;
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
             color: white;
             user-select: none;
             position: relative;
@@ -1444,7 +1832,7 @@
 
         @media (min-width: 1024px) {
             .hero h1 {
-                font-size: 3.75rem;
+                font-size: 4rem;
             }
 
             .section-title {
@@ -1466,13 +1854,17 @@
             .form-grid.two-cols {
                 grid-template-columns: 1fr 1fr;
             }
+
+            .hero-stats {
+                flex-wrap: nowrap;
+            }
         }
 
         /* Animations */
         @keyframes fadeInLeft {
             0% {
                 opacity: 0;
-                transform: translateX(-30px);
+                transform: translateX(-40px);
             }
 
             100% {
@@ -1484,7 +1876,7 @@
         @keyframes fadeInRight {
             0% {
                 opacity: 0;
-                transform: translateX(30px);
+                transform: translateX(40px);
             }
 
             100% {
@@ -1499,7 +1891,7 @@
             }
 
             50% {
-                transform: translateY(-15px);
+                transform: translateY(-18px);
             }
 
             100% {
@@ -1507,11 +1899,23 @@
             }
         }
 
+        @keyframes countUp {
+            0% {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* Scroll Reveal Animations */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(35px);
+            transition: opacity 0.75s cubic-bezier(.22, .68, 0, 1), transform 0.75s cubic-bezier(.22, .68, 0, 1);
         }
 
         .reveal.active {
@@ -1520,24 +1924,34 @@
         }
 
         .reveal-delay-1 {
-            transition-delay: 100ms;
+            transition-delay: 80ms;
         }
 
         .reveal-delay-2 {
-            transition-delay: 200ms;
+            transition-delay: 160ms;
         }
 
         .reveal-delay-3 {
-            transition-delay: 300ms;
+            transition-delay: 240ms;
         }
 
         .reveal-delay-4 {
-            transition-delay: 400ms;
+            transition-delay: 320ms;
+        }
+
+        /* Glow text effect for CTA */
+        .glow-text {
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.35);
         }
     </style>
 </head>
 
 <body>
+    <!-- Announcement Bar -->
+    <div class="announcement-bar" role="banner" aria-label="Announcement">
+        🎉 <strong>Limited Time:</strong> Start with 7 days free trial — No credit card required!
+        <a href="https://sikhsha-sathi-2940.onrender.com/" target="_blank" rel="noopener">Start Now →</a>
+    </div>
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="container">
@@ -1563,10 +1977,10 @@
                 </div>
 
                 <div class="nav-buttons">
-                    <a href="https://sikhsha-sathi-2940.onrender.com/" target="_blank" rel="noopener" class="btn btn-ghost"
-                        tabindex="0">Login</a>
-                    <a href="https://sikhsha-sathi-2940.onrender.com/" target="_blank" rel="noopener" class="btn btn-cta"
-                        tabindex="0">Get Started</a>
+                    <a href="https://sikhsha-sathi-2940.onrender.com/" target="_blank" rel="noopener"
+                        class="btn btn-ghost" tabindex="0">Login</a>
+                    <a href="https://sikhsha-sathi-2940.onrender.com/" target="_blank" rel="noopener"
+                        class="btn btn-cta" tabindex="0">Get Started</a>
                 </div>
 
                 <button class="menu-button" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu"
@@ -1581,47 +1995,42 @@
             </div>
 
             <div class="mobile-menu" id="mobileMenu" role="menu" aria-label="Mobile navigation">
-    <a href="#features" role="menuitem" tabindex="-1">Features</a>
+                <a href="#features" role="menuitem" tabindex="-1">Features</a>
 
-    <a href="javascript:void(0)"
-       id="openPlansLinkMobile"
-       role="menuitem"
-       tabindex="-1"
-       aria-haspopup="dialog"
-       aria-controls="plansModal">
-        Subscription
-    </a>
+                <a href="javascript:void(0)" id="openPlansLinkMobile" role="menuitem" tabindex="-1"
+                    aria-haspopup="dialog" aria-controls="plansModal">
+                    Subscription
+                </a>
 
-    <a href="#solutions" role="menuitem" tabindex="-1">Solutions</a>
+                <a href="#solutions" role="menuitem" tabindex="-1">Solutions</a>
 
-    <a href="#about" role="menuitem" tabindex="-1">About</a>
+                <a href="#about" role="menuitem" tabindex="-1">About</a>
 
-    <a href="https://sikhsha-sathi-2940.onrender.com/"
-       class="btn btn-ghost"
-       style="width: 100%; margin-top: 1rem;"
-       tabindex="-1">
-        Login
-    </a>
+                <a href="https://sikhsha-sathi-2940.onrender.com/" class="btn btn-ghost"
+                    style="width: 100%; margin-top: 1rem;" tabindex="-1">
+                    Login
+                </a>
 
-    <a href="https://sikhsha-sathi-2940.onrender.com/"
-       class="btn btn-cta"
-       style="width: 100%; margin-top: 0.5rem;"
-       tabindex="-1">
-        Get Started
-    </a>
-</div>
+                <a href="https://sikhsha-sathi-2940.onrender.com/" class="btn btn-cta"
+                    style="width: 100%; margin-top: 0.5rem;" tabindex="-1">
+                    Get Started
+                </a>
+            </div>
 
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero" role="region" aria-labelledby="hero-title">
+        <!-- Floating particles -->
+        <div class="hero-particles" aria-hidden="true" id="heroParticles"></div>
+
         <div class="container">
             <div class="hero-grid">
                 <div class="hero-content">
                     <div class="hero-badge" aria-label="Education badge">
-                        <span aria-hidden="true">🎓</span>
-                        <span>Transform Your Institute Digitally</span>
+                        <div class="hero-badge-dot"></div>
+                        <span>🎓 Transform Your Institute Digitally</span>
                     </div>
                     <h1 id="hero-title">
                         Complete Digital<br />
@@ -1629,23 +2038,42 @@
                         for Modern Institutes
                     </h1>
                     <p>
-                        Sikhsha Sathi empowers educational institutes across India—especially
-                        in Bihar, UP, and tier-2/3 cities—to go completely paperless.
-                        Manage students, faculty, courses, fees, and more from one powerful
-                        dashboard.
+                        Sikhsha Sathi empowers educational institutes across India — especially
+                        in <strong style="color:var(--primary);font-weight:700">Bihar, UP,</strong> and tier-2/3 cities
+                        — to go completely paperless.
+                        Manage students, faculty, courses, fees, and more from one powerful dashboard.
                     </p>
                     <div class="hero-buttons">
                         <a href="https://sikhsha-sathi-2940.onrender.com/" target="_blank" rel="noopener"
                             class="btn btn-hero inline-flex" aria-label="Start Free Trial" tabindex="0">
-                            Start Free Trial<span aria-hidden="true"> →</span>
+                            🚀 Start Free Trial <span aria-hidden="true">→</span>
                         </a>
 
                         <a href="https://youtu.be/Fndd0hdTEzw?si=w4yLr3s8a1asQCIe" target="_blank" rel="noopener"
                             class="btn btn-outline btn-lg" aria-label="Watch Demo">
-                            <span aria-hidden="true">📖</span> Watch Demo
+                            ▶ Watch Demo
                         </a>
                     </div>
 
+                    <!-- Feature highlights -->
+                    <div class="hero-stats" aria-label="Key features">
+                        <div class="hero-stat">
+                            <span class="hero-stat-icon">🏫</span>
+                            <span>Multi-Branch Management</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-icon">⚡</span>
+                            <span>AI-Powered Tools</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-icon">💳</span>
+                            <span>Online Payments</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-icon">📊</span>
+                            <span>Live Analytics</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="hero-image" aria-hidden="true">
@@ -1656,17 +2084,19 @@
         </div>
     </section>
 
+
     <!-- Problems Section -->
     <section class="problems" id="problems" role="region" aria-labelledby="problems-title">
         <div class="container">
             <div class="section-header">
-                <div class="section-badge">The Challenges You Face Daily</div>
+                <div class="section-badge">⚡ The Challenges You Face Daily</div>
                 <h2 class="section-title" id="problems-title">
-                    Running an Institute in Small Cities is <span style="color: var(--danger);">Tough</span>
+                    Running an Institute is <span
+                        style="color:var(--danger);display:inline-block;background:linear-gradient(135deg,#ef4444,#dc2626);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Tough</span>
                 </h2>
                 <p class="section-description">
                     Especially in Bihar, UP, and tier-2/3 cities where resources are limited and digital infrastructure
-                    is still developing. We understand your pain points.
+                    is still developing. We deeply understand your daily pain points.
                 </p>
             </div>
             <div class="problems-grid" aria-label="List of common problems">
@@ -1790,7 +2220,9 @@
     <section class="solutions" id="solutions" role="region" aria-labelledby="solutions-title">
         <div class="container">
             <div class="section-header">
-                <div class="section-badge">The Sikhsha Sathi Solution</div>
+                <div class="section-badge"
+                    style="background:rgba(34,197,94,0.1);border:1.5px solid rgba(34,197,94,0.25);color:#16a34a;">✅ The
+                    Sikhsha Sathi Solution</div>
                 <h2 class="section-title" id="solutions-title">
                     Go <span class="gradient-text">Completely Digital</span> in One Day
                 </h2>
@@ -1883,13 +2315,15 @@
     <section id="features" role="region" aria-labelledby="features-title">
         <div class="container">
             <div class="section-header">
-                <div class="section-badge">Powerful Features</div>
+                <div class="section-badge"
+                    style="background:rgba(94,89,230,0.1);border:1.5px solid rgba(94,89,230,0.22);color:var(--primary);">
+                    🛠 Powerful Features</div>
                 <h2 class="section-title" id="features-title">
                     Everything You Need in <span class="gradient-text">One Platform</span>
                 </h2>
                 <p class="section-description">
-                    From student enrollment to fee collection, from AI-powered tools to detailed analytics—we've got you
-                    covered.
+                    From student enrollment to fee collection, from AI-powered tools to detailed analytics — we've got
+                    you covered.
                 </p>
             </div>
 
@@ -2042,16 +2476,15 @@
         <div class="container">
             <div class="dashboard-preview">
                 <div class="section-header">
-                    <div class="section-badge" aria-hidden="true"
-                        style="background: rgba(94, 89, 230, 0.12); border: 1.5px solid rgba(94, 89, 230, 0.25); color: var(--primary); box-shadow: 0 0 15px rgba(94, 89, 230, 0.12);">
-                        <span aria-hidden="true">✨</span> <span>Beautiful Dashboard</span>
-                    </div>
+                    <div class="section-badge"
+                        style="background:rgba(94,89,230,0.1);border:1.5px solid rgba(94,89,230,0.22);color:var(--primary);">
+                        ✨ Beautiful Dashboard</div>
                     <h2 class="section-title" id="dashboard-title">
                         Manage Everything from <span class="gradient-text">One Screen</span>
                     </h2>
                     <p class="section-description">
-                        Intuitive, clean, and powerful dashboard designed for Indian educators. See all your key metrics
-                        at a glance.
+                        Intuitive, clean, and powerful dashboard designed for Indian educators. See all key metrics at a
+                        glance.
                     </p>
                 </div>
 
@@ -2218,6 +2651,7 @@
 
     <!-- Footer -->
     <footer class="footer" role="contentinfo">
+        <div class="footer-glow" aria-hidden="true"></div>
         <div class="container">
             <div class="footer-grid">
                 <section aria-labelledby="footer-brand-title">
@@ -2271,7 +2705,7 @@
                             </svg>
                         </a>
 
-                        <a href="https://www.linkedin.com/in/rounak-raj-761400267/" class="social-link"
+                        <a href="https://www.linkedin.com/in/sikhsha-sathi-a02731397/" class="social-link"
                             aria-label="LinkedIn" tabindex="0" rel="noopener" target="_blank">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
                                 viewBox="0 0 24 24" aria-hidden="true">
@@ -2381,8 +2815,10 @@
             <div class="footer-bottom">
                 <p>© 2026 Sikhsha Sathi. All rights reserved.</p>
                 <div class="footer-links" role="navigation" aria-label="Footer policies">
-                    <a href="javascript:void(0)" class="policy-link" data-policy="privacy" tabindex="0">Privacy Policy</a>
-                    <a href="javascript:void(0)" class="policy-link" data-policy="terms" tabindex="0">Terms of Service</a>
+                    <a href="javascript:void(0)" class="policy-link" data-policy="privacy" tabindex="0">Privacy
+                        Policy</a>
+                    <a href="javascript:void(0)" class="policy-link" data-policy="terms" tabindex="0">Terms of
+                        Service</a>
                     <a href="javascript:void(0)" class="policy-link" data-policy="cookie" tabindex="0">Cookie Policy</a>
                 </div>
             </div>
@@ -2524,7 +2960,7 @@
                     aria-label="Close subscription plans modal">
                     Close
                 </button>
-                <a href="https://sikhsha-sathi.onrender.com" target="_blank" rel="noopener" class="btn-modal btn-submit"
+                <a href="https://sikhsha-sathi-2940.onrender.com" class="btn-modal btn-submit"
                     aria-label="Start Free Trial from subscription plans modal" tabindex="0">Start Free Trial</a>
             </div>
         </div>
@@ -2533,15 +2969,27 @@
     <!-- Policy Modal -->
     <div id="policyModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true"
         aria-labelledby="policyModalTitle" tabindex="-1">
-        <div class="modal" role="document" style="background: linear-gradient(to bottom, #ffffff, #f8faff); border-top: 4px solid var(--primary); box-shadow: 0 30px 60px rgba(94, 89, 230, 0.2), 0 0 0 1px rgba(94, 89, 230, 0.1);">
-            <div class="modal-header" style="background: rgba(94, 89, 230, 0.03); border-bottom: 1px solid rgba(94, 89, 230, 0.1);">
+        <div class="modal" role="document"
+            style="background: linear-gradient(to bottom, #ffffff, #f8faff); border-top: 4px solid var(--primary); box-shadow: 0 30px 60px rgba(94, 89, 230, 0.2), 0 0 0 1px rgba(94, 89, 230, 0.1);">
+            <div class="modal-header"
+                style="background: rgba(94, 89, 230, 0.03); border-bottom: 1px solid rgba(94, 89, 230, 0.1);">
                 <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    <div style="width: 2.75rem; height: 2.75rem; border-radius: 50%; background: linear-gradient(135deg, var(--primary-light), var(--primary)); display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 10px var(--shadow-light);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <div
+                        style="width: 2.75rem; height: 2.75rem; border-radius: 50%; background: linear-gradient(135deg, var(--primary-light), var(--primary)); display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 10px var(--shadow-light);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
                     </div>
-                    <h3 id="policyModalTitle" style="font-size: 1.35rem; color: var(--primary-dark); font-weight: 800; margin: 0;">Policy</h3>
+                    <h3 id="policyModalTitle"
+                        style="font-size: 1.35rem; color: var(--primary-dark); font-weight: 800; margin: 0;">Policy</h3>
                 </div>
-                <button class="close-modal" id="closePolicyBtn" aria-label="Close modal" type="button" style="background: white; border-radius: 50%; width: 2.25rem; height: 2.25rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); color: var(--text-dark);">
+                <button class="close-modal" id="closePolicyBtn" aria-label="Close modal" type="button"
+                    style="background: white; border-radius: 50%; width: 2.25rem; height: 2.25rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); color: var(--text-dark);">
                     ✕
                 </button>
             </div>
@@ -2550,9 +2998,10 @@
                     <!-- Content injected via JS -->
                 </div>
             </div>
-            <div class="modal-footer" style="background: rgba(94, 89, 230, 0.03); border-top: 1px solid rgba(94, 89, 230, 0.1);">
-                <button type="button" class="btn-modal btn-submit" id="cancelPolicyBtn"
-                    aria-label="Close policy modal" style="margin-right: 0; padding: 0.6rem 2.5rem; border-radius: var(--radius-full);">
+            <div class="modal-footer"
+                style="background: rgba(94, 89, 230, 0.03); border-top: 1px solid rgba(94, 89, 230, 0.1);">
+                <button type="button" class="btn-modal btn-submit" id="cancelPolicyBtn" aria-label="Close policy modal"
+                    style="margin-right: 0; padding: 0.6rem 2.5rem; border-radius: var(--radius-full);">
                     Got it!
                 </button>
             </div>
@@ -2561,6 +3010,52 @@
 
     <!-- JavaScript -->
     <script>
+        // Hero floating particles
+        (function () {
+            const container = document.getElementById('heroParticles');
+            if (!container) return;
+            const colors = ['rgba(94,89,230,0.4)', 'rgba(168,85,247,0.35)', 'rgba(251,113,33,0.3)', 'rgba(99,102,241,0.3)'];
+            for (let i = 0; i < 18; i++) {
+                const p = document.createElement('div');
+                p.className = 'hero-particle';
+                const size = Math.random() * 8 + 4;
+                p.style.cssText = [
+                    `width:${size}px`, `height:${size}px`,
+                    `left:${Math.random() * 100}%`,
+                    `background:${colors[Math.floor(Math.random() * colors.length)]}`,
+                    `animation-duration:${6 + Math.random() * 10}s`,
+                    `animation-delay:${Math.random() * 10}s`
+                ].join(';');
+                container.appendChild(p);
+            }
+        })();
+
+        // Animated number counter
+        function animateCounter(el) {
+            const target = parseInt(el.getAttribute('data-target'));
+            const suffix = el.querySelector('span')?.textContent || '';
+            const duration = 1800;
+            const step = target / (duration / 16);
+            let current = 0;
+            const timer = setInterval(() => {
+                current = Math.min(current + step, target);
+                const display = target >= 1000 ? (current / 1000).toFixed(1) + 'K' : Math.floor(current).toString();
+                el.childNodes[0].textContent = display;
+                if (current >= target) clearInterval(timer);
+            }, 16);
+        }
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObserver.observe(el));
+
         const navbar = document.getElementById('navbar');
         const mobileMenu = document.getElementById('mobileMenu');
         const menuButton = document.querySelector('.menu-button');
