@@ -1,0 +1,32 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Shiksha Sathi — Wise Owl Brand Icon -->
+  <rect width="64" height="64" rx="14" fill="#0d5c2e"/>
+  <!-- Ear tufts -->
+  <polygon points="22,22 19,13 25,19" fill="white"/>
+  <polygon points="42,22 45,13 39,19" fill="white"/>
+  <!-- Body -->
+  <ellipse cx="32" cy="40" rx="14" ry="14" fill="white"/>
+  <!-- Face plate -->
+  <ellipse cx="32" cy="33" rx="13" ry="11" fill="#e8f5ee"/>
+  <!-- Eye rings -->
+  <circle cx="25" cy="32" r="6" fill="white" stroke="#0d5c2e" stroke-width="1.5"/>
+  <circle cx="39" cy="32" r="6" fill="white" stroke="#0d5c2e" stroke-width="1.5"/>
+  <!-- Pupils -->
+  <circle cx="25" cy="32" r="3" fill="#0d5c2e"/>
+  <circle cx="39" cy="32" r="3" fill="#0d5c2e"/>
+  <!-- Eye shine -->
+  <circle cx="26.2" cy="30.8" r="1" fill="white"/>
+  <circle cx="40.2" cy="30.8" r="1" fill="white"/>
+  <!-- Beak -->
+  <polygon points="32,36 29,40 35,40" fill="#FFD700"/>
+  <!-- Wings -->
+  <path d="M18,44 Q13,38 17,30 Q19,39 24,41Z" fill="white"/>
+  <path d="M46,44 Q51,38 47,30 Q45,39 40,41Z" fill="white"/>
+  <!-- Feet -->
+  <line x1="27" y1="52" x2="24" y2="57" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="27" y1="52" x2="27" y2="57" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="27" y1="52" x2="30" y2="57" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="37" y1="52" x2="34" y2="57" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="37" y1="52" x2="37" y2="57" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="37" y1="52" x2="40" y2="57" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+</svg>
